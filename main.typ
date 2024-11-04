@@ -30,13 +30,8 @@
 
 = Ievads
 == Nolūks
-Šī dokumenta mērķis ir izpētīt Bevy spēļu dzinēja iespējas, izstrādājot
-minimālistisku labirinta izpētes spēli "Maze Ascension", un demonstrēt
-#todo("reword 'inovatīvu'")
-inovatīvu spēles mehāniku.
-
-Šī projekta mērķis ir izpētīt Bevy iespējas, izmantojot tā moderno arhitektūru
-un veiktspējas priekšrocības, lai nodrošinātu unikālu spēļu pieredzi.
+Šī dokumenta mērķis ir raksturot sešstūru labirinta spēles "Maze Ascension"
+programmatūras prasības un izpētīt Bevy spēļu dzinēja iespējas.
 
 == Darbības sfēra
 #todo("add first sentence")
@@ -194,6 +189,29 @@ pārvaldāms, nodrošinot strukturētu ceļu projekta mērķu sasniegšanai. */
       year: 2024,
       month: 11,
       day: 04,
+    ),
+  )
+
+
++ #hyperlink-source(
+    "", // TODO:
+    "Unofficial Bevy Cheat Book.",
+    "https://bevy-cheatbook.github.io/",
+    datetime(
+      year: 2024,
+      month: 09,
+      day: 10,
+    ),
+  )
+
++ #hyperlink-source(
+    "Bevy piemēri.",
+    "Bevy Examples",
+    "https://bevyengine.org/examples/",
+    datetime(
+      year: 2024,
+      month: 09,
+      day: 10,
     ),
   )
 

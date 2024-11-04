@@ -12,7 +12,13 @@
   first-line-indent: 0cm,
   [*Atslēgvārdi:*],
 )
-Papilspējas.
+Labirints
+datorspēle,
+sistēmas prasības,
+programmatūras prasību specifikācija,
+Bevy,
+ECS,
+papilspējas.
 
 
 #text(
@@ -37,6 +43,12 @@ Papilspējas.
       first-line-indent: 0cm,
       [*Keywords:*],
     )
-    Power-ups.
+    Maze,
+    comtuper game,
+    system requirements,
+    software requirements specification,
+    Bevy,
+    ECS,
+    power-ups.
   ],
 )
