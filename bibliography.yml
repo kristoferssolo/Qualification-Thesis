@@ -1,0 +1,41 @@
+typst:
+  type: Web
+  title: Typst
+  author:
+    - Mädje
+    - Laurenz
+    - Haug
+    - Martin
+    - Typst Projekta Izstrādātāji
+  url: https://typst.app/
+hex_grid:
+  type: Web
+  title: Hexagonal Grids
+  author: Red Blob Games
+  url: {value: 'https://www.redblobgames.com/grids/hexagons/', date: 2024-09-10}
+bevy_examples:
+  type: Web
+  title: Bevy Examples
+  author:
+  url: {value: 'https://bevyengine.org/examples/', date: 2024-09-10}
+bevy_cheatbook:
+  type: Web
+  title: Unofficial Bevy Cheat Book
+  author:
+  url: {value: 'https://bevy-cheatbook.github.io/', date: 2024-09-10}
+lvs_68:
+  type: Book
+  title: Programmatūras prasību specifikācijas ceļvedis
+  author: Institūcija SIA "Latvijas standarts"
+  issue: 68
+  date: 1996-03-27
+  organization: Latvijas Nacionālais standartizācijas un metroloģijas centrs
+  page-total: 22
+lvs_72:
+  type: Book
+  title: Ieteicamā prakse programmatūras projektējuma aprakstīšanai
+  author: Institūcija SIA "Latvijas standarts"
+  issue: 72
+  date: 1996-03-27
+  organization: Latvijas Nacionālais standartizācijas un metroloģijas centrs
+  page-total: 13
