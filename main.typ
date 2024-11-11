@@ -17,8 +17,11 @@
 #set heading(numbering: none)
 = Apzīmējumu saraksts
 
+/ CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
-/ ECS: entitāšu komponentu sistēma (angl. Entity-Component-System);
+/ ECS: entitāšu komponentu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
+/ GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
+/ GitHub Release #footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>: izvēršamas programmatūras iterācijas, ko varat iepakot un padarīt pieejamas plašākai auditorijai, lai lejupielādētu un izmantotu;
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
 / Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
@@ -36,34 +39,37 @@
 == Nolūks
 Šī dokumenta mērķis ir raksturot sešstūru labirinta spēles "Maze Ascension"
 programmatūras prasības un izpētīt Bevy spēļu dzinēja iespējas.
-#lorem(100)
+
 == Darbības sfēra
 #todo("add first sentence")
 
-Galvenā uzmanība tiek pievērsta tādas galvenās spēles mehānikas izstrādei kā labirinta
-ģenerēšana, navigācija, papildspēju (power-up) integrācija un vertikālā
-virzība, vienlaikus saglabājot minimālisma estētiku.
+Darba galvenā uzmanība ir vērsta uz būtisku spēles mehāniku ieviešanu, tostarp
+procedurālu labirintu ģenerēšanu, spēlētāju navigācijas sistēmu, papildspēju
+integrāciju un vertikālās progresijas mehāniku, vienlaikus ievērojot minimālisma
+dizaina filozofiju.
 
-Spēles dizaina centrā ir sešstūra formas plāksnes, kas, savukārt, veido sešstūra
+Spēles pamatā ir sešstūra formas plāksnes, kas, savukārt, veido sešstūra
 formas labirintus, kuri rada atšķirīgu vizuālo un navigācijas izaicinājumu.
 Spēlētāju uzdevums ir pārvietoties pa šiem labirintiem, lai sasniegtu katra
 līmeņa beigas. Spēlētājiem progresējot, tie sastopas ar arvien sarežģītākiem
-labirintiem, kuros nepieciešama stratēģiska domāšana un izpēte. Papildspēju
-integrācija piešķir spēlei dziļumu, mudinot spēlētājus izpētīt un eksperimentēt
-ar dažādām spēju kombinācijām.
+labirintiem, kuros nepieciešama stratēģiska domāšana, izpēte un papildspēju
+izmantošana.
 
-No tehniskā viedokļa šajā darbā tiks aplūkota spēles īstenošana, izmantojot
-Bevy entitāšu komponentu sistēmas (ECS) arhitektūru. Tas ietver spēles vides
-izveidi, spēles stāvokļu pārvaldību un Bevy funkciju izmantošanu, lai radītu
-netraucētu un efektīvu spēles pieredzi.
-/* Projekta ietvaros tiks izstrādāts arī lietotāja interfeisa dizains,
-* nodrošinot, ka tas ir intuitīvs un pieejams, ar skaidru vizuālu atgriezenisko
-* saiti par spēlētāja progresu un savāktajiem papildspēkiem. */
+Spēlētājam progresējot, tie sastopas ar dažādiem uzlabojumiem un
+papildspējām, kas stratēģiski izvietoti labirintos. Šī funkcija padziļina spēlēšanas
+pieredzi, veicinot izpēti un eksperimentēšanu ar dažādām spēju kombinācijām,
+radot dinamiskākus un aizraujošākus spēles scenārijus.
 
-/* Turklāt, lai gan spēlei būs minimālistiska vizuālā izstrāde, darbā netiks
-* aplūkotas progresīvas grafikas atveidošanas metodes vai augstas precizitātes
-* vizuālie efekti, saglabājot koncentrēšanos uz dizaina vienkāršību un
-* skaidrību. */
+No tehniskā viedokļa darbā tiek pētīta šo funkciju īstenošana, izmantojot
+Bevy entitāšu komponentu sistēmas (ECS) arhitektūru. Tas ietver stabilu spēles vides
+sistēmu izstrādi, stāvokļa pārvaldības mehānismus un efektīvu Bevy iebūvēto
+funkcionalitāšu izmantošanu.
+
+No darbības sfēras apzināti izslēgta daudzspēlētāju funkcionalitāte un sarežģīti
+grafiskie efekti, koncentrējoties uz pulētu viena spēlētāja pieredzi ar skaidru,
+minimālistisku vizuālo noformējumu. Šāda mērķtiecīga pieeja ļauj padziļināti
+izpētīt spēles pamatmehāniku, vienlaikus nodrošinot projekta vadāmību un
+tehnisko iespējamību.
 
 == Saistība ar citiem dokumentiem
 PPS ir izstrādāta, ievērojot LVS 68:1996 "Programmatūras prasību specifikācijas
@@ -89,12 +95,12 @@ Trešajā nodaļā tiek aprakstīta ...
 #set heading(numbering: "1.1.")
 = Vispārējais apraksts
 == Esošā stāvokļa apraksts
-Pašreizējo spēļu izstrādes ainavu raksturo pieaugoša interese par neatkarīgajām
+Pašreizējo spēļu izstrādes ainavu raksturo pieaugoša interese pēc neatkarīgajām
 spēlēm un modernu, efektīvu spēļu dzinēju izmantošana. Izstrādātāji arvien
 biežāk meklē rīkus, kas piedāvā elastību, veiktspēju un lietošanas ērtumu. Spēļu
 dzinējs Bevy ar savu moderno arhitektūru un Rust programmēšanas valodas
 izmantošanu gūst arvien lielāku popularitāti izstrādātāju vidū, pateicoties tā
-drošības un laiksakritība funkcijām.
+drošām un vienlaicīgām funkcijām.
 
 == Pasūtītājs
 Sistēma nav izstrādāta pēc konkrēta pasūtītāja pieprasījuma, tā ir raksturota un
@@ -103,15 +109,15 @@ ietvaros.
 
 == Produkta perspektīva
 "Maze Ascension" ir izstrādāta kā daudzplatformu spēle, izmantojot nepārtrauktas
-integrācijas un nepārtrauktas izvietošanas (CI/CD) _pipeline_
-#todo("check CI/CD pipeline translation"), lai racionalizētu
-izstrādes un izplatīšanas procesu. Šis _pipeline_ ir konfigurēts tā, lai kompilētu
-spēli vairākām platformām, tostarp Linux, macOS, Windows un WebAssembly (Wasm).
+integrācijas un nepārtrauktas izvietošanas (CI/CD) cauruļvadu@pipeline, lai
+vienkāršotu izstrādes un izplatīšanas procesu.
+Šis cauruļvads ir konfigurēts tā, lai kompilētu spēli vairākām platformām,
+tostarp Linux, macOS, Windows un WebAssembly (Wasm).
 Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekventu
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
-Spēle tiek izplatīta, izmantojot #todo("GitHub releases") un #link("http://itch.io/")[itch.io], kas ir populāra neatkarīgo spēļu
-platforma, kas ļauj viegli piekļūt un izplatīt spēli visā pasaulē.
+Spēle tiek izplatīta, izmantojot GitHub releases un #link("http://itch.io/")[itch.io], kas ir populāra neatkarīgo spēļu
+platforma, kas ļauj viegli piekļūt un izplatīt spēles visā pasaulē.
 Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu un kopienas
 iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un atpazīstamību.
 
@@ -131,7 +137,7 @@ Sistēmas izstrādē galvenā uzmanība tiks pievērsta sekojošu darījumprasī
 // + Paziņošanas sistēma: Spēlētāji saņems paziņojumus par svarīgiem spēles atjauninājumiem, sasniegumiem un citu svarīgu informāciju, lai saglabātu viņu iesaisti un informētību.
 + Savietojamība ar vairākām platformām: sistēma būs pieejama vairākās platformās, tostarp Linux, macOS, Windows un WebAssembly, nodrošinot plašu pieejamību un sasniedzamību.
 + Kopienas iesaiste: Spēle izmantos #link("http://itch.io/")[itch.io] kopienas funkcijas, lai sadarbotos ar spēlētājiem, apkopotu atsauksmes un veicinātu atbalstošu spēlētāju kopienu.
-+ Regulāri atjauninājumi un uzturēšana: CI/CD _pipeline_ veicinās regulārus atjauninājumus un uzturēšanu, nodrošinot, ka spēle ir atjaunināta ar jaunākajām funkcijām un uzlabojumiem.
++ Regulāri atjauninājumi un uzturēšana: CI/CD cauruļvadu veicinās regulārus atjauninājumus un uzturēšanu, nodrošinot, ka spēle ir atjaunināta ar jaunākajām funkcijām un uzlabojumiem.
 
 == Sistēmas lietotāji
 Sistēma ir izstrādāta, ņemot vērā vienu lietotāja tipu -- spēlētājs. Spēlētāji
@@ -160,27 +166,29 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 //   + CI/CD _pipeline_.
 
 == Pieņēmumi un atkarības
-
-// Constraints
-
-/* Šis darbs koncentrējas uz viena spēlētāja spēlēšanu, uzsverot
-individuālās prasmes un stratēģiju. Daudzspēlētāju funkcionalitāte nav iekļauta
-darbības jomā, kas ļauj koncentrēti izpētīt spēles pamatmehāniku. */
-
-/* Attiecībā uz attīstības ierobežojumiem projektu ierobežo pieejamie resursi,
-tostarp laiks un tehniskās zināšanas. Tas liek koncentrēties uz būtiskām
-funkcijām un mehāniku, nevis uz plašu saturu vai sarežģītām sistēmām. Tiks ņemti
-vērā arī Bevy dzinēja ierobežojumi, jo īpaši tādās jomās kā lietotāja interfeisa
-izstrāde un aktīvu pārvaldība, kas noteiks dizaina lēmumus un izstrādes procesu. */
-
-/* Visbeidzot, šajā darbā tiek pieņemts, ka spēlētājiem ir pieejamas ierīces, kas
-spēj atbalstīt uz Bevy balstītas spēles, un viņiem ir pamatzināšanas par
-labirinta navigāciju un mīklu risināšanu. Projekts ir atkarīgs no Bevy spēles
-dzinēja nepārtrauktas attīstības un atbalsta, un jebkuras izmaiņas vai
-atjauninājumi var ietekmēt spēles attīstību un funkcionalitāti. Skaidri
-definējot šīs robežas, darbības joma nodrošina, ka darbs paliek koncentrēts un
-pārvaldāms, nodrošinot strukturētu ceļu projekta mērķu sasniegšanai. */
-
+- Tehniskie pieņēmumi:
+  - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu palaist uz Bevy spēles dzinēja balstītas spēles.
+  - ierīcei jāatbalsta OpenGL 3.3 vai WebGL 2.0, lai nodrošinātu pareizu atveidošanu.
+  - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
+  - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
+- Veiktspējas atkarība:
+  - Spēle ir atkarīga no Bevy spēles dzinēja (0.14 vai jaunāka versija).
+- Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD cauruļvadam saderības ar:
+  - Linux kompilācijām;
+  - MacOS kompilācijām;
+  - Windows kompilācijām;
+  - WebAssembly kompilāciju.
+- Izplatīšanas atkarības:
+  - Pastāvīga #link("http://itch.io/")[itch.io] platformas pieejamība spēļu izplatīšanai.
+  - CI/CD cauruļvadam nepieciešamo kompilēšanas rīku un atkarību uzturēšana.
+- Izstrādes atkarības:
+  - Rust programmēšanas valoda (stabilā versija);
+  - Cargo pakešu pārvaldnieks;
+  - Nepieciešamie Bevy spraudņi un atkarības, kā norādīts projekta Cargo.toml failā.
+- Lietotāja vides pieņēmumi:
+  - Spēlētājiem ir pamata izpratne par labirinta navigāciju un mīklu risināšanas koncepcijām.
+  - Lietotāji var piekļūt un lejupielādēt spēles no #link("http://itch.io/")[itch.io] platformas.
+  - Spēlētājiem ir ievadierīces (tastatūra/pele), ar kurām kontrolēt spēli.
 
 = Programmatūras prasību specifikācija
 == Funkcionālās prasības

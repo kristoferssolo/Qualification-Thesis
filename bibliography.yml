@@ -39,3 +39,8 @@ lvs_72:
   date: 1996-03-27
   organization: Latvijas Nacionālais standartizācijas un metroloģijas centrs
   page-total: 13
+pipeline:
+  type: Web
+  title: "CI/CD: The what, why, and how"
+  author:
+  url: https://github.com/resources/articles/devops/ci-cd
