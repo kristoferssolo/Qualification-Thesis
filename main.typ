@@ -9,7 +9,7 @@
   university: "Latvijas Universitāte",
   faculty: "Eksakto zinātņu un tehnoloģiju fakultāte",
   type: "Kvalifikācijas darbs",
-  title: [Spēles izstrāde, izmantojot Bevy spēļu dzinēju],
+  title: [Spēles izstrāde, izmantojot\ Bevy spēļu dzinēju],
   authors: ("Kristiāns Francis Cagulis, kc22015",),
   advisor: "prof. Mg. dat. Jānis Iljins",
   date: "Rīga 2025",
@@ -154,7 +154,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 
 #figure(
   caption: "0. līmeņa DPD",
-  image("assets/images/dpd/dpd0.jpg"),
+  image("assets/images/dpd/dpd0.svg"),
 ) <dpd-0>
 
 == Vispārējie ierobežojumi
