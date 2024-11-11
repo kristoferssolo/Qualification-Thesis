@@ -7,6 +7,7 @@
 #let project(
   university: "",
   faculty: "",
+  type: "",
   title: [],
   authors: (),
   advisor: "",
@@ -27,7 +28,7 @@
   )
   set text(
     //font: "New Computer Modern",
-    font: "CMU", size: 12pt, hyphenate: auto, lang: "lv", region: "LV",
+    font: "CMU", size: 12pt, hyphenate: auto, lang: "lv", region: "lv",
   )
   show raw: set text(font: "New Computer Modern Mono")
 
@@ -38,8 +39,8 @@
     justify: true,
     leading: 1.5em,
     first-line-indent: indent,
+    spacing: 1.5em,
   )
-  show par: set block(spacing: 1.5em) // Set 1.5em gap between paragraphs
   show heading: set block(spacing: 1.5em)
   set terms(separator: [ -- ])
 
@@ -59,7 +60,7 @@
       it
     }
     ""
-    v(-indent)
+    v(-1cm)
   }
 
   /* Title page config start */
@@ -80,10 +81,24 @@
 
   align(
     center,
-    text(
-      20pt,
-      weight: "bold",
-      title,
+    upper(
+      text(
+        20pt,
+        weight: "bold",
+        title,
+      ),
+    ),
+  )
+
+  v(0.3fr)
+
+  align(
+    center,
+    upper(
+      text(
+        size: 16pt,
+        type,
+      ),
     ),
   )
 
@@ -134,32 +149,34 @@
   /* --- Figure/Table config start --- */
   show heading: i-figured.reset-counters
   show figure: i-figured.show-figure.with(numbering: "1.1.")
+  set figure(placement: auto)
 
   show figure.where(kind: "i-figured-table"): set block(breakable: true)
   show figure.where(kind: "i-figured-table"): set figure.caption(position: top)
 
   show figure: set par(justify: false) // disable justify for figures (tables)
+  show figure.caption: set text(size: 11pt)
 
   show figure.caption: it => {
     if it.kind == "i-figured-table" {
-      align(
+      return align(
         end,
         emph(it.counter.display(it.numbering) + " tabula ") + text(
           weight: "bold",
           it.body,
         ),
       )
-    } else if it.kind == "i-figured-image" {
-      align(
+    }
+    if it.kind == "i-figured-image" {
+      return align(
         start,
         emph(it.counter.display(it.numbering) + " att. ") + text(
           weight: "bold",
           it.body,
         ),
       )
-    } else {
-      it
     }
+    it
   }
 
   set ref(supplement: it => { }) // disable default reference suppliments
@@ -198,6 +215,9 @@
     numbering: "1",
     number-align: center,
   )
+
+
+  // show link: set text(fill: blue.darken(20%))
 
   // Main body
   body
