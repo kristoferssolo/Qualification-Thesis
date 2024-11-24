@@ -1,8 +1,9 @@
-#import "layout.typ": project
+#import "@preview/dashy-todo:0.0.1": todo
 #import "@preview/i-figured:0.2.4"
 #import "@preview/tablex:0.0.9": tablex, rowspanx, colspanx, cellx
-#import "utils.typ": *
 #import "@preview/wordometer:0.1.3": word-count, total-words
+#import "layout.typ": project
+#import "utils.typ": *
 #show: word-count
 
 #show: project.with(
@@ -17,15 +18,19 @@
 #set heading(numbering: none)
 = Apzīmējumu saraksts
 
+/ Audio: #todo("add description")
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
 / ECS: entitāšu komponentu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
-/ GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
 / GitHub Release #footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>: izvēršamas programmatūras iterācijas, ko varat iepakot un padarīt pieejamas plašākai auditorijai, lai lejupielādētu un izmantotu;
+/ GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
+/ Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table#footnote[https://en.wikipedia.org/wiki/Hash_table]) ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
 / Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
+/ Renderēšana: #todo("add description")
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
+/ Sēkla: #todo("add description")
 
 /* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
 * pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
@@ -41,8 +46,6 @@
 programmatūras prasības un izpētīt Bevy spēļu dzinēja iespējas.
 
 == Darbības sfēra
-#todo("add first sentence")
-
 Darba galvenā uzmanība ir vērsta uz būtisku spēles mehāniku ieviešanu, tostarp
 procedurālu labirintu ģenerēšanu, spēlētāju navigācijas sistēmu, papildspēju
 integrāciju un vertikālās progresijas mehāniku, vienlaikus ievērojot minimālisma
@@ -153,7 +156,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 (skat. @fig:dpd-0 att.)
 
 #figure(
-  caption: "0. līmeņa DPD",
+  caption: [\0. līmeņa DPD #todo("uzlabot diagrammu")],
   image("assets/images/dpd/dpd0.svg"),
 ) <dpd-0>
 
@@ -192,10 +195,141 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 
 = Programmatūras prasību specifikācija
 == Funkcionālās prasības
+\1. līmeņa datu plūsmas diagramma (skat. @fig:dpd-1 att.) ilustrē galvenos
+procesus spēles "Maze Ascension" sistēmā.
+Diagrammā attēloti septiņi galvenie procesi:
+ievades apstrādātājs,
+spēles stāvokļa pārvaldnieks,
+labirinta ģenerators,
+spēlētāja modulis,
+spēles līmeņu pārvaldnieks,
+atveidošanas jeb renderēšanas un skaņas jeb audio moduļi.
+Šie procesi mijiedarbojas ar vienu datu krātuvi -- operatīvo atmiņu (RAM) -- un vienu
+ārējo lietotāju -- spēlētājs.
+
+Ievades apstrādes modulis uztver un apstrādā spēlētāja ievades datus.
+Spēles stāvokļa modulis pārrauga vispārējo spēles stāvokli.
+Labirinta ģeneratora modulis izveido un pārvalda labirinta struktūras.
+Spēlētāja modulis apstrādā visas ar spēlētāju saistītās kustības, sadursmes un papildspēju mijiedarbības.
+Spēles līmeņu pārvaldnieks kontrolē līmeņu virzību un stāvokli.
+Renderēšanas un audio moduļi pārvalda attiecīgi vizuālo un audio izvadi.
+
+// Visas datu plūsmas starp procesiem tiek nodrošinātas, izmantojot operatīvo
+// atmiņu, ievērojot atbilstošas datu plūsmas diagrammas konvencijas. Šī
+// arhitektūra nodrošina efektīvu datu pārvaldību un skaidru interešu nodalīšanu
+// starp dažādām spēles sastāvdaļām.
+
 #figure(
-  caption: "1. līmeņa DPD",
-  image("assets/images/dpd/dpd1.jpg"),
+  caption: [\1. līmeņa DPD #todo("uzlabot diagrammu")],
+  image("assets/images/dpd/dpd1.svg"),
 ) <dpd-1>
+
+
+=== Funkciju sadalījums moduļos
+Tabulā @tbl:function-modules ir sniegts visaptverošs spēles funkcionalitātes
+sadalījums pa tās galvenajiem moduļiem. Katram modulim ir noteikti konkrēti
+pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
+
+#figure(
+  caption: "Funkciju sadalījums pa moduļiem",
+  kind: table,
+  tablex(
+    columns: 3,
+    /* --- header --- */
+    [*Modulis*], [*Funkcija*], [*Identifikators*],
+    /* -------------- */
+    rowspanx(3)[Ievades apstrādes modulis],
+    [Ievades notikumu apstrāde], [],
+    [Ievades stāvokļa atjaunināšana], [],
+    [Ievades validācija], [],
+
+    rowspanx(4)[Spēles stāvokļa pārvaldības modulis],
+    [Spēļu stāvokļa pārvaldība], [],
+    [Spēles cilpas pārvaldība], [],
+    [Stāvokļu pāreju apstrāde], [],
+    [Spēles notikumu apstrāde], [],
+
+    rowspanx(4)[Spēlētāja modulis],
+    [Kustības vadība], [],
+    [Sadursmju apstrāde], [],
+    [Papildsēju pārvaldība], [],
+    [Spēlētāju stāvokļa atjaunināšana], [],
+
+    rowspanx(3)[Labirinta ģenerēšanas modulis],
+    [Labirinta ģenerēšana], [#link(<LGMF01>)[LGMF01]],
+    [Objektu novietošana], [],
+    [Ceļa validācija], [],
+
+    rowspanx(5)[Līmeņu pārvaldības modulis],
+    [Līmeņu ielāde], [],
+    [Progresa izsekošana], [],
+    [Pāreju apstrāde], [],
+    [Stāvokļa saglabāšana], [],
+    [Stāvokļa ielāde], [],
+
+    rowspanx(4)[Renderēšanas modulis],
+    [Labirinta renderēšana], [],
+    [Spēlētāja renderēšana], [],
+    [Lietotājsaskarnes renderēšana], [],
+    [Vizuālo efektu renderēšana], [],
+
+    rowspanx(3)[Audio modulis],
+    [Skaņas efektu atskaņošana], [],
+    [Mūzikas pārvaldība], [],
+    [Audio stāvokļu apstrāde], [],
+  ),
+) <function-modules>
+
+=== Ievades apstrādes modulis
+=== Spēles stāvokļa pārvaldības modulis
+=== Spēlētāja modulis
+=== Labirinta ģenerēšanas modulis
+
+#function-table(
+  "Labirinta ģenerēšana",
+  "LGMF01",
+  "Izveido sešstūrainu labirinta struktūru, izmantojot modificētu rekursīvo atpakaļsekošanas algoritmu.",
+  [
+    + Rādiuss: `u32` -- Labirinta rādiuss. Obligāts parametrs, kas nosaka labirinta izmēru.
+    + Sēkla: `Option<u64>` -- Neobligāta sēkla nejaušo skaitļu ģeneratoram. Ja
+      norādīta, nodrošina reproducējamu labirinta ģenerēšanu ar vienādiem
+      parametriem. Ja nav norādīta, tiek izmantota nejauša sēkla.
+    + Sākuma pozīcija: `Option<Hex>` -- Neobligāta sākotnējā pozīcija labirintā.
+      Ja norādīta, labirinta ģenerēšana sāksies no šīs pozīcijas. Ja nav norādīta,
+      tiek izvēlēta nejauša derīga sākuma pozīcija.
+    // + Ģeneratora tips: `GeneratorType` -- Algoritms, kas tiks izmantots
+    //   labirinta ģenerēšanai. Pašlaik pieejams tikai RecursiveBacktracking.
+  ],
+  [
+    + Validē ievades parametrus:
+      + Pārbauda rādiusa esamību un derīgumu;
+      + Validē sākuma pozīciju, ja tāda norādīta;
+    + Izveido sākotnējo heksagonālo režģi:
+      + Inicializē tukšu režģi ar norādīto rādiusu;
+      + Katrai šūnai iestata sākotnējās (visas) sienas;
+    + Ģenerē labirintu:
+      + Izvēlas sākuma pozīciju;
+      + Rekursīvi izveido ceļus, noņemot sienas starp šūnām;
+      + Izmanto atpakaļizsekošanu, kad sasniegts strupceļš;
+    + Pārbauda izveidotā labirinta korektumu.
+  ],
+  [
+    + `HexMaze` struktūra, kas satur:
+      + Jaucējtabula ar sešstūra koordinātēm kā atslēgām;
+      + Sešstūra objekti ar:
+        + Pozīcijas koordinātēm ($x$, $y$);
+        + Sienu konfigurāciju (8-bitu maska).
+  ],
+  [
+    + Lai izveidotu labirintu, ir jānorāda rādiuss.
+    + Sākuma pozīcija ir ārpus labirinta robežām.
+    + Neizdevās izveidot labirintu.
+  ],
+) <LGMF01>
+
+=== Līmeņu pārvaldības modulis
+=== Renderēšanas modulis
+=== Audio modulis
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
@@ -230,5 +364,5 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   "bibliography.yml",
 )
 
-#pagebreak()
-#todo[#total-words words]
+// #pagebreak()
+// #total-words words

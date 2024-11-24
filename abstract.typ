@@ -1,3 +1,4 @@
+#import "@preview/dashy-todo:0.0.1": todo
 #pagebreak()
 #heading(
   level: 1,
@@ -7,6 +8,8 @@
 )
 
 #lorem(100)
+
+#todo("Uzrakstīt anotāciju")
 
 #par(
   first-line-indent: 0cm,
