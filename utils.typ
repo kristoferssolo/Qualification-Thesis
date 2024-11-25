@@ -1,5 +1,4 @@
 #import "@preview/tablex:0.0.9": tablex
-#import "@preview/big-todo:0.2.0": todo as TODO
 
 #let custom-block(
   item,
@@ -115,7 +114,7 @@
     titles: (
       "Funkcijas nosaukums",
       "Funkcijas identifikators",
-      "Ievads",
+      "Apraksts",
       "Ievade",
       "Apstrāde",
       "Izvade",
@@ -177,17 +176,6 @@
         entity-table-row(..items.pos().slice(i, i+4))
       },
     ),
-  )
-}
-
-#let todo(
-  ..body,
-) = {
-  TODO(
-    ..body,
-    inline: true,
-    big_text: 14pt,
-    small_text: 12pt,
   )
 }
 

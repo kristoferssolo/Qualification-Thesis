@@ -1,5 +1,4 @@
 #import "@preview/i-figured:0.2.4"
-#import "@preview/big-todo:0.2.0": *
 #import "@preview/tablex:0.0.9": tablex
 
 #let indent = 1cm
@@ -57,7 +56,7 @@
         ),
       )
     } else {
-      it
+      text(12pt, it)
     }
     ""
     v(-1cm)
@@ -144,12 +143,12 @@
   /* Title page config end */
 
   // WARNING: remove before sending
-  todo_outline
+  outline(title: "TODOs", target: figure.where(kind: "todo"))
 
   /* --- Figure/Table config start --- */
   show heading: i-figured.reset-counters
   show figure: i-figured.show-figure.with(numbering: "1.1.")
-  set figure(placement: auto)
+  set figure(placement: none)
 
   show figure.where(kind: "i-figured-table"): set block(breakable: true)
   show figure.where(kind: "i-figured-table"): set figure.caption(position: top)

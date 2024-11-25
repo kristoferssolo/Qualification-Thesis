@@ -1,3 +1,4 @@
+#import "@preview/dashy-todo:0.0.1": todo
 #pagebreak()
 #heading(
   level: 1,
@@ -7,6 +8,9 @@
 )
 
 #lorem(100)
+
+#todo("Uzrakstīt anotāciju (līdz 850 rakstzīmēm)")
+
 
 #par(
   first-line-indent: 0cm,
@@ -39,6 +43,7 @@ papilspējas.
     progressing vertically as they climb up through levels. The game includes
     power-ups and abilities hidden throughout the maze, and later introduces the
     ability to move between levels freely._
+    #todo("līdz 850 rakstzīmēm")
     #par(
       first-line-indent: 0cm,
       [*Keywords:*],
