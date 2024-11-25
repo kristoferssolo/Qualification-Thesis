@@ -56,3 +56,18 @@ bevy_quickstart:
   type: Web
   title: Bevy New 2D
   url: https://github.com/TheBevyFlock/bevy_new_2d
+git:
+  type: Web
+  title: Versijas kontroles sistēmas git dokumentācija
+  url: https://git-scm.com/doc
+sem_ver:
+  type: Web
+  title: Semantiskā versiju veidošana
+  url: https://semver.org/
+omg-uml:
+  type: Book
+  title: OMG Unified Modeling Language (OMG UML)
+  author: Object Management Group
+  date: 2015-03
+  url: https://www.omg.org/spec/UML/2.5/PDF
+  page-total: 794

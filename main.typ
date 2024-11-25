@@ -2,7 +2,7 @@
 #import "@preview/i-figured:0.2.4"
 #import "@preview/tablex:0.0.9": tablex, rowspanx, colspanx, cellx
 #import "@preview/wordometer:0.1.3": word-count, total-words
-#import "layout.typ": project
+#import "layout.typ": project, indent-par
 #import "utils.typ": *
 #show: word-count
 
@@ -113,10 +113,10 @@ ietvaros.
 
 == Produkta perspektīva
 "Maze Ascension" ir izstrādāta kā daudzplatformu spēle, izmantojot nepārtrauktas
-integrācijas un nepārtrauktas izvietošanas (CI/CD) cauruļvadu@pipeline, lai
+integrācijas un nepārtrauktas izvietošanas (CI/CD) darbplūsma@pipeline, lai
 vienkāršotu izstrādes un izplatīšanas procesu.
-Šis cauruļvads ir konfigurēts tā, lai kompilētu spēli vairākām platformām,
-tostarp Linux, MacOS, Windows un WebAssembly (Wasm).
+Šī darbplūsma ir konfigurēts tā, lai kompilētu spēli vairākām platformām,
+tostarp Linux, macOS, Windows un WebAssembly (WASM).
 Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekventu
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
@@ -180,7 +180,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   + Responsivitāte;
   + Starpplatformu savietojamība: Linux, macOS, Windows un WebAssembly.
 // + Izplatīšanas un izvietošanas ierobežojumi:
-//   + CI/CD _pipeline_.
+//   + CI/CD darbplūsma.
 
 == Pieņēmumi un atkarības
 - Tehniskie pieņēmumi:
@@ -191,14 +191,14 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
 - Veiktspējas atkarība:
   - Spēle ir atkarīga no Bevy spēles dzinēja (0.14 vai jaunāka versija).
-- Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD cauruļvadam saderības ar:
+- Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD darbplūsmai saderības ar:
   - Linux kompilācijām;
-  - MacOS kompilācijām;
+  - macOS kompilācijām;
   - Windows kompilācijām;
   - WebAssembly kompilāciju.
 - Izplatīšanas atkarības:
   - Pastāvīga #link("http://itch.io/")[itch.io] platformas pieejamība spēļu izplatīšanai.
-  - CI/CD cauruļvadam nepieciešamo kompilēšanas rīku un atkarību uzturēšana.
+  - CI/CD darbplūsmai nepieciešamo kompilēšanas rīku un atkarību uzturēšana.
 - Izstrādes atkarības:
   - Rust programmēšanas valoda (stabilā versija);
   - Cargo pakešu pārvaldnieks;
@@ -375,9 +375,9 @@ Pret sistēmas izstrādājamo programmatūras uzturamību tiek izvirzītas sekoj
 - Koda testēšanas pārklājumam jābūt vismaz 70%.
 
 ==== Pārnesamība
-- Platformas: spēlei jādarbojas uz 64 bitu Windows, Linux un MacOS.
+- Platformas: spēlei jādarbojas uz 64 bitu Windows, Linux un macOS.
 - Prasības: spēlei jādarbojas uz datora ar vismaz:
-  - 4GB operatīvo atmiņa(RAM);
+  - 4GB operatīvo atmiņa (RAM);
   - Integrēto grafisko karti;
   - Divu-kodolu procesoru.
 
@@ -407,8 +407,35 @@ Pret sistēmas izstrādājamo programmatūras uzturamību tiek izvirzītas sekoj
 = Programmas projekta organizācija
 
 = Kvalitātes nodrošināšana
+PPS ir izstrādāta, ievērojot LVS 68:1996 standarta "Programmatūras prasību specifikācijas
+ceļvedis"@lvs_68 un LVS 72:1996 standarta "Ieteicamā prakse programmatūras projektējuma
+aprakstīšanai"@lvs_72 standarta prasības.
+// Programmatūras projektējuma aprakstā iekļautās
+// aktivitāšu diagrammas ir izstrādātas, ievērojot UML 2.5 versijas
+// specifikāciju@omg-uml.
 
 = Konfigurācijas pārvaldība
+Pirmkods tiek pārvaldīts, izmantojot "git"@git versiju kontroles sistēmu.
+Repozitorijs tiek izvietots platformā "GitHub".
+
+Rīku konfigurācija ir definēta vairākos failos:
+- "justfile#footnote[https://github.com/casey/just]" -- satur atkļūdošanas un
+  piegādes komandas dažādām vidēm:
+  - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
+  - piegādes kompilācijas ar iespējotu optimizāciju.
+- "GitHub Actions" darbplūsmas, kas apstrādā:
+  - koda kvalitātes pārbaudes (vienībtesti, statiskie testi, formatēšana,
+    dokumentācijas izveide).
+  - kompilācijas un izvietotošanas darbplūsma, kas:
+    - izveido Windows, Linux, macOS un WebAssembly versijas;
+    - publicē bināros failus GitHub platformā;
+    - izvieto tīmekļa versiju #link("http://itch.io/")[itch.io] platformā.
+
+#indent-par[Versiju kontrole notiek pēc semantiskās versiju@sem_ver atlases
+  (MAJOR.MINOR.PATCH): ]
++ MAJOR -- galvenā versija, nesaderīgas izmaiņas, būtiskas koda izmaiņas.
++ MINOR -- atpakaļsaderīgas funkcionalitātes papildinājumi.
++ PATCH -- ar iepriekšējo versiju saderīgu kļūdu labojumi.
 
 = Darbietilpības novērtējums
 

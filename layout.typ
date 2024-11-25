@@ -3,6 +3,11 @@
 
 #let indent = 1cm
 
+#let indent-par(
+  body,
+) = par(h(indent) + body)
+
+
 #let project(
   university: "",
   faculty: "",
