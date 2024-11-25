@@ -22,15 +22,16 @@
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
 / ECS: entitāšu komponentu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
-/ GitHub Release #footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>: izvēršamas programmatūras iterācijas, ko varat iepakot un padarīt pieejamas plašākai auditorijai, lai lejupielādētu un izmantotu;
 / GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
+/ GitHub Release #footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>: izvēršamas programmatūras iterācijas, ko varat iepakot un padarīt pieejamas plašākai auditorijai, lai lejupielādētu un izmantotu;
 / Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table#footnote[https://en.wikipedia.org/wiki/Hash_table]) ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
+/ Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
+/ Pirmkods: #todo("add description")
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
-/ Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
 / Renderēšana: #todo("add description")
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
-/ Sēkla: #todo("add description")
+/ Sēkla: _seed_ #todo("add description")
 
 /* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
 * pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
@@ -115,11 +116,12 @@ ietvaros.
 integrācijas un nepārtrauktas izvietošanas (CI/CD) cauruļvadu@pipeline, lai
 vienkāršotu izstrādes un izplatīšanas procesu.
 Šis cauruļvads ir konfigurēts tā, lai kompilētu spēli vairākām platformām,
-tostarp Linux, macOS, Windows un WebAssembly (Wasm).
+tostarp Linux, MacOS, Windows un WebAssembly (Wasm).
 Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekventu
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
-Spēle tiek izplatīta, izmantojot GitHub releases un #link("http://itch.io/")[itch.io], kas ir populāra neatkarīgo spēļu
+Spēle tiek izplatīta, izmantojot GitHub releases un
+#link("http://itch.io/")[itch.io], kas ir populāra neatkarīgo spēļu
 platforma, kas ļauj viegli piekļūt un izplatīt spēles visā pasaulē.
 Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu un kopienas
 iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un atpazīstamību.
@@ -134,13 +136,25 @@ jaunākā versija ar jaunākajiem uzlabojumiem un kļūdu labojumiem. */
 Sistēmas izstrādē galvenā uzmanība tiks pievērsta sekojošu darījumprasību
 īstenošanai, lai nodrošinātu stabilu un saistošu lietotāja pieredzi:
 
-+ Spēles progresēšana un līmeņu pārvaldība: Sistēma automātiski pārvaldīs spēlētāju virzību pa spēles līmeņiem, nodrošinot vienmērīgu pāreju, kad spēlētāji progresē un saskaras ar jauniem izaicinājumiem.
-  Progress tiks saglabāts lokāli spēlētāja ierīcē.
-+ Nevainojama piekļuve spēlēm: Spēlētāji varēs piekļūt spēlei un spēlēt to bez nepieciešamības izveidot lietotāja kontu vai pieteikties. Tas nodrošina netraucētu piekļuvi spēlei, ļaujot spēlētājiem nekavējoties sākt spēlēt.
-// + Paziņošanas sistēma: Spēlētāji saņems paziņojumus par svarīgiem spēles atjauninājumiem, sasniegumiem un citu svarīgu informāciju, lai saglabātu viņu iesaisti un informētību.
-+ Savietojamība ar vairākām platformām: sistēma būs pieejama vairākās platformās, tostarp Linux, macOS, Windows un WebAssembly, nodrošinot plašu pieejamību un sasniedzamību.
-+ Kopienas iesaiste: Spēle izmantos #link("http://itch.io/")[itch.io] kopienas funkcijas, lai sadarbotos ar spēlētājiem, apkopotu atsauksmes un veicinātu atbalstošu spēlētāju kopienu.
-+ Regulāri atjauninājumi un uzturēšana: CI/CD cauruļvadu veicinās regulārus atjauninājumus un uzturēšanu, nodrošinot, ka spēle ir atjaunināta ar jaunākajām funkcijām un uzlabojumiem.
++ Spēles progresēšana un līmeņu pārvaldība: Sistēma automātiski pārvaldīs
+  spēlētāju virzību pa spēles līmeņiem, nodrošinot vienmērīgu pāreju, kad
+  spēlētāji progresē un saskaras ar jauniem izaicinājumiem. Progress tiks
+  saglabāts lokāli spēlētāja ierīcē.
++ Nevainojama piekļuve spēlēm: Spēlētāji varēs piekļūt spēlei un spēlēt to bez
+  nepieciešamības izveidot lietotāja kontu vai pieteikties. Tas nodrošina
+  netraucētu piekļuvi spēlei, ļaujot spēlētājiem nekavējoties sākt spēlēt.
+// + Paziņošanas sistēma: Spēlētāji saņems paziņojumus par svarīgiem spēles
+// atjauninājumiem, sasniegumiem un citu svarīgu informāciju, lai saglabātu viņu
+// iesaisti un informētību.
++ Savietojamība ar vairākām platformām: sistēma būs pieejama vairākās
+  platformās, tostarp Linux, macOS, Windows un WebAssembly, nodrošinot plašu
+  pieejamību un sasniedzamību.
++ Kopienas iesaiste: Spēle izmantos #link("http://itch.io/")[itch.io] kopienas
+  funkcijas, lai sadarbotos ar spēlētājiem, apkopotu atsauksmes un veicinātu
+  atbalstošu spēlētāju kopienu.
++ Regulāri atjauninājumi un uzturēšana: CI/CD cauruļvadu veicinās regulārus
+  atjauninājumus un uzturēšanu, nodrošinot, ka spēle ir atjaunināta ar jaunākajām
+  funkcijām un uzlabojumiem.
 
 == Sistēmas lietotāji
 Sistēma ir izstrādāta, ņemot vērā vienu lietotāja tipu -- spēlētājs. Spēlētāji
@@ -170,7 +184,8 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 
 == Pieņēmumi un atkarības
 - Tehniskie pieņēmumi:
-  - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu palaist uz Bevy spēles dzinēja balstītas spēles.
+  - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu
+    palaist uz Bevy spēles dzinēja balstītas spēles.
   - ierīcei jāatbalsta OpenGL 3.3 vai WebGL 2.0, lai nodrošinātu pareizu atveidošanu.
   - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
   - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
@@ -234,7 +249,7 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
   caption: "Funkciju sadalījums pa moduļiem",
   kind: table,
   tablex(
-    columns: 3,
+    columns: (auto, 1fr, auto),
     /* --- header --- */
     [*Modulis*], [*Funkcija*], [*Identifikators*],
     /* -------------- */
@@ -255,10 +270,8 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [Papildsēju pārvaldība], [],
     [Spēlētāju stāvokļa atjaunināšana], [],
 
-    rowspanx(3)[Labirinta ģenerēšanas modulis],
+    rowspanx(1)[Labirinta ģenerēšanas modulis],
     [Labirinta ģenerēšana], [#link(<LGMF01>)[LGMF01]],
-    [Objektu novietošana], [],
-    [Ceļa validācija], [],
 
     rowspanx(5)[Līmeņu pārvaldības modulis],
     [Līmeņu ielāde], [],
@@ -284,11 +297,10 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 === Spēles stāvokļa pārvaldības modulis
 === Spēlētāja modulis
 === Labirinta ģenerēšanas modulis
-
 #function-table(
   "Labirinta ģenerēšana",
   "LGMF01",
-  "Izveido sešstūrainu labirinta struktūru, izmantojot modificētu rekursīvo atpakaļsekošanas algoritmu.",
+  [Izveido sešstūrainu labirintu ar norādītajiem parametriem.],
   [
     + Rādiuss: `u32` -- Labirinta rādiuss. Obligāts parametrs, kas nosaka labirinta izmēru.
     + Sēkla: `Option<u64>` -- Neobligāta sēkla nejaušo skaitļu ģeneratoram. Ja
@@ -304,18 +316,17 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     + Validē ievades parametrus:
       + Pārbauda rādiusa esamību un derīgumu;
       + Validē sākuma pozīciju, ja tāda norādīta;
-    + Izveido sākotnējo heksagonālo režģi:
-      + Inicializē tukšu režģi ar norādīto rādiusu;
-      + Katrai šūnai iestata sākotnējās (visas) sienas;
+    + Izveido sākotnējo labirinta struktūru:
+      + Inicializē tukšu labirintu ar norādīto rādiusu;
+      + Katrai šūnai iestata sākotnējās (visas) sienas.
+    + Validē stākuma prozīciju, ja tāda norādīta.
     + Ģenerē labirintu:
-      + Izvēlas sākuma pozīciju;
       + Rekursīvi izveido ceļus, noņemot sienas starp šūnām;
-      + Izmanto atpakaļizsekošanu, kad sasniegts strupceļš;
-    + Pārbauda izveidotā labirinta korektumu.
+      + Izmanto atpakaļizsekošanu, kad sasniegts strupceļš.
   ],
   [
-    + `HexMaze` struktūra, kas satur:
-      + Jaucējtabula ar sešstūra koordinātēm kā atslēgām;
+    + Jaucējtabulu, kas satur:
+      + Sešstūra koordinātes kā atslēgās;
       + Sešstūra objekti ar:
         + Pozīcijas koordinātēm ($x$, $y$);
         + Sienu konfigurāciju (8-bitu maska).
@@ -327,42 +338,90 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
   ],
 ) <LGMF01>
 
+
 === Līmeņu pārvaldības modulis
 === Renderēšanas modulis
 === Audio modulis
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
-==== Statiskā veiktspēja
-==== Dinamiskā veiktspēja
+Uz sistēmas veiktspēju ir sekojošas prasības:
+- Labirinta ģenerēšana: Jebkura izmēra labirintam jātiek uzģenerētam ātrāk par 1 sekundi.
+- Spēles ielāde: Spēlei jāstartējas ātrāk par 3 sekundēm.
+- Kadru ātrums: Spēlei jādarbojas ar vismaz 60 kadriem sekundē.
+- Ievades apstrāde: Spēlētāja kustībām jātiek apstrādātām bez manāmas aizkaves ($<16$ms).
+=== Uzticamība
+Uz sistēmas uzticamību ir sekojošas prasības:
+- Kļūdu apstrāde: spēlei jāapstrādā kļūdas graciozi, bez sistēmas atteicēm.
+- Saglabāšana: spēles progresam jātiek automātiski saglabātam pēc katra līmeņa.
+- Atjaunošanās: spēlei jāspēj atjaunoties pēc negaidītas aizvēršanas.
+
 === Atribūti
 ==== Izmantojamība
-==== Mērogojamība
+Uz sistēmas izmantojamību ir sekojošas prasības:
+- $90%$ jaunu lietotāju jāspēj lietot visas tiem pieejamās funkcijas bez palīdzības.
+- Teksta fonta izmēram datoru ekrāniem jābūt vismaz 14 pikseļiem, labas
+  salasāmības nodrošināšanai.
+
 ==== Drošība
+Uz drošību risinājumiem ir sekojošas prasības:
+- Spēles pirmkods ir iekļauts kopā ar izpildāmo bināro failu;
+- Spēle nemodificē un nelasa lietotāja vai operētājsistēmas failus, izņemot izmantoto bibliotēku
+  failus.
+
 ==== Uzturamība
+Pret sistēmas izstrādājamo programmatūras uzturamību tiek izvirzītas sekojošās prasības:
+- API dokumentācijas pārklājumam jābūt vismaz 80%.
+- Koda testēšanas pārklājumam jābūt vismaz 70%.
+
 ==== Pārnesamība
-=== Projekta ierobežojumi
-==== Intelektuālā īpašuma tiesības
-==== Aparatūras ierobežojumi
-===== Atbalstītās ierīces
-===== Serveris un mitināšana
+- Platformas: spēlei jādarbojas uz 64 bitu Windows, Linux un MacOS.
+- Prasības: spēlei jādarbojas uz datora ar vismaz:
+  - 4GB operatīvo atmiņa(RAM);
+  - Integrēto grafisko karti;
+  - Divu-kodolu procesoru.
+
+=== Paplašināmība
+- Labirinta ģenerēšana: jābūt iespējai viegli pievienot jaunus ģenerēšanas
+  algoritmus,
+- Līmeņu dizains: jābūt iespējai viegli pievienot jaunus līmeņus.
+- Papildinājumi: koda arhitektūrai jāatbalsta jaunu funkciju pievienošana.
+
 === Ārējās saskarnes prasības
-==== Lietotāja saskarne
-==== Sakaru saskarne
+
 = Programmatūras projektējuma apraksts
 == Daļējs funkciju projektējums
 /* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
 * obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
 * piemēru (use case) diagrammas */
+== Izmantotās bibliotēkas
 == Daļējs lietotāju saskarņu projektējums
 /* 5-7 lietotāja saskarnes un to apraksts */
-=== Navigācija
-=== Ekrānskati
+
+= Testēšanas dokumentācija
+== Dinamiskā programmatūras testēšana
+=== Manuālā integrācijas testēšana
+=== Automatizēti testi
+== Statiskā programmatūras testēšana
+
+= Programmas projekta organizācija
+
+= Kvalitātes nodrošināšana
+
+= Konfigurācijas pārvaldība
+
+= Darbietilpības novērtējums
+
+= Secinājumi
 
 #bibliography(
   title: "Izmantotā literatūra un avoti",
   "bibliography.yml",
 )
+
+#heading("Pielikumi", numbering: none)
+
+// #include "doc.typ"
 
 // #pagebreak()
 // #total-words words

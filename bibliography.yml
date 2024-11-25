@@ -44,3 +44,15 @@ pipeline:
   title: "CI/CD: The what, why, and how"
   author:
   url: https://github.com/resources/articles/devops/ci-cd
+backtracking:
+  type: Web
+  title: Backtracking
+  url: https://en.wikipedia.org/wiki/Backtracking
+maze_generation:
+  type: Web
+  title: Maze Generation
+  url: https://rosettacode.org/wiki/Maze_generation
+bevy_quickstart:
+  type: Web
+  title: Bevy New 2D
+  url: https://github.com/TheBevyFlock/bevy_new_2d

@@ -56,7 +56,7 @@
         ),
       )
     } else {
-      it
+      text(12pt, it)
     }
     ""
     v(-1cm)
