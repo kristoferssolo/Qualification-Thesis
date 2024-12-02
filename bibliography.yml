@@ -111,3 +111,13 @@ gh-release:
   title: Par laidieniem
   author: GitHub komanda
   url: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
+gh-actions:
+  type: Web
+  title: GitHub Actions dokumentācija
+  author: GitHub komanda
+  url: https://docs.github.com/en/actions
+webgl2:
+  type: Web
+  title: Bevy + WebGPU
+  author:
+  url: https://bevyengine.org/news/bevy-webgpu/

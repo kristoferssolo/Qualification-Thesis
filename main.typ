@@ -94,6 +94,8 @@ Otrajā nodaļā tiek ...
 
 Trešajā nodaļā tiek aprakstīta ...
 
+#todo("uzrakstīt dokumenta pārskatu")
+
 #set heading(numbering: "1.1.")
 = Vispārējais apraksts
 == Esošā stāvokļa apraksts
@@ -169,7 +171,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 (skat. @fig:dpd-0 att.)
 
 #figure(
-  caption: [\0. līmeņa DPD #todo("uzlabot diagrammu")],
+  caption: [\0. līmeņa DPD],
   image("assets/images/dpd/dpd0.svg"),
 ) <dpd-0>
 
@@ -185,9 +187,10 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 - Tehniskie pieņēmumi:
   - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu
     palaist uz Bevy spēles dzinēja balstītas spēles.
-  - ierīcei jāatbalsta OpenGL 3.3 vai WebGL 2.0, lai nodrošinātu pareizu atveidošanu.
-  - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
-  - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
+  - ierīcei jāatbalsta WebGL2#footnote("https://registry.khronos.org/webgl/specs/latest/2.0/"),
+    lai nodrošinātu pareizu atveidošanu @webgl2.
+- tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
+- ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
 - Veiktspējas atkarība:
   - Spēle ir atkarīga no Bevy spēles dzinēja (0.14).
 - Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD darbplūsmai saderības ar:
@@ -234,7 +237,7 @@ Renderēšanas un audio moduļi pārvalda attiecīgi vizuālo un audio izvadi.
 // starp dažādām spēles sastāvdaļām.
 
 #figure(
-  caption: [\1. līmeņa DPD #todo("uzlabot diagrammu")],
+  caption: [\1. līmeņa DPD],
   image("assets/images/dpd/dpd1.svg"),
 ) <dpd-1>
 
@@ -293,9 +296,13 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 ) <function-modules>
 
 === Ievades apstrādes modulis
+#todo("uzrakstīt ievades apstrādes moduli")
 === Spēles stāvokļa pārvaldības modulis
+#todo("uzrakstīt spēles stāvokļa pārvaldības moduli")
 === Spēlētāja modulis
+#todo("uzrakstīt spēlētāja moduli")
 === Labirinta ģenerēšanas modulis
+#todo("uzrakstīt labirinta ģenerēšanas moduli")
 
 Apakšnodaļa ietver labirinta moduļa funkcijas. Moduļa funkcionalitāte ir
 izmantota sešstūraina labirinta ģenerēšanai.
@@ -361,8 +368,11 @@ programmu.
 
 
 === Līmeņu pārvaldības modulis
+#todo("uzrakstīt līmeņu pārvaldības moduli")
 === Renderēšanas modulis
+#todo("uzrakstīt renderēšanas moduli")
 === Audio modulis
+#todo("uzrakstīt audio moduli")
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
@@ -396,17 +406,13 @@ Pret sistēmas izstrādājamo programmatūras uzturamību tiek izvirzītas sekoj
 - Koda testēšanas pārklājumam jābūt vismaz 70%.
 
 ==== Pārnesamība
-- Platformas: spēlei jādarbojas uz 64 bitu Windows, Linux un macOS.
-- Prasības: spēlei jādarbojas uz datora ar vismaz:
-  - 4GB operatīvo atmiņa (RAM);
-  - Integrēto grafisko karti;
-  - Divu-kodolu procesoru.
+Spēlei jābūt saderīgai ar vairākām operētājsistēmām. Tas ietver Windows, Linux
+un macOS operētājsistēmu 64 bitu versiju atbalstu. Minimālās sistēmas prasības
+ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veiktspēju:
 
-=== Paplašināmība
-- Labirinta ģenerēšana: jābūt iespējai viegli pievienot jaunus ģenerēšanas
-  algoritmus,
-- Līmeņu dizains: jābūt iespējai viegli pievienot jaunus līmeņus.
-- Papildinājumi: koda arhitektūrai jāatbalsta jaunu funkciju pievienošana.
+- 4GB operatīvās atmiņas (RAM);
+- Integrēta grafiskā karte;
+- Divkodolu procesors.
 
 === Ārējās saskarnes prasības
 
@@ -487,11 +493,11 @@ standarta prasības.
 Pirmkods tiek pārvaldīts, izmantojot "git"@git versiju kontroles sistēmu.
 Repozitorijs tiek izvietots platformā "GitHub".
 Rīku konfigurācija ir definēta vairākos failos:
-- "justfile" -- satur atkļūdošanas un
-  laidiena komandas dažādām vidēm@justfile:
+- "justfile"@justfile -- satur atkļūdošanas un
+  laidiena komandas dažādām vidēm:
   - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
   - laidiena kompilācijas ar iespējotu optimizāciju.
-- "GitHub Actions" darbplūsmas, kas apstrādā:
+- "GitHub Actions"@gh-actions darbplūsmas, kas apstrādā:
   - koda kvalitātes pārbaudes (vienībtesti, statiskie testi, formatēšana,
     dokumentācijas izveide).
   - kompilācijas un izvietotošanas darbplūsma, kas:
@@ -519,5 +525,5 @@ Versiju specifikācija notiek pēc semantiskās versiju atlases@sem_ver (MAJOR.M
 
 // #include "doc.typ"
 
-#pagebreak()
-#total-words words
+// #pagebreak()
+// #total-words words
