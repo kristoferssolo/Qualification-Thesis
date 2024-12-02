@@ -60,7 +60,6 @@ papilspējas.
     with each successive level offering a larger maze. The game is available
     as a downloadable version for Windows, Linux and macOS platforms, and as
     as a web-based version using WebAssembly technology.
-    #todo("līdz 850 rakstzīmēm")
     #par(
       first-line-indent: 0cm,
       [*Keywords:*],

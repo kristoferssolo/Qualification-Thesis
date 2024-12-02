@@ -80,8 +80,6 @@ PPS ir izstrādāta, ievērojot LVS 68:1996 "Programmatūras prasību specifikā
 ceļvedis"@lvs_68 un LVS 72:1996 "Ieteicamā prakse programmatūras projektējuma
 aprakstīšanai"@lvs_72 standarta prasības.
 
-#todo("papildināt dokumentu sarakstu")
-
 == Pārskats
 Dokumenta ievads satur ...
 
@@ -121,11 +119,11 @@ Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekven
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
 Spēle tiek izplatīta, izmantojot "GitHub
-releases"@gh-release
-un itch.io#footnote("https://itch.io/")<itch-io>, kas ir populāra neatkarīgo
-spēļu platforma, kas ļauj viegli piekļūt un izplatīt spēles visā pasaulē.
-Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu un kopienas
-iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un atpazīstamību.
+releases"@gh-release un itch.io#footnote("https://itch.io/")<itch-io>, kas ir
+populāra neatkarīgo spēļu platforma, kas ļauj viegli piekļūt un izplatīt spēles
+visā pasaulē. Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu
+un kopienas iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un
+atpazīstamību.
 
 /* Lai gan spēle neizmanto mākoņpakalpojumus datu uzglabāšanai vai
 analīzei, CI/CD cauruļvads nodrošina, ka atjauninājumus un jaunas funkcijas var
@@ -191,7 +189,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
   - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
 - Veiktspējas atkarība:
-  - Spēle ir atkarīga no Bevy spēles dzinēja (0.14 vai jaunāka versija).
+  - Spēle ir atkarīga no Bevy spēles dzinēja (0.14).
 - Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD darbplūsmai saderības ar:
   - Linux kompilācijām;
   - macOS kompilācijām;
@@ -202,8 +200,8 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   - CI/CD darbplūsmai nepieciešamo kompilēšanas rīku un atkarību uzturēšana.
 - Izstrādes atkarības:
   - Rust programmēšanas valoda (stabilā versija);
-  - Cargo pakešu pārvaldnieks;
-  - Nepieciešamie Bevy spraudņi un atkarības, kā norādīts projekta Cargo.toml failā.
+  - "Cargo" pakešu pārvaldnieks;
+  - Nepieciešamie Bevy spraudņi un atkarības, kā norādīts projekta "Cargo.toml" failā.
 - Lietotāja vides pieņēmumi:
   - Spēlētājiem ir pamata izpratne par labirinta navigāciju un mīklu risināšanas koncepcijām.
   - Lietotāji var piekļūt un lejupielādēt spēles no itch.io@itch-io platformas.
@@ -214,11 +212,11 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 \1. līmeņa datu plūsmas diagramma (skat. @fig:dpd-1 att.) ilustrē galvenos
 procesus spēles "Maze Ascension" sistēmā.
 Diagrammā attēloti septiņi galvenie procesi:
-ievades apstrādātājs,
-spēles stāvokļa pārvaldnieks,
-labirinta ģenerators,
+ievades apstrādāšanas modulis,
+spēles stāvokļa pārvalības modulis,
 spēlētāja modulis,
-spēles līmeņu pārvaldnieks,
+labirinta ģenerēšanas modulis,
+spēles līmeņu pārvaldības modulis,
 atveidošanas jeb renderēšanas un skaņas jeb audio moduļi.
 Šie procesi mijiedarbojas ar vienu datu krātuvi -- operatīvo atmiņu (RAM) -- un vienu
 ārējo lietotāju -- spēlētājs.
@@ -471,11 +469,11 @@ uzturētu vienotu koda formatējumu visā projektā. Šis rīks automātiski for
 kodu saskaņā ar Rust stila vadlīnijām@rust-style.
 
 Turklāt visas publiskās funkcijas un datu struktūras
-hexlab bibliotēkā ir
-dokumentētas@hexlab-docs. Šajā dokumentācijā ir ietverti detalizēti apraksti un lietošanas
-piemēri, kas ne tikai palīdz saprast kodu, bet arī kalpo kā dokumentācijas
-testēšanas veids. Darbinot "cargo doc"@cargo-doc, tiek ģenerēja un validēja
-dokumentācija, nodrošinot, ka piemēri ir pareizi un aktuāli.
+hexlab bibliotēkā ir dokumentētas@hexlab-docs. Šajā dokumentācijā ir ietverti
+detalizēti apraksti un lietošanas piemēri, kas ne tikai palīdz saprast kodu, bet
+arī kalpo kā dokumentācijas testēšanas veids. Darbinot "cargo doc"@cargo-doc,
+tiek ģenerēja un validēja dokumentācija, nodrošinot, ka piemēri ir pareizi un
+aktuāli.
 
 Programmatūras prasības specifikācija ir izstrādāta, ievērojot LVS 68:1996
 standarta "Programmatūras prasību specifikācijas ceļvedis"@lvs_68 un LVS 72:1996
