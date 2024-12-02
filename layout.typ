@@ -184,6 +184,21 @@
   }
 
   set ref(supplement: it => { }) // disable default reference suppliments
+  show ref: it => {
+    let el = it.element
+
+    if el != none and el.func() == heading {
+      return link(
+        el.location(),
+        numbering(
+          el.numbering,
+          ..counter(heading).at(el.location()),
+        ) + " " + el.body,
+      )
+    }
+
+    it
+  }
   /* --- Figure/Table config end --- */
 
   set list(marker: (

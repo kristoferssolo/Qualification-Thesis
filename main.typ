@@ -18,20 +18,20 @@
 #set heading(numbering: none)
 = Apzīmējumu saraksts
 
-/ Audio: #todo("add description")
+/ Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku.
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
 / ECS: entitāšu komponentu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
 / GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
-/ GitHub Release #footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>: izvēršamas programmatūras iterācijas, ko varat iepakot un padarīt pieejamas plašākai auditorijai, lai lejupielādētu un izmantotu;
 / Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table#footnote[https://en.wikipedia.org/wiki/Hash_table]) ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
-/ Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
-/ Pirmkods: #todo("add description")
+/ Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus.
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
-/ Renderēšana: #todo("add description")
+/ Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
+/ Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību.
+/ Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade.
+/ Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai.
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
-/ Sēkla: _seed_ #todo("add description")
 
 /* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
 * pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
@@ -120,9 +120,10 @@ tostarp Linux, macOS, Windows un WebAssembly (WASM).
 Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekventu
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
-Spēle tiek izplatīta, izmantojot GitHub releases un
-#link("http://itch.io/")[itch.io], kas ir populāra neatkarīgo spēļu
-platforma, kas ļauj viegli piekļūt un izplatīt spēles visā pasaulē.
+Spēle tiek izplatīta, izmantojot "GitHub
+releases"@gh-release
+un itch.io#footnote("https://itch.io/")<itch-io>, kas ir populāra neatkarīgo
+spēļu platforma, kas ļauj viegli piekļūt un izplatīt spēles visā pasaulē.
 Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu un kopienas
 iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un atpazīstamību.
 
@@ -149,7 +150,7 @@ Sistēmas izstrādē galvenā uzmanība tiks pievērsta sekojošu darījumprasī
 + Savietojamība ar vairākām platformām: sistēma būs pieejama vairākās
   platformās, tostarp Linux, macOS, Windows un WebAssembly, nodrošinot plašu
   pieejamību un sasniedzamību.
-+ Kopienas iesaiste: Spēle izmantos #link("http://itch.io/")[itch.io] kopienas
++ Kopienas iesaiste: Spēle izmantos itch.io@itch-io kopienas
   funkcijas, lai sadarbotos ar spēlētājiem, apkopotu atsauksmes un veicinātu
   atbalstošu spēlētāju kopienu.
 + Regulāri atjauninājumi un uzturēšana: CI/CD cauruļvadu veicinās regulārus
@@ -197,7 +198,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   - Windows kompilācijām;
   - WebAssembly kompilāciju.
 - Izplatīšanas atkarības:
-  - Pastāvīga #link("http://itch.io/")[itch.io] platformas pieejamība spēļu izplatīšanai.
+  - Pastāvīga itch.io@itch-io platformas pieejamība spēļu izplatīšanai.
   - CI/CD darbplūsmai nepieciešamo kompilēšanas rīku un atkarību uzturēšana.
 - Izstrādes atkarības:
   - Rust programmēšanas valoda (stabilā versija);
@@ -205,7 +206,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   - Nepieciešamie Bevy spraudņi un atkarības, kā norādīts projekta Cargo.toml failā.
 - Lietotāja vides pieņēmumi:
   - Spēlētājiem ir pamata izpratne par labirinta navigāciju un mīklu risināšanas koncepcijām.
-  - Lietotāji var piekļūt un lejupielādēt spēles no #link("http://itch.io/")[itch.io] platformas.
+  - Lietotāji var piekļūt un lejupielādēt spēles no itch.io@itch-io platformas.
   - Spēlētājiem ir ievadierīces (tastatūra/pele), ar kurām kontrolēt spēli.
 
 = Programmatūras prasību specifikācija
@@ -271,7 +272,7 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [Spēlētāju stāvokļa atjaunināšana], [],
 
     rowspanx(1)[Labirinta ģenerēšanas modulis],
-    [Labirinta ģenerēšana], [#link(<LGMF01>)[LGMF01]],
+    [Labirinta būvētājs], [#link(<LGMF01>)[LGMF01]],
 
     rowspanx(5)[Līmeņu pārvaldības modulis],
     [Līmeņu ielāde], [],
@@ -297,16 +298,38 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 === Spēles stāvokļa pārvaldības modulis
 === Spēlētāja modulis
 === Labirinta ģenerēšanas modulis
+
+Apakšnodaļa ietver labirinta moduļa funkcijas. Moduļa funkcionalitāte ir
+izmantota sešstūraina labirinta ģenerēšanai.
+Moduļa funkciju datu
+plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (skat. @dpd-2-maze-gen att.)
+Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (skat.
+#link(<LGMF01>)[LGMF01] tab.)
+
+Modularitātes un atkārtotas lietojamības apsvērumu dēļ labirinta ģenerēšanas
+funkcionalitāte tika pārnesta uz ārēju bibliotēku "hexlib"@hexlab. Šis lēmums
+ļauj labirinta ģenerēšanas loģiku atkārtoti izmantot dažādos projektos un
+lietojumprogrammās, veicinot atkārtotu koda izmantošanu.
+Iekapsulējot labirinta ģenerēšanu atsevišķā bibliotēkā, to ir vieglāk pārvaldīt
+un atjaunināt neatkarīgi no galvenās lietojumprogrammas, nodrošinot, ka
+labirinta ģenerēšanas algoritma uzlabojumus vai izmaiņas var veikt, neietekmējot
+programmu.
+
+#figure(
+  caption: [Labirinta ģenerēšanas moduļa 2. līmeņa DPD],
+  image("assets/images/dpd/dpd2/maze-gen.svg"),
+) <dpd-2-maze-gen>
+
 #function-table(
-  "Labirinta ģenerēšana",
+  "Labirinta būzētājs",
   "LGMF01",
   [Izveido sešstūrainu labirintu ar norādītajiem parametriem.],
   [
-    + Rādiuss: `u32` -- Labirinta rādiuss. Obligāts parametrs, kas nosaka labirinta izmēru.
-    + Sēkla: `Option<u64>` -- Neobligāta sēkla nejaušo skaitļu ģeneratoram. Ja
+    + Rādiuss -- Labirinta rādiuss. Obligāts parametrs, kas nosaka labirinta izmēru.
+    + Sēkla -- Neobligāta sēkla nejaušo skaitļu ģeneratoram. Ja
       norādīta, nodrošina reproducējamu labirinta ģenerēšanu ar vienādiem
       parametriem. Ja nav norādīta, tiek izmantota nejauša sēkla.
-    + Sākuma pozīcija: `Option<Hex>` -- Neobligāta sākotnējā pozīcija labirintā.
+    + Sākuma pozīcija -- Neobligāta sākotnējā pozīcija labirintā.
       Ja norādīta, labirinta ģenerēšana sāksies no šīs pozīcijas. Ja nav norādīta,
       tiek izvēlēta nejauša derīga sākuma pozīcija.
     // + Ģeneratora tips: `GeneratorType` -- Algoritms, kas tiks izmantots
@@ -391,55 +414,103 @@ Pret sistēmas izstrādājamo programmatūras uzturamību tiek izvirzītas sekoj
 
 = Programmatūras projektējuma apraksts
 == Daļējs funkciju projektējums
+#todo("pievienot funkciju projektējumu +diagrammas")
 /* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
 * obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
 * piemēru (use case) diagrammas */
-== Izmantotās bibliotēkas
-== Daļējs lietotāju saskarņu projektējums
+== Saskarņu projektējums
+#todo("pievienot saskarnes (UI/UX)")
 /* 5-7 lietotāja saskarnes un to apraksts */
 
 = Testēšanas dokumentācija
-== Dinamiskā programmatūras testēšana
+Šajā nodaļā ir aprakstīta spēles "Maze Ascension" testēšanas process.
+Testēšana tika veikta divos galvenajos virzienos -- statiskā un dinamiskā
+testēšana, izmantojot gan automatizētus rīkus, gan manuālu pārbaudi.
+
+== Statiskā testēšana <static-tests>
+Statiskā testēšana ir svarīga daļa no projekta kvalitātes nodrošināšanas.
+"Clippy"@clippy tiek izmantots koda analīzei, meklējot potenciālas problēmas un
+neoptimālus risinājumus. Papildus noklusētajiem noteikumiem, tika aktivizēti
+stingrāki koda kvalitātes pārbaudes līmeņi: "pedantic" režīms nodrošina
+padziļinātu koda stila pārbaudi, "nursery" aktivizē eksperimentālās pārbaudes,
+un "unwrap_used" un "expect_used" brīdina par potenciāli nedrošu kļūdu
+apstrādi. Šie papildu noteikumi palīdz uzturēt augstāku koda kvalitāti un
+samazināt potenciālo kļūdu skaitu.
+
+
+/* Programmatūras statiskai testēšanai ir izmantots rīks „clang-tidy“, kas analizē
+programmatūru, meklējot kļūdas un problēmas pirmkodā. [12] Rīks satur vairākas specifiskas
+problēmu kopas, kas var tikt izmantotas analīzē. Tika izmantota „clang-analyzer“ problēmu
+kopa. Vieglākai statisko testu darbināšanai tika izmantots vienkāršs programmēšanas valodas
+„Python“ skripts, kas atlasa visus failus, kuru paplašinājums ir „cpp“ (valodas „C++“ pirmkoda
+fails) vai „h“ (galvenes fails) un darbina statiskās analīzes rīku ar katru failu atsevišķi (skat.
+izpildes rezultātu attēlā 4.3.). */
+
+== Dinamiskā testēšana
+#todo("uztakstīt dinamisko testēšanu")
 === Manuālā integrācijas testēšana
 === Automatizēti testi
-== Statiskā programmatūras testēšana
 
 = Programmas projekta organizācija
 
-= Kvalitātes nodrošināšana
-PPS ir izstrādāta, ievērojot LVS 68:1996 standarta "Programmatūras prasību specifikācijas
-ceļvedis"@lvs_68 un LVS 72:1996 standarta "Ieteicamā prakse programmatūras projektējuma
-aprakstīšanai"@lvs_72 standarta prasības.
+Kvalifikācijas darba prasības paredz, ka programmatūru un dokumentāciju autors
+veido patstāvīgi, vadoties pēc darba vadītāja norādījumiem.
+
+#todo("uzrakstīt projekta organizāciju")
+
+== Kvalitātes nodrošināšana
+Augstas koda kvalitātes nodrošināšana ir jebkura projekta būtisks aspekts.
+Lai to panāktu, tiek izmantoti vairāki rīki un prakses, kas palīdz uzturēt tīru,
+efektīvu un uzticamu koda.
+
+Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy"@clippy, kas analizē
+iespējamās problēmas un iesaka uzlabojumus (skat. @static-tests nodaļu).
+
+Kopā ar "Clippy" tiek arī izmantots "Rustfmt"@rustfmt, koda formatētājs, lai
+uzturētu vienotu koda formatējumu visā projektā. Šis rīks automātiski formatē
+kodu saskaņā ar Rust stila vadlīnijām@rust-style.
+
+Turklāt visas publiskās funkcijas un datu struktūras
+hexlab bibliotēkā ir
+dokumentētas@hexlab-docs. Šajā dokumentācijā ir ietverti detalizēti apraksti un lietošanas
+piemēri, kas ne tikai palīdz saprast kodu, bet arī kalpo kā dokumentācijas
+testēšanas veids. Darbinot "cargo doc"@cargo-doc, tiek ģenerēja un validēja
+dokumentācija, nodrošinot, ka piemēri ir pareizi un aktuāli.
+
+Programmatūras prasības specifikācija ir izstrādāta, ievērojot LVS 68:1996
+standarta "Programmatūras prasību specifikācijas ceļvedis"@lvs_68 un LVS 72:1996
+standarta "Ieteicamā prakse programmatūras projektējuma aprakstīšanai"@lvs_72
+standarta prasības.
 // Programmatūras projektējuma aprakstā iekļautās
 // aktivitāšu diagrammas ir izstrādātas, ievērojot UML 2.5 versijas
 // specifikāciju@omg-uml.
 
-= Konfigurācijas pārvaldība
+== Konfigurācijas pārvaldība
 Pirmkods tiek pārvaldīts, izmantojot "git"@git versiju kontroles sistēmu.
 Repozitorijs tiek izvietots platformā "GitHub".
-
 Rīku konfigurācija ir definēta vairākos failos:
-- "justfile#footnote[https://github.com/casey/just]" -- satur atkļūdošanas un
-  piegādes komandas dažādām vidēm:
+- "justfile" -- satur atkļūdošanas un
+  laidiena komandas dažādām vidēm@justfile:
   - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
-  - piegādes kompilācijas ar iespējotu optimizāciju.
+  - laidiena kompilācijas ar iespējotu optimizāciju.
 - "GitHub Actions" darbplūsmas, kas apstrādā:
   - koda kvalitātes pārbaudes (vienībtesti, statiskie testi, formatēšana,
     dokumentācijas izveide).
   - kompilācijas un izvietotošanas darbplūsma, kas:
     - izveido Windows, Linux, macOS un WebAssembly versijas;
     - publicē bināros failus GitHub platformā;
-    - izvieto tīmekļa versiju #link("http://itch.io/")[itch.io] platformā.
+    - izvieto tīmekļa versiju itch.io@itch-io platformā.
 
-#indent-par[Versiju kontrole notiek pēc semantiskās versiju@sem_ver atlases
-  (MAJOR.MINOR.PATCH): ]
+Versiju specifikācija notiek pēc semantiskās versiju atlases@sem_ver (MAJOR.MINOR.PATCH):
 + MAJOR -- galvenā versija, nesaderīgas izmaiņas, būtiskas koda izmaiņas.
 + MINOR -- atpakaļsaderīgas funkcionalitātes papildinājumi.
 + PATCH -- ar iepriekšējo versiju saderīgu kļūdu labojumi.
 
-= Darbietilpības novērtējums
+== Darbietilpības novērtējums
+#todo("uzrakstīt darbietilpības novērtējumu")
 
-= Secinājumi
+// = Secinājumi
+// #todo("uzrakstīt secinājumus")
 
 #bibliography(
   title: "Izmantotā literatūra un avoti",
@@ -450,5 +521,5 @@ Rīku konfigurācija ir definēta vairākos failos:
 
 // #include "doc.typ"
 
-// #pagebreak()
-// #total-words words
+#pagebreak()
+#total-words words

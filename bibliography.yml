@@ -71,3 +71,43 @@ omg-uml:
   date: 2015-03
   url: https://www.omg.org/spec/UML/2.5/PDF
   page-total: 794
+clippy:
+  type: Web
+  title: Clippy
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/clippy/usage.html
+rustfmt:
+  type: Web
+  title: Rustfmt
+  author: Rust Projekta Izstādātāji
+  url: https://github.com/rust-lang/rustfmt
+cargo-doc:
+  type: Web
+  title: cargo-doc
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/cargo/commands/cargo-doc.html
+rust-style:
+  type: Web
+  title: Rust stila ceļvedis
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/nightly/style-guide/
+hexlab:
+  type: Web
+  title: Hexlab bibliotēka
+  author: Kristiāns Francis Cagulis
+  url: https://crates.io/crates/hexlab
+hexlab-docs:
+  type: Web
+  title: Hexlab bibliotēkas dokumentācija
+  author: Kristiāns Francis Cagulis
+  url: https://docs.rs/hexlab/latest/hexlab/
+justfile:
+  type: Web
+  title: Just programmētāja rokasgrāmata
+  author: Casey Rodarmor
+  url: https://just.systems/man/en/
+gh-release:
+  type: Web
+  title: Par laidieniem
+  author: GitHub komanda
+  url: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
