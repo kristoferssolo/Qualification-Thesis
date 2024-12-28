@@ -34,12 +34,12 @@
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
 
 /* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
-* pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
-* dzinēju pieejamība. Starp šiem dzinējiem Bevy izceļas kā mūsdienīgs atvērtā
-* koda risinājums, kas izmanto Rust programmēšanas valodu, lai nodrošinātu
-* drošību un veiktspēju. Šajā diplomdarbā tiek pētīts Bevy spēļu dzinēja
-* potenciāls, izstrādājot minimālistisku labirinta izpētes spēli "Maze
-* Ascension". */
+ * pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
+ * dzinēju pieejamība. Starp šiem dzinējiem Bevy izceļas kā mūsdienīgs atvērtā
+ * koda risinājums, kas izmanto Rust programmēšanas valodu, lai nodrošinātu
+ * drošību un veiktspēju. Šajā diplomdarbā tiek pētīts Bevy spēļu dzinēja
+ * potenciāls, izstrādājot minimālistisku labirinta izpētes spēli "Maze
+ * Ascension". */
 
 = Ievads
 == Nolūks
@@ -253,45 +253,71 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
   tablex(
     columns: (auto, 1fr, auto),
     /* --- header --- */
-    [*Modulis*], [*Funkcija*], [*Identifikators*],
+    [*Modulis*],
+    [*Funkcija*],
+    [*Identifikators*],
     /* -------------- */
     rowspanx(3)[Ievades apstrādes modulis],
-    [Ievades notikumu apstrāde], [],
-    [Ievades stāvokļa atjaunināšana], [],
-    [Ievades validācija], [],
+    [Ievades notikumu apstrāde],
+    [],
+    [Ievades stāvokļa atjaunināšana],
+    [],
+    [Ievades validācija],
+    [],
 
     rowspanx(4)[Spēles stāvokļa pārvaldības modulis],
-    [Spēļu stāvokļa pārvaldība], [],
-    [Spēles cilpas pārvaldība], [],
-    [Stāvokļu pāreju apstrāde], [],
-    [Spēles notikumu apstrāde], [],
+    [Spēļu stāvokļa pārvaldība],
+    [],
+    [Spēles cilpas pārvaldība],
+    [],
+    [Stāvokļu pāreju apstrāde],
+    [],
+    [Spēles notikumu apstrāde],
+    [],
 
     rowspanx(4)[Spēlētāja modulis],
-    [Kustības vadība], [],
-    [Sadursmju apstrāde], [],
-    [Papildsēju pārvaldība], [],
-    [Spēlētāju stāvokļa atjaunināšana], [],
+    [Kustības vadība],
+    [],
+    [Sadursmju apstrāde],
+    [],
+    [Papildsēju pārvaldība],
+    [],
+    [Spēlētāju stāvokļa atjaunināšana],
+    [],
 
     rowspanx(1)[Labirinta ģenerēšanas modulis],
-    [Labirinta būvētājs], [#link(<LGMF01>)[LGMF01]],
+    [Labirinta būvētājs],
+    [#link(<LGMF01>)[LGMF01]],
 
     rowspanx(5)[Līmeņu pārvaldības modulis],
-    [Līmeņu ielāde], [],
-    [Progresa izsekošana], [],
-    [Pāreju apstrāde], [],
-    [Stāvokļa saglabāšana], [],
-    [Stāvokļa ielāde], [],
+    [Līmeņu ielāde],
+    [],
+    [Progresa izsekošana],
+    [],
+    [Pāreju apstrāde],
+    [],
+    [Stāvokļa saglabāšana],
+    [],
+    [Stāvokļa ielāde],
+    [],
 
     rowspanx(4)[Renderēšanas modulis],
-    [Labirinta renderēšana], [],
-    [Spēlētāja renderēšana], [],
-    [Lietotājsaskarnes renderēšana], [],
-    [Vizuālo efektu renderēšana], [],
+    [Labirinta renderēšana],
+    [],
+    [Spēlētāja renderēšana],
+    [],
+    [Lietotājsaskarnes renderēšana],
+    [],
+    [Vizuālo efektu renderēšana],
+    [],
 
     rowspanx(3)[Audio modulis],
-    [Skaņas efektu atskaņošana], [],
-    [Mūzikas pārvaldība], [],
-    [Audio stāvokļu apstrāde], [],
+    [Skaņas efektu atskaņošana],
+    [],
+    [Mūzikas pārvaldība],
+    [],
+    [Audio stāvokļu apstrāde],
+    [],
   ),
 ) <function-modules>
 
@@ -420,8 +446,8 @@ ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veikt
 == Daļējs funkciju projektējums
 #todo("pievienot funkciju projektējumu +diagrammas")
 /* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
-* obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
-* piemēru (use case) diagrammas */
+ * obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
+ * piemēru (use case) diagrammas */
 == Saskarņu projektējums
 #todo("pievienot saskarnes (UI/UX)")
 /* 5-7 lietotāja saskarnes un to apraksts */
@@ -522,6 +548,7 @@ Versiju specifikācija notiek pēc semantiskās versiju atlases@sem_ver (MAJOR.M
 )
 
 #heading("Pielikumi", numbering: none)
+// #include "code.typ"
 
 // #include "doc.typ"
 

@@ -31,10 +31,13 @@
     paper: "a4",
   )
   set text(
-    //font: "New Computer Modern",
-    font: "CMU", size: 12pt, hyphenate: auto, lang: "lv", region: "lv",
+    font: "Times New Roman",
+    size: 12pt,
+    hyphenate: auto,
+    lang: "lv",
+    region: "lv",
   )
-  show raw: set text(font: "New Computer Modern Mono")
+  show raw: set text(font: "JetBrainsMono NF")
 
   show math.equation: set text(weight: 400)
 

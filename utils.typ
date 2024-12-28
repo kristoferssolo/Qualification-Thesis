@@ -191,3 +191,11 @@
     [#author #title Pieejams: #link(link_str) aplūkots #date.display("[day].[month].[year]")]
   }
 }
+
+#let codeblock(filename, lang) = {
+  raw(
+    read(filename),
+    block: true,
+    lang: lang,
+  )
+}
