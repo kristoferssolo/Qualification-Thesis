@@ -121,3 +121,13 @@ webgl2:
   title: Bevy + WebGPU
   author:
   url: https://bevyengine.org/news/bevy-webgpu/
+bevy-egui:
+  type: Web
+  title: Bevy Egui bibliotēkas dokumentācija
+  author:
+  url: https://docs.rs/bevy_egui/latest/bevy_egui/
+bevy-inspector-egui:
+  type: Web
+  title: Bevy Inspector Egui bibliotēkas dokumentācija
+  author:
+  url: https://docs.rs/bevy-inspector-egui/0.28.0/bevy_inspector_egui/

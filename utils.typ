@@ -21,7 +21,7 @@
   ..items,
 ) = {
   set par(first-line-indent: 0pt)
-  figure(
+  return figure(
     gap: 1.5em,
     kind: table,
     caption: if caption != "" {
@@ -42,9 +42,7 @@
           ),
         )
       }
-      #for i in range(
-        items.pos().len(),
-      ) {
+      #for i in range(items.pos().len()) {
         if titles.len() > 0 {
           custom-block(
             text(
@@ -53,13 +51,10 @@
             ),
           )
         }
-        custom-block(
-          items.pos().at(i),
-        )
+        custom-block(items.pos().at(i))
       }
     ],
   )
-  linebreak()
 }
 
 #let parameter-table(
@@ -110,7 +105,7 @@
   if caption == "" {
     caption = items.pos().first()
   }
-  longtable(
+  return longtable(
     titles: (
       "Funkcijas nosaukums",
       "Funkcijas identifikators",
@@ -161,19 +156,22 @@
     )
   }
 
-  figure(
+  return figure(
     caption: caption,
     kind: table,
     tablex(
       columns: (4cm, 3cm, auto, auto),
       repeat-header: true,
       /* Header */
-      [*Lauks*], [*Datu tips*], [*Lauka atribūti*], [*Apraksts*],
+      [*Lauks*],
+      [*Datu tips*],
+      [*Lauka atribūti*],
+      [*Apraksts*],
 
       ..entity-table-row(..id), // id row
 
-      ..for i in range(items.pos().len(), step:4){
-        entity-table-row(..items.pos().slice(i, i+4))
+      ..for i in range(items.pos().len(), step: 4) {
+        entity-table-row(..items.pos().slice(i, i + 4))
       },
     ),
   )
@@ -198,4 +196,8 @@
     block: true,
     lang: lang,
   )
+}
+
+#let red(body) = {
+  text(body, fill: rgb(255, 0, 0))
 }

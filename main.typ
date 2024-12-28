@@ -28,10 +28,11 @@
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
 / Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
+/ Pasaules resursi: #todo("add World resource")
 / Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību.
 / Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade.
-/ Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai.
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
+/ Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai.
 
 /* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
  * pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
@@ -192,7 +193,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
 - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
 - Veiktspējas atkarība:
-  - Spēle ir atkarīga no Bevy spēles dzinēja (0.14).
+  - Spēle ir atkarīga no Bevy spēles dzinēja (0.15).
 - Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD darbplūsmai saderības ar:
   - Linux kompilācijām;
   - macOS kompilācijām;
@@ -257,15 +258,47 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [*Funkcija*],
     [*Identifikators*],
     /* -------------- */
-    rowspanx(3)[Ievades apstrādes modulis],
-    [Ievades notikumu apstrāde],
-    [],
-    [Ievades stāvokļa atjaunināšana],
-    [],
-    [Ievades validācija],
+    rowspanx(1)[Audio modulis], // audio
+    [Skaņas efektu atskaņošana],
     [],
 
-    rowspanx(4)[Spēles stāvokļa pārvaldības modulis],
+    rowspanx(1)[Izstrādes rīku modulis], // dev_tools
+    [Labirinta pārvaldības saskarne],
+    [#link(<dev_tools-F01>)[IRMF01]],
+
+    rowspanx(3)[Stāva pārvaldības modulis], // floor
+    [Stāva ielāde],
+    [],
+    [Stāva #red("izlāde")],
+    [],
+    [Stāvu kustība],
+    [],
+
+    rowspanx(1)[Labirinta ģenerēšanas modulis], // hexlab
+    [Labirinta būvētājs],
+    [#link(<hexlab-F01>)[LGMF01]],
+
+    rowspanx(3)[Labirinta pārvaldības modulis], // maze
+    [Labirinta ielāde],
+    [],
+    [Labirinta #red("pārlāde")],
+    [],
+    [Labirinta #red("izlāde")],
+    [],
+
+    rowspanx(5)[Spēlētāja modulis], // player
+    [Spēlētāja ielāde],
+    [],
+    [Spēlētāja ievades apstrāde],
+    [],
+    [Spēlētāja kustība],
+    [],
+    [Spēlētāja #red("pacelšanās")],
+    [],
+    [Spēlētāja #red("nolaušainās")],
+    [],
+
+    rowspanx(4)[Spēles stāvokļa pārvaldības modulis], // screens
     [Spēļu stāvokļa pārvaldība],
     [],
     [Spēles cilpas pārvaldība],
@@ -274,68 +307,86 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [],
     [Spēles notikumu apstrāde],
     [],
-
-    rowspanx(4)[Spēlētāja modulis],
-    [Kustības vadība],
-    [],
-    [Sadursmju apstrāde],
-    [],
-    [Papildsēju pārvaldība],
-    [],
-    [Spēlētāju stāvokļa atjaunināšana],
-    [],
-
-    rowspanx(1)[Labirinta ģenerēšanas modulis],
-    [Labirinta būvētājs],
-    [#link(<LGMF01>)[LGMF01]],
-
-    rowspanx(5)[Līmeņu pārvaldības modulis],
-    [Līmeņu ielāde],
-    [],
-    [Progresa izsekošana],
-    [],
-    [Pāreju apstrāde],
-    [],
-    [Stāvokļa saglabāšana],
-    [],
-    [Stāvokļa ielāde],
-    [],
-
-    rowspanx(4)[Renderēšanas modulis],
-    [Labirinta renderēšana],
-    [],
-    [Spēlētāja renderēšana],
-    [],
-    [Lietotājsaskarnes renderēšana],
-    [],
-    [Vizuālo efektu renderēšana],
-    [],
-
-    rowspanx(3)[Audio modulis],
-    [Skaņas efektu atskaņošana],
-    [],
-    [Mūzikas pārvaldība],
-    [],
-    [Audio stāvokļu apstrāde],
-    [],
   ),
 ) <function-modules>
 
-=== Ievades apstrādes modulis
-#todo("uzrakstīt ievades apstrādes moduli")
-=== Spēles stāvokļa pārvaldības modulis
-#todo("uzrakstīt spēles stāvokļa pārvaldības moduli")
-=== Spēlētāja modulis
-#todo("uzrakstīt spēlētāja moduli")
+=== Audio modulis
+#todo("uzrakstīt audio moduli")
+
+=== Izstrādes rīku modulis
+
+Dotais modulis ir izstrādes rīks, kas paredzēts lietotāja saskarnes elementu
+attēlošanai un apstrādei, lai konfigurētu labirinta parametrus.
+Šis modulis, izmantojot "egui"@bevy-egui un "inspector-egui"@bevy-inspector-egui
+bibliotēkas, izveido logu "Maze Controls" (labirinta vadības
+elementi), kurā tiek parādītas dažādas
+konfigurācijas opcijas, piemēram, sēkla, rādiuss, augstums, labirinta izmērs,
+orientācija un sākuma/galapunkta pozīcijas (skat @tbl:dev_tools-F01 tab.).
+Lietotāji var mijiedarboties ar šiem vadības elementiem, lai mainītu labirinta
+izkārtojumu un izskatu.
+Modulis pārbauda, vai konfigurācijā nav notikušas izmaiņas, un izraisa attiecīgus
+notikumus, lai atjauninātu labirintu un spēlētāja pozīciju, kad notiek izmaiņas.
+
+Svarīgi atzīmēt, ka šis modulis ir paredzēts lietošanai spēles izstrādes procesā.
+Laidiena #todo("double-check 'laidiens'") versijās šī lietotāja saskarne nebūs pieejama, nodrošinot, ka
+gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
+
+// Moduļa funkcionalitāti var vizualizēt, izmantojot datu plūsmas diagrammu (DFD),
+// kurā būtu parādītas ievades no spēles pasaules (piemēram, pašreizējā stāva un
+// labirinta konfigurācija), apstrāde lietotāja saskarnes sistēmā un izejas kā
+// atjauninātas labirinta konfigurācijas un respawn notikumi.
+
+
+
+#function-table(
+  "Labirinta pārvadības saskarne",
+  "IRMF01",
+  [Apstrādā un izvada labirinta konfigurācijas vadības elementus lietotāja saskarnē.],
+  [
+    Ievades dati tiek saņemti no pasaules resursiem un komponentiem:
+    + Labirinta spraudņa resurss;
+    + `EguiContext`#footnote("https://docs.rs/bevy_egui/latest/bevy_egui/")<bevy_egui>
+      komponente;
+    + Labirinta konfigurācija un stāva komponentes saistībā ar pašreizējā stāva
+      komponenti;
+    + Globālais labirinta konfigurācijas resurss.
+  ],
+  [
+    + Pārbauda, vai labirinta straudņa resurss eksistē pasaulē.
+      + Ja nav, iziet no sistēmas un nedara neko.
+    + Saņem `EguiContext` komponentu no primārā loga.
+    + Saņem labirinta konfigurāciju un stāvu komponentus no pašreizējā stāva.
+    + Izveido jaunu "Maze Controls" logu, izmantojot `egui`@bevy-egui.
+    + Ja globālais labirinta konfigurācijas resurss ir pieejams:
+      + Parāda galveno virsrakstu "Maze Configuration".
+      + Pievieno vadības elementus:
+        - Sēklai;
+        - Rādiusam;
+        - Augstumam;
+        - Šešstūra izmēram;
+        - Orientācijai;
+        - Sākuma pozīcijai;
+        - Beigu pozīcijai.
+      + Apstrādā izmaiņas un atjaunina labirintu un spēlētāju, ja radušās izmaiņas.
+  ],
+  [
+    + Atjaunināta labirinta konfigurācijas struktūra.
+    + Atjaunināts labirints, ja radušās izmaiņas.
+    + Atjaunināts spēlētāja novietojums, ja radušās izmaiņas.
+  ],
+) <dev_tools-F01>
+
+=== Stāvu pārvaldības modulis
+#todo("uzrakstīt stāvu pārvaldības moduli")
+
 === Labirinta ģenerēšanas modulis
 #todo("uzrakstīt labirinta ģenerēšanas moduli")
 
 Apakšnodaļa ietver labirinta moduļa funkcijas. Moduļa funkcionalitāte ir
 izmantota sešstūraina labirinta ģenerēšanai.
 Moduļa funkciju datu
-plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (skat. @dpd-2-maze-gen att.)
-Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (skat.
-#link(<LGMF01>)[LGMF01] tab.)
+plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (skat. @fig:dpd-2-maze-gen att.)
+Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (skat. @hexlab-F01 tab.)
 
 Modularitātes un atkārtotas lietojamības apsvērumu dēļ labirinta ģenerēšanas
 funkcionalitāte tika pārnesta uz ārēju bibliotēku "hexlib"@hexlab. Šis lēmums
@@ -390,15 +441,17 @@ programmu.
     + Sākuma pozīcija ir ārpus labirinta robežām.
     + Neizdevās izveidot labirintu.
   ],
-) <LGMF01>
+) <hexlab-F01>
 
+=== Labirinta pārvaldības modulis
+#todo("uzrakstīt labirinta pārvaldības moduli")
 
-=== Līmeņu pārvaldības modulis
-#todo("uzrakstīt līmeņu pārvaldības moduli")
-=== Renderēšanas modulis
-#todo("uzrakstīt renderēšanas moduli")
-=== Audio modulis
-#todo("uzrakstīt audio moduli")
+=== Spēlētāja modulis
+#todo("uzrakstīt spēlētāja moduli")
+
+=== Spēles stāvokļa pārvaldības modulis
+#todo("uzrakstīt spēles stāvokļa pārvaldības moduli")
+
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
@@ -552,5 +605,5 @@ Versiju specifikācija notiek pēc semantiskās versiju atlases@sem_ver (MAJOR.M
 
 // #include "doc.typ"
 
-// #pagebreak()
-// #total-words words
+#pagebreak()
+#total-words words
