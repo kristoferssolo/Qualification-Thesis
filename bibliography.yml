@@ -12,17 +12,17 @@ hex_grid:
   type: Web
   title: Hexagonal Grids
   author: Red Blob Games
-  url: {value: 'https://www.redblobgames.com/grids/hexagons/', date: 2024-09-10}
+  url: {value: "https://www.redblobgames.com/grids/hexagons/", date: 2024-09-10}
 bevy_examples:
   type: Web
   title: Bevy Examples
   author:
-  url: {value: 'https://bevyengine.org/examples/', date: 2024-09-10}
+  url: {value: "https://bevyengine.org/examples/", date: 2024-09-10}
 bevy_cheatbook:
   type: Web
   title: Unofficial Bevy Cheat Book
   author:
-  url: {value: 'https://bevy-cheatbook.github.io/', date: 2024-09-10}
+  url: {value: "https://bevy-cheatbook.github.io/", date: 2024-09-10}
 lvs_68:
   type: Book
   title: Programmatūras prasību specifikācijas ceļvedis
@@ -131,3 +131,14 @@ bevy-inspector-egui:
   title: Bevy Inspector Egui bibliotēkas dokumentācija
   author:
   url: https://docs.rs/bevy-inspector-egui/0.28.0/bevy_inspector_egui/
+the-rust-performance-book:
+  type: Web
+  title: The Rust Performance Book
+  author: Nicholas Nethercote
+  date: 2020-11
+  url: https://nnethercote.github.io/perf-book
+cargo-tarpaulin:
+  type: Web
+  title: Tarpaulin
+  author: xd009642
+  url: https://crates.io/crates/cargo-tarpaulin

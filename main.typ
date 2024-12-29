@@ -629,9 +629,9 @@ testēšana, izmantojot gan automatizētus rīkus, gan manuālu pārbaudi.
 Statiskā testēšana ir svarīga daļa no projekta kvalitātes nodrošināšanas.
 "Clippy"@clippy tiek izmantots koda analīzei, meklējot potenciālas problēmas un
 neoptimālus risinājumus. Papildus noklusētajiem noteikumiem, tika aktivizēti
-stingrāki koda kvalitātes pārbaudes līmeņi: "pedantic" režīms nodrošina
-padziļinātu koda stila pārbaudi, "nursery" aktivizē eksperimentālās pārbaudes,
-un "unwrap_used" un "expect_used" brīdina par potenciāli nedrošu kļūdu
+stingrāki koda kvalitātes pārbaudes līmeņi: "`pedantic`" režīms nodrošina
+padziļinātu koda stila pārbaudi, "`nursery`" aktivizē eksperimentālās pārbaudes,
+un "`unwrap_used`" un "`expect_used`" brīdina par potenciāli nedrošu kļūdu
 apstrādi. Šie papildu noteikumi palīdz uzturēt augstāku koda kvalitāti un
 samazināt potenciālo kļūdu skaitu.
 
@@ -645,9 +645,51 @@ fails) vai „h“ (galvenes fails) un darbina statiskās analīzes rīku ar kat
 izpildes rezultātu attēlā 4.3.). */
 
 == Dinamiskā testēšana
-#todo("uztakstīt dinamisko testēšanu")
+
+Lai novērtētu programmatūras uzvedību darbības laikā, tika veikta dinamiskā
+testēšana. Šī testēšanas pieeja apvieno gan manuālu testēšanu, izmantojot
+lietotāja saskarnes mijiedarbību, gan automatizētus testu komplektus, lai
+nodrošinātu visaptverošu spēles funkcionalitātes pārklājumu.
+
 === Manuālā integrācijas testēšana
+
+Integrācijas testēšana ir veikta manuāli, mijiedarboties ar spēles saskarni.
+Katrs testa scenārijs ir dokumentēta strukturētas tabulas formātā, ievērojot
+būtisku informāciju, piemēram, test nosaukumu, unikālo identifikatoru, aprakstu,
+izpildes soļus, gaidāmo rezultātu un faktisko rezultātu (veiksmīga testa
+gadījumā apzīmēts ar "Ok", bet neveiksmīgu -- ar "Err").
+Izvēlētie testu gadījumi ir detalizēti aprakstīti #todo("tab") tabulā.
+
 === Automatizēti testi
+
+Automatizētā testēšanas sistēma plaši pārklāj bibliotēku "hexlab", jo tā ir
+paredzēta publiskai lietošanai@hexlab.
+Testēšanas stratēģijā ir ieviesti vairāki pārbaudes līmeņi: dokumentācijas testi
+no drošina piemēra koda pareizību, moduļu testi pārbauda iekšējo
+funkcionalitāti, savukārt testu mapē esošie vienībtesti un integrācijas testi
+pārbauda sarežģītākus gadījumus.
+Izmantojot "cargo-tarpaulin", testu pārklājums ir $81,69%$ (116 no 142
+iekļautajām rindiņām), tomēr šis rādītājs pilnībā neatspoguļo faktisko
+pārklājumu, jo rīkam ir ierobežojumi attiecībā uz "inline#footnote[https://doc.rust-lang.org/nightly/reference/attributes/codegen.html?highlight=inline]"
+funkcijām un citi tehniski ierobežojumi @cargo-tarpaulin.
+
+
+#todo("double check which tests are actually impemented")
+Arī spēles kods saglabā stabilu testēšanas stratēģiju.
+Dokumentācijas testi tiek rakstīti tieši koda dokumentācijā, kalpojot diviem
+mērķiem -- tie pārbauda koda pareizību un vienlaikus sniedz skaidrus lietošanas
+piemērus turpmākai uzturēšanai.
+Šie testi ir īpaši vērtīgi, jo tie nodrošina, ka dokumentācija tiek sinhronizēta
+ar faktisko koda uzvedību.
+Moduļu testi ir stratēģiski izvietoti līdzās implementācijas kodam tajā pašā
+failā, nodrošinot, ka katras komponentes funkcionalitāte tiek pārbaudīta
+izolēti.
+Šie testi attiecas uz tādām svarīgām spēles sistēmām kā spēlētāju kustība,
+sadursmju noteikšana, spēles stāvokļa pārvaldība u.c.
+
+Visi testi tiek automātiski izpildīti kā nepārtrauktas integrācijas procesa
+daļa, nodrošinot tūlītēju atgriezenisko saiti par sistēmas stabilitāti un
+funkcionalitāti pēc katras koda izmaiņas.
 
 = Programmas projekta organizācija
 
@@ -684,6 +726,7 @@ standarta prasības.
 // specifikāciju@omg-uml.
 
 == Konfigurācijas pārvaldība
+
 Pirmkods tiek pārvaldīts, izmantojot "git"@git versiju kontroles sistēmu.
 Repozitorijs tiek izvietots platformā "GitHub".
 Rīku konfigurācija ir definēta vairākos failos:
