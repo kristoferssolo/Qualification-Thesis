@@ -35,12 +35,12 @@
 / Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai.
 
 /* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
- * pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
- * dzinēju pieejamība. Starp šiem dzinējiem Bevy izceļas kā mūsdienīgs atvērtā
- * koda risinājums, kas izmanto Rust programmēšanas valodu, lai nodrošinātu
- * drošību un veiktspēju. Šajā diplomdarbā tiek pētīts Bevy spēļu dzinēja
- * potenciāls, izstrādājot minimālistisku labirinta izpētes spēli "Maze
- * Ascension". */
+* pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
+* dzinēju pieejamība. Starp šiem dzinējiem Bevy izceļas kā mūsdienīgs atvērtā
+* koda risinājums, kas izmanto Rust programmēšanas valodu, lai nodrošinātu
+* drošību un veiktspēju. Šajā diplomdarbā tiek pētīts Bevy spēļu dzinēja
+* potenciāls, izstrādājot minimālistisku labirinta izpētes spēli "Maze
+* Ascension". */
 
 = Ievads
 == Nolūks
@@ -224,6 +224,7 @@ spēles līmeņu pārvaldības modulis,
 atveidošanas jeb renderēšanas un skaņas jeb audio moduļi.
 Šie procesi mijiedarbojas ar vienu datu krātuvi -- operatīvo atmiņu (RAM) -- un vienu
 ārējo lietotāju -- spēlētājs.
+#todo("update module list")
 
 Ievades apstrādes modulis uztver un apstrādā spēlētāja ievades datus.
 Spēles stāvokļa modulis pārrauga vispārējo spēles stāvokli.
@@ -258,9 +259,9 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [*Funkcija*],
     [*Identifikators*],
     /* -------------- */
-    rowspanx(1)[Audio modulis], // audio
-    [Skaņas efektu atskaņošana],
-    [],
+    // rowspanx(1)[Audio modulis], // audio
+    // [Skaņas efektu atskaņošana],
+    // [],
 
     rowspanx(1)[Izstrādes rīku modulis], // dev_tools
     [Labirinta pārvaldības saskarne],
@@ -280,7 +281,7 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 
     rowspanx(3)[Labirinta pārvaldības modulis], // maze
     [Labirinta ielāde],
-    [],
+    [#link(<maze-F01>)[LPMF01]],
     [Labirinta #red("pārlāde")],
     [],
     [Labirinta #red("izlāde")],
@@ -299,19 +300,19 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [],
 
     rowspanx(4)[Spēles stāvokļa pārvaldības modulis], // screens
-    [Spēļu stāvokļa pārvaldība],
+    [Spēles sākšana],
+    [#link(<screen-F01>)[SSPMF01]],
+    [Atgriešanās uz sākumekrānu],
+    [#link(<screen-F02>)[SSPMF02]],
     [],
-    [Spēles cilpas pārvaldība],
     [],
-    [Stāvokļu pāreju apstrāde],
     [],
-    [Spēles notikumu apstrāde],
     [],
   ),
 ) <function-modules>
 
-=== Audio modulis
-#todo("uzrakstīt audio moduli")
+// === Audio modulis
+// #todo("uzrakstīt audio moduli")
 
 === Izstrādes rīku modulis
 
@@ -328,14 +329,13 @@ Modulis pārbauda, vai konfigurācijā nav notikušas izmaiņas, un izraisa atti
 notikumus, lai atjauninātu labirintu un spēlētāja pozīciju, kad notiek izmaiņas.
 
 Svarīgi atzīmēt, ka šis modulis ir paredzēts lietošanai spēles izstrādes procesā.
-Laidiena #todo("double-check 'laidiens'") versijās šī lietotāja saskarne nebūs pieejama, nodrošinot, ka
+Laidiena versijās šī lietotāja saskarne nebūs pieejama, nodrošinot, ka
 gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
 
 // Moduļa funkcionalitāti var vizualizēt, izmantojot datu plūsmas diagrammu (DFD),
 // kurā būtu parādītas ievades no spēles pasaules (piemēram, pašreizējā stāva un
 // labirinta konfigurācija), apstrāde lietotāja saskarnes sistēmā un izejas kā
 // atjauninātas labirinta konfigurācijas un respawn notikumi.
-
 
 
 #function-table(
@@ -403,7 +403,7 @@ programmu.
 ) <dpd-2-maze-gen>
 
 #function-table(
-  "Labirinta būzētājs",
+  "Labirinta būvētājs",
   "LGMF01",
   [Izveido sešstūrainu labirintu ar norādītajiem parametriem.],
   [
@@ -446,20 +446,135 @@ programmu.
 === Labirinta pārvaldības modulis
 #todo("uzrakstīt labirinta pārvaldības moduli")
 
+#function-table(
+  "Labirinta ielāde",
+  "LPMF01",
+  [ Izveidot jaunu labirinta stāvu spēles pasaulē. ],
+  [
+    Ievades dati tiek saņemti no:
+    + SpawnMaze notikuma (saturoša stāva numuru un konfigurāciju)
+    + Bevy ECS komponentiem un resursiem
+  ],
+  [
+    + Pārbauda, vai labirints šim stāvam jau eksistē.
+      + Ja eksistē, parāda 1. paziņojumu un iziet no sistēmas.
+    + Ģenerē jaunu labirintu balstoties uz nodoto konfigurāciju.
+    + Aprēķina vertikālo nobīdi jaunajam stāvam.
+    + Izveido jaunu entitāti, kas pārstāv labirinta stāvu, pievienojot tam
+      atbilstošās komponente.
+    + Atkarībā no tā, vai tas ir pašreizējais vai nākamais stāvs, pievieno
+      attiecīgo komponenti.
+    + Izsauc atsevišķu funkciju labirinta flīžu izveidei.
+  ],
+  [
+    Izvades datu sistēmai nav.
+  ],
+  [
+    + "Stāvs x jau eksistē."
+    + "Neizdevās ģenerēt labirintu stāvam x."
+  ],
+) <maze-F01>
+
 === Spēlētāja modulis
 #todo("uzrakstīt spēlētāja moduli")
 
 === Spēles stāvokļa pārvaldības modulis
 #todo("uzrakstīt spēles stāvokļa pārvaldības moduli")
 
+#function-table(
+  "Spēles sākšana",
+  "SSPMF01",
+  "Sākt spēles līmeni, ielādējot labirintu, spēlētāju un mūziku.",
+  [
+    + Ekrāna stāvoklis
+  ],
+  [
+    + Pievieno sistēmas spēles sākumā:
+      - Izveido līmeni;
+      - Izveido spēlētāju;
+      - Sistēmas tiek darbinātas secīgi.
+  ],
+  [
+    Izvades datu sistēmai nav.
+  ],
+) <screen-F01>
+
+
+#function-table(
+  "Atgriešanās uz sākumekrānu",
+  "SSPMF02",
+  "Apstrādāt atgriešanos uz titulekrānu no gameplay režīma.",
+  [
+    + Ekrāna stāvoklis
+    + Nospiestie tastatūra taustiņi
+  ],
+  [
+    + Pārbauda, vai ir nospiests "Escape" taustiņš.
+      + Ja nav, iziet no sistēmas un nedara neko.
+    + Pārbauda, vai pašreizējais stāvoklis spēle ir aktīva.
+      + Ja nav, iziet no sistēmas un nedara neko.
+    + Samaina ekrāna stāvokli uz sākumekrānu.
+  ],
+  [
+    Izvades datu sistēmai nav.
+  ],
+) <screen-F02>
+
+#function-table(
+  "Attēlot sākumekrānu",
+  "SSPMF03",
+  "Izveido un parāda nosaukuma ekrāna lietotāja saskarni ar interaktīvām pogām.",
+  [
+    + Ekrāna stāvoklis
+  ],
+  [
+    + Pievieno interaktīvas pogas:
+      - pogu "Play" ar pāreju uz spēli;
+      // - pogu "Credits" ar pāreju uz kredītiem;
+      - pogu "Exit" (tikai platformām, kas nav WASM).
+    + Pievieno novērotājus katrai pogai.
+  ],
+  [
+    Izvades datu sistēmai nav.
+  ],
+) <screen-F03>
+
+/* #function-table(
+"Mūzikas atskaņošana",
+"SSPMF03",
+"Sākt atskaņot spēles mūziku gameplay režīmā.",
+[ Ievades dati: + GameplayMusic resurss + AudioSource resurss ],
+[ + Izveido jaunu audio entītiju + Pievieno AudioPlayer komponenti + Iestata atskaņošanas iestatījumus uz LOOP ],
+[ + Aktīva audio atskaņošanas entītija ],
+[ Nav definēti specifiski kļūdu ziņojumi. ],
+) <screen-F03> */
+
+/* #function-table(
+"Mūzikas apturēšana",
+"SSPMF04",
+"Apturēt spēles mūziku, izejot no gameplay režīma.",
+[
++ GameplayMusic resurss ar entītijas ID
+],
+[
++ Pārbauda, vai eksistē mūzikas entītija:
++ Ja neeksistē, ...
++ Ja eksistē, likvidē entītiju rekursīvi
+],
+[
+Izvades datu sistēmai nav.
+],
+) <screen-F04> */
+
+
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
 Uz sistēmas veiktspēju ir sekojošas prasības:
-- Labirinta ģenerēšana: Jebkura izmēra labirintam jātiek uzģenerētam ātrāk par 1 sekundi.
-- Spēles ielāde: Spēlei jāstartējas ātrāk par 3 sekundēm.
-- Kadru ātrums: Spēlei jādarbojas ar vismaz 60 kadriem sekundē.
-- Ievades apstrāde: Spēlētāja kustībām jātiek apstrādātām bez manāmas aizkaves ($<16$ms).
+- Jebkura izmēra labirintam jātiek uzģenerētam ātrāk kā 1 sekundē.
+- Spēlei jāstartējas ātrāk par 3 sekundēm.
+- Spēlei jādarbojas ar vismaz 60 kadriem sekundē.
+- Spēlētāja kustībām jātiek apstrādātām bez manāmas aizkaves ($<16$ms).
 === Uzticamība
 Uz sistēmas uzticamību ir sekojošas prasības:
 - Kļūdu apstrāde: spēlei jāapstrādā kļūdas graciozi, bez sistēmas atteicēm.
@@ -499,8 +614,8 @@ ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veikt
 == Daļējs funkciju projektējums
 #todo("pievienot funkciju projektējumu +diagrammas")
 /* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
- * obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
- * piemēru (use case) diagrammas */
+* obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
+* piemēru (use case) diagrammas */
 == Saskarņu projektējums
 #todo("pievienot saskarnes (UI/UX)")
 /* 5-7 lietotāja saskarnes un to apraksts */

@@ -46,6 +46,7 @@ papilspējas.
       numbering: none,
       "Abstract",
     )
+    #todo("add english title")
     The qualification work includes the game "Maze Ascension", which offers
     players the challenge to pass through procedurally generated hexagons
     mazes. The game is built using the Rust programming language and Bevy
