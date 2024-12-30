@@ -78,8 +78,8 @@ tehnisko iespējamību.
 
 == Saistība ar citiem dokumentiem
 PPS ir izstrādāta, ievērojot LVS 68:1996 "Programmatūras prasību specifikācijas
-ceļvedis"@lvs_68 un LVS 72:1996 "Ieteicamā prakse programmatūras projektējuma
-aprakstīšanai"@lvs_72 standarta prasības.
+ceļvedis" un LVS 72:1996 "Ieteicamā prakse programmatūras projektējuma
+aprakstīšanai" standarta prasības @lvs_68 @lvs_72.
 
 == Pārskats
 Dokumenta ievads satur ...
@@ -114,7 +114,8 @@ ietvaros.
 
 == Produkta perspektīva
 "Maze Ascension" ir izstrādāta kā daudzplatformu spēle, izmantojot nepārtrauktas
-integrācijas un nepārtrauktas izvietošanas (CI/CD) darbplūsma@pipeline, lai
+integrācijas un nepārtrauktas izvietošanas (CI/CD)
+darbplūsma#footnote[https://github.com/resources/articles/devops/ci-cd]<pipeline>, lai
 vienkāršotu izstrādes un izplatīšanas procesu.
 Šī darbplūsma ir konfigurēts tā, lai kompilētu spēli vairākām platformām,
 tostarp Linux, macOS, Windows un WebAssembly (WASM).
@@ -122,7 +123,8 @@ Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekven
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
 Spēle tiek izplatīta, izmantojot "GitHub
-releases"@gh-release un itch.io#footnote("https://itch.io/")<itch-io>, kas ir
+releases#footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>"
+un itch.io#footnote("https://itch.io/")<itch-io>, kas ir
 populāra neatkarīgo spēļu platforma, kas ļauj viegli piekļūt un izplatīt spēles
 visā pasaulē. Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu
 un kopienas iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un
@@ -299,15 +301,13 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [Spēlētāja #red("nolaušainās")],
     [],
 
-    rowspanx(4)[Spēles stāvokļa pārvaldības modulis], // screens
+    rowspanx(3)[Spēles stāvokļa pārvaldības modulis], // screens
     [Spēles sākšana],
     [#link(<screen-F01>)[SSPMF01]],
     [Atgriešanās uz sākumekrānu],
     [#link(<screen-F02>)[SSPMF02]],
-    [],
-    [],
-    [],
-    [],
+    [Attēlot sākumekrānu],
+    [#link(<screen-F03>)[SSPMF03]],
   ),
 ) <function-modules>
 
@@ -354,7 +354,7 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
   [
     + Pārbauda, vai labirinta straudņa resurss eksistē pasaulē.
       + Ja nav, iziet no sistēmas un nedara neko.
-    + Saņem `EguiContext` komponentu no primārā loga.
+    + Saņem `EguiContext`@bevy_egui komponentu no primārā loga.
     + Saņem labirinta konfigurāciju un stāvu komponentus no pašreizējā stāva.
     + Izveido jaunu "Maze Controls" logu, izmantojot `egui`@bevy-egui.
     + Ja globālais labirinta konfigurācijas resurss ir pieejams:
@@ -389,7 +389,8 @@ plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-maz
 Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (sk. @tbl:hexlab-F01)
 
 Modularitātes un atkārtotas lietojamības apsvērumu dēļ labirinta ģenerēšanas
-funkcionalitāte tika pārnesta uz ārēju bibliotēku "hexlib"@hexlab. Šis lēmums
+funkcionalitāte tika pārnesta uz ārēju bibliotēku
+"hexlib#footnote[https://crates.io/crates/hexlab]<hexlab>". Šis lēmums
 ļauj labirinta ģenerēšanas loģiku atkārtoti izmantot dažādos projektos un
 lietojumprogrammās, veicinot atkārtotu koda izmantošanu.
 Iekapsulējot labirinta ģenerēšanu atsevišķā bibliotēkā, to ir vieglāk pārvaldīt
@@ -680,7 +681,8 @@ labirinta izveidi un uzturēšanu.
   "Glabā pilnu labirinta struktūru, izmantojot jaucējtabulu (hashmap)",
   `Walls`,
   "Apzīmē sienu konfigurāciju",
-  [Pārvalda sienas stāvokļus, izmantojot bitu karodziņus @bitflags.],
+  [Pārvalda sienas stāvokļus, izmantojot bitu karodziņus
+    @begginer-patterns.],
 ) <components-maze>
 
 ==== Spēlētāja komponentes
@@ -800,9 +802,11 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
   "Uzglabā globālos labirinta izskata parametrus.",
 ) <resources>
 
-Resurss "`GlobalMazeConfig`" ir īpaši svarīgs, jo tas pārvalda labirinta vizuālo
-attēlojumu, ietverot tādus parametrus kā sešstūra lielums, sienu biezums un
-vertikālais augstums.
+#indent-par[
+  Resurss "`GlobalMazeConfig`" ir īpaši svarīgs, jo tas pārvalda labirinta vizuālo
+  attēlojumu, ietverot tādus parametrus kā sešstūra lielums, sienu biezums un
+  vertikālais augstums.
+]
 
 == Daļējs funkciju projektējums
 
@@ -821,7 +825,8 @@ testēšana, izmantojot gan automatizētus rīkus, gan manuālu pārbaudi.
 
 == Statiskā testēšana <static-tests>
 Statiskā testēšana ir svarīga daļa no projekta kvalitātes nodrošināšanas.
-"Clippy"@clippy tiek izmantots koda analīzei, meklējot potenciālas problēmas un
+"Clippy#footnote[https://doc.rust-lang.org/clippy/usage.html]<clippy>"
+tiek izmantots koda analīzei, meklējot potenciālas problēmas un
 neoptimālus risinājumus. Papildus noklusētajiem noteikumiem, tika aktivizēti
 stingrāki koda kvalitātes pārbaudes līmeņi: "`pedantic`" režīms nodrošina
 padziļinātu koda stila pārbaudi, "`nursery`" aktivizē eksperimentālās pārbaudes,
@@ -859,7 +864,7 @@ Izvēlētie testu gadījumi ir detalizēti aprakstīti #todo("tab") tabulā.
 === Automatizēti testi
 
 Automatizētā testēšanas sistēma plaši pārklāj bibliotēku "hexlab", jo tā ir
-paredzēta publiskai lietošanai@hexlab.
+paredzēta publiskai lietošanai.
 Testēšanas stratēģijā ir ieviesti vairāki pārbaudes līmeņi: dokumentācijas testi
 no drošina piemēra koda pareizību, moduļu testi pārbauda iekšējo
 funkcionalitāti, savukārt testu mapē esošie vienībtesti un integrācijas testi
@@ -899,35 +904,36 @@ Augstas koda kvalitātes nodrošināšana ir jebkura projekta būtisks aspekts.
 Lai to panāktu, tiek izmantoti vairāki rīki un prakses, kas palīdz uzturēt tīru,
 efektīvu un uzticamu koda.
 
-Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy#footnote[https://doc.rust-lang.org/clippy/usage.html]<clippy>", kas analizē
+Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy@clippy", kas analizē
 iespējamās problēmas un iesaka uzlabojumus (sk. @static-tests nodaļu).
 
-Kopā ar "Clippy" tiek arī izmantots "Rustfmt#footnote[https://github.com/rust-lang/rustfmt]<rustfmt>", koda formatētājs, lai
+Kopā ar "Clippy@clippy" tiek arī izmantots "Rustfmt#footnote[https://github.com/rust-lang/rustfmt]<rustfmt>", koda formatētājs, lai
 uzturētu vienotu koda formatējumu visā projektā. Šis rīks automātiski formatē
 kodu saskaņā ar Rust stila
 vadlīnijām#footnote[https://doc.rust-lang.org/nightly/style-guide/]<rust-style>.
 
 Turklāt visas publiskās funkcijas un datu struktūras
-hexlab bibliotēkā ir dokumentētas@hexlab-docs. Šajā dokumentācijā ir ietverti
-detalizēti apraksti un lietošanas piemēri, kas ne tikai palīdz saprast kodu, bet
-Programmatūras prasības specifikācija ir izstrādāta, ievērojot LVS 68:1996
-standarta "Programmatūras prasību specifikācijas ceļvedis"@lvs_68 un LVS 72:1996
-standarta "Ieteicamā prakse programmatūras projektējuma aprakstīšanai"@lvs_72
-standarta prasības.
+hexlab bibliotēkā ir
+dokumentētas#footnote[https://docs.rs/hexlab/latest/hexlab/]<hexlab-docs>.
+Šajā dokumentācijā ir ietverti detalizēti apraksti un lietošanas piemēri, kas ne
+tikai palīdz saprast kodu, bet programmatūras prasības specifikācija ir
+izstrādāta, ievērojot LVS 68:1996 standarta "Programmatūras prasību
+specifikācijas ceļvedis" un LVS 72:1996 standarta "Ieteicamā prakse
+programmatūras projektējuma aprakstīšanai" standarta prasības @lvs_68 @lvs_72.
 // Programmatūras projektējuma aprakstā iekļautās
 // aktivitāšu diagrammas ir izstrādātas, ievērojot UML 2.5 versijas
 // specifikāciju@omg-uml.
 
 == Konfigurācijas pārvaldība
 
-Pirmkods tiek pārvaldīts, izmantojot "git"@git versiju kontroles sistēmu.
+Pirmkods tiek pārvaldīts, izmantojot "git#footnote[https://git-scm.com/doc]<git>" versiju kontroles sistēmu.
 Repozitorijs tiek izvietots platformā "GitHub".
 Rīku konfigurācija ir definēta vairākos failos:
 - "justfile#footnote[https://just.systems/man/en/]<justfile>" -- satur atkļūdošanas un
   laidiena komandas dažādām vidēm:
   - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
   - laidiena kompilācijas ar iespējotu optimizāciju.
-- "GitHub Actions"@gh-actions darbplūsmas, kas apstrādā:
+- "GitHub Actions#footnote[https://docs.github.com/en/actions]<gh-actions>" darbplūsmas, kas apstrādā:
   - koda kvalitātes pārbaudes (vienībtesti, statiskie testi, formatēšana,
     dokumentācijas izveide).
   - kompilācijas un izvietotošanas darbplūsma, kas:
@@ -954,7 +960,7 @@ Versiju specifikācija notiek pēc semantiskās versiju atlases@sem-ver (MAJOR.M
 #heading("Pielikumi", numbering: none)
 // #include "code.typ"
 
-// #include "doc.typ"
+#include "doc.typ"
 
 #pagebreak()
 #total-words words

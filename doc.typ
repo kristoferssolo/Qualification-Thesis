@@ -1,88 +1,48 @@
 #import "@preview/tablex:0.0.9": tablex
+#import "@preview/dashy-todo:0.0.1": todo
 
 #let vspace = 1fr
-#heading(numbering: none, outlined: false, "Dokumentārā lapa")
-#v(vspace)
+#let fill = box(width: 1fr, repeat(sym.space))
+#let long-underline = underline(box(width: 1fr, repeat(sym.space)))
 
-Kvalifikācijas darbs "Spēles izstrāde, izmantojot Bevy spēļu dzinēju" ir
+#heading(numbering: none, outlined: false, "Dokumentārā lapa")
+
+Kvalifikācijas darbs "*Spēles izstrāde, izmantojot Bevy spēļu dzinēju*" ir
 izstrādāts Latvijas Universitātes eksakto zinātņu un tehnoloģiju fakultātē.
 
-Darba autors apliecina, ka darbs ir veikts patstāvīgi, un ir izmantoti tikai
-tajā norādītie informācijas avoti.
+Ar savu parakstu apliecinu, ka darbs izstrādāts patstāvīgi, izmantoti tikai tajā
+norādītie informācijas avoti un iesniegtā darba elektroniskā kopija atbilst
+izdrukai.
 
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Darba autors:",
-    [
-      Kristiāns Francis Cagulis, kc22015
-    ],
-  ),
-)
+#context {
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Darba vadītājs:",
-    "prof. Mg. dat. Jānis Iljins",
-  ),
-)
+  set par(
+    first-line-indent: 1cm,
+    hanging-indent: 1cm,
+  )
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Darba galīgā versija izgatavota:",
-    "x.01.2025.",
-  ),
-)
+  v(vspace)
+  [Darba autors: *Kristiāns Francis Cagulis, kc22015 ~~\_\_.01.2025.*]
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Darba iesniegšanas datums:",
-    "06.01.2025.",
-  ),
-)
+  v(vspace)
+  [Rekomendēju darbu aizstāvēšanai\
+    Darba vadītājs: *prof. Mg. dat. Jānis Iljins ~~\_\_.01.2025.*]
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Darba aizstāvēšanas datums:",
-    "x.01.2025.",
-  ),
-)
+  v(vspace)
+  [Recenzents: #todo("write reviewer name")*recenzenta grāds, vārds, uzvārds*]
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Komisijas vērtējums:",
-    line(length: 100%, start: (0pt, 10pt)),
-  ),
-)
 
-#v(vspace)
-#figure(
-  tablex(
-    stroke: none,
-    columns: (1fr, 1fr),
-    "Komisijas sastāvs:",
-    [
-      #line(length: 100%, start: (0pt, 10pt))
-      #line(length: 100%, start: (0pt, 30pt))
-      #line(length: 100%, start: (0pt, 40pt))
-    ],
-  ),
-)
+  v(vspace)
+  [Darbs iesniegs *\_\_.01.2025.*\
+    Kvalifikācijas darbu pārbaudījumu komisijas sekretārs(-e): #long-underline
+  ]
+
+  v(vspace)
+  [Darbs aizstāvēts kvalifikācijas darbu pārbaudījuma komisijas sēdē\
+    \_\_.01.2025. prot. Nr. #long-underline
+  ]
+  v(vspace / 2)
+  [Komisijas sekretārs(-e): #long-underline]
+  v(vspace)
+}

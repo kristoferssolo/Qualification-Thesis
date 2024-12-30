@@ -39,15 +39,6 @@ lvs_72:
   date: 1996-03-27
   organization: Latvijas Nacionālais standartizācijas un metroloģijas centrs
   page-total: 13
-pipeline:
-  type: Web
-  title: "CI/CD: The what, why, and how"
-  author:
-  url: https://github.com/resources/articles/devops/ci-cd
-backtracking:
-  type: Web
-  title: Backtracking
-  url: https://en.wikipedia.org/wiki/Backtracking
 maze-generation:
   type: Web
   title: Maze Generation
@@ -56,14 +47,10 @@ bevy-quickstart:
   type: Web
   title: Bevy New 2D
   url: https://github.com/TheBevyFlock/bevy_new_2d
-git:
-  type: Web
-  title: Versijas kontroles sistēmas git dokumentācija
-  url: https://git-scm.com/doc
 sem-ver:
   type: Web
   title: Semantiskā versiju veidošana
-  url: https://semver.org/
+  url: {value: "https://semver.org/", date: 2024-09-17}
 omg-uml:
   type: Book
   title: OMG Unified Modeling Language (OMG UML)
@@ -71,43 +58,23 @@ omg-uml:
   date: 2015-03
   url: https://www.omg.org/spec/UML/2.5/PDF
   page-total: 794
-hexlab:
-  type: Web
-  title: Hexlab bibliotēka
-  author: Kristiāns Francis Cagulis
-  url: https://crates.io/crates/hexlab
-hexlab-docs:
-  type: Web
-  title: Hexlab bibliotēkas dokumentācija
-  author: Kristiāns Francis Cagulis
-  url: https://docs.rs/hexlab/latest/hexlab/
-gh-release:
-  type: Web
-  title: About Releases
-  author: GitHub komanda
-  url: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
-gh-actions:
-  type: Web
-  title: GitHub Actions dokumentācija
-  author: GitHub komanda
-  url: https://docs.github.com/en/actions
 webgl2:
   type: Web
   title: Bevy + WebGPU
   author:
-  url: https://bevyengine.org/news/bevy-webgpu/
+  url: {value: "https://bevyengine.org/news/bevy-webgpu/", date: 2024-09-20}
 bevy-egui:
   type: Web
   title: Bevy Egui bibliotēkas dokumentācija
   author:
-  url: https://docs.rs/bevy_egui/latest/bevy_egui/
+  url: {value: "https://docs.rs/bevy_egui/latest/bevy_egui/", date: 2024-09-26}
 bevy-inspector-egui:
   type: Web
   title: Bevy Inspector Egui bibliotēkas dokumentācija
   author:
-  url: https://docs.rs/bevy-inspector-egui/0.28.0/bevy_inspector_egui/
+  url: {value: "https://docs.rs/bevy-inspector-egui/0.28.0/bevy_inspector_egui/", date: 2024-09-26}
 the-rust-performance-book:
-  type: Web
+  type: Book
   title: The Rust Performance Book
   author: Nicholas Nethercote
   date: 2020-11
@@ -116,24 +83,24 @@ cargo-tarpaulin:
   type: Web
   title: Tarpaulin
   author: xd009642
-  url: https://crates.io/crates/cargo-tarpaulin
+  url: {value: "https://crates.io/crates/cargo-tarpaulin", date: 2024-12-18}
 ecs:
   type: Web
   title: ECS
-  url: https://en.wikipedia.org/wiki/Entity_component_system
+  url: {value: "https://en.wikipedia.org/wiki/Entity_component_system", date: 2024-09-12}
 bevy-ecs:
   type: Web
   title: Bevy ECS
-  url: https://bevyengine.org/learn/quick-start/getting-started/ecs/
+  url: {value: "https://bevyengine.org/learn/quick-start/getting-started/ecs/", date: 2024-09-12}
 SRP:
   type: Web
   title: Single-responsibility principle
-  url: https://en.wikipedia.org/wiki/Single-responsibility_principle
+  url: {value: "https://en.wikipedia.org/wiki/Single-responsibility_principle"}
 SoC:
   type: Web
   title: Separation of concerns
-  url: https://en.wikipedia.org/wiki/Separation_of_concerns
-bitflags:
+  url: {value: "https://en.wikipedia.org/wiki/Separation_of_concerns"}
+begginer-patterns:
   type: Book
   title: Patterns for Beginning Programmers
   author: David Bernstein
