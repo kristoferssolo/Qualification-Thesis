@@ -9,7 +9,7 @@
 #show: project.with(
   university: "Latvijas Universitāte",
   faculty: "Eksakto zinātņu un tehnoloģiju fakultāte",
-  type: "Kvalifikācijas darbs",
+  thesis_type: "Kvalifikācijas darbs",
   title: [Spēles izstrāde, izmantojot\ Bevy spēļu dzinēju],
   authors: ("Kristiāns Francis Cagulis, kc22015",),
   advisor: "prof. Mg. dat. Jānis Iljins",
@@ -21,7 +21,7 @@
 / Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku.
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
-/ ECS: entitāšu komponentu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
+/ ECS: entitāšu komponenšu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
 / GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
 / Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table#footnote[https://en.wikipedia.org/wiki/Hash_table]) ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
 / Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus.
@@ -169,7 +169,7 @@ brīža.
 nepieciešams automātiskai spēles gaitas pārvaldībai. */
 
 Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņa DPD
-(skat. @fig:dpd-0 att.)
+(sk. @fig:dpd-0)
 
 #figure(
   caption: [\0. līmeņa DPD],
@@ -213,7 +213,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 
 = Programmatūras prasību specifikācija
 == Funkcionālās prasības
-\1. līmeņa datu plūsmas diagramma (skat. @fig:dpd-1 att.) ilustrē galvenos
+\1. līmeņa datu plūsmas diagramma (sk. @fig:dpd-1) ilustrē galvenos
 procesus spēles "Maze Ascension" sistēmā.
 Diagrammā attēloti septiņi galvenie procesi:
 ievades apstrādāšanas modulis,
@@ -322,7 +322,7 @@ attēlošanai un apstrādei, lai konfigurētu labirinta parametrus.
 bibliotēkas, izveido logu "Maze Controls" (labirinta vadības
 elementi), kurā tiek parādītas dažādas
 konfigurācijas opcijas, piemēram, sēkla, rādiuss, augstums, labirinta izmērs,
-orientācija un sākuma/galapunkta pozīcijas (skat @tbl:dev_tools-F01 tab.).
+orientācija un sākuma/galapunkta pozīcijas (sk @tbl:dev_tools-F01).
 Lietotāji var mijiedarboties ar šiem vadības elementiem, lai mainītu labirinta
 izkārtojumu un izskatu.
 Modulis pārbauda, vai konfigurācijā nav notikušas izmaiņas, un izraisa attiecīgus
@@ -385,8 +385,8 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
 Apakšnodaļa ietver labirinta moduļa funkcijas. Moduļa funkcionalitāte ir
 izmantota sešstūraina labirinta ģenerēšanai.
 Moduļa funkciju datu
-plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (skat. @fig:dpd-2-maze-gen att.)
-Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (skat. @hexlab-F01 tab.)
+plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-maze-gen)
+Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (sk. @tbl:hexlab-F01)
 
 Modularitātes un atkārtotas lietojamības apsvērumu dēļ labirinta ģenerēšanas
 funkcionalitāte tika pārnesta uz ārēju bibliotēku "hexlib"@hexlab. Šis lēmums
@@ -464,13 +464,13 @@ programmu.
       atbilstošās komponente.
     + Atkarībā no tā, vai tas ir pašreizējais vai nākamais stāvs, pievieno
       attiecīgo komponenti.
-    + Izsauc atsevišķu funkciju labirinta flīžu izveidei.
+    + Izsauc atsevišķu funkciju labirinta plākšņu izveidei. #todo("rework")
   ],
   [
     Izvades datu sistēmai nav.
   ],
   [
-    + "Stāvs x jau eksistē."
+    + "Stāvs _x_ jau eksistē."
     + "Neizdevās ģenerēt labirintu stāvam x."
   ],
 ) <maze-F01>
@@ -544,8 +544,8 @@ programmu.
 "SSPMF03",
 "Sākt atskaņot spēles mūziku gameplay režīmā.",
 [ Ievades dati: + GameplayMusic resurss + AudioSource resurss ],
-[ + Izveido jaunu audio entītiju + Pievieno AudioPlayer komponenti + Iestata atskaņošanas iestatījumus uz LOOP ],
-[ + Aktīva audio atskaņošanas entītija ],
+[ + Izveido jaunu audio entitāšu + Pievieno AudioPlayer komponenti + Iestata atskaņošanas iestatījumus uz LOOP ],
+[ + Aktīva audio atskaņošanas entitāte ],
 [ Nav definēti specifiski kļūdu ziņojumi. ],
 ) <screen-F03> */
 
@@ -554,12 +554,12 @@ programmu.
 "SSPMF04",
 "Apturēt spēles mūziku, izejot no gameplay režīma.",
 [
-+ GameplayMusic resurss ar entītijas ID
++ GameplayMusic resurss ar entitāte ID
 ],
 [
-+ Pārbauda, vai eksistē mūzikas entītija:
++ Pārbauda, vai eksistē mūzikas entitāte:
 + Ja neeksistē, ...
-+ Ja eksistē, likvidē entītiju rekursīvi
++ Ja eksistē, likvidē entitāte rekursīvi
 ],
 [
 Izvades datu sistēmai nav.
@@ -611,7 +611,201 @@ ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veikt
 === Ārējās saskarnes prasības
 
 = Programmatūras projektējuma apraksts
+== Datu struktūru projektējums
+
+Spēle ir veidota, izmantojot Bevy spēles dzinēju, kas īstenu
+entitāšu komponenšu sistēmu (ECS) arhitektūras modeli.
+Šis modelis sadala spēles loģiku trīs galvenajās daļās: entitātes jeb spēles
+objekti, komponentes jeb dati un sistēmas -- loģika, kas darbojas ar entitātēm
+ar konkrētām komponentēm @ecs @bevy-ecs @bevy-cheatbook[nod. ~14.7].
+Šis modelis ļauj efektīvi apstrādāt datus un skaidri nodalīt atsevišķus
+pienākumus.
+
+=== Komponentes
+
+Komponentes Bevy ir vienkāršas datu struktūras, kuras var pievienot entitātēm.
+Tās nosaka spēles objektu īpašības un iespējas.
+Šajā spēlē komponentes tiek izmantotas, lai attēlotu dažādus spēles vienību
+aspektus, sākot ar to fiziskajām īpašībām un beidzot ar to vizuālo attēlojumu.
+Komponentes ir izstrādātas būt minimālām un mērķtiecīgām, ievērojot vienotas
+atbildības principus @SRP @SoC.
+Šīs komponentes var iedalīt trīs galvenajās grupās: ar stāvu/līmeni, labirintu un
+spēlētāju saistītās komponentes, kā redzams @tbl:components-floor[],
+@tbl:components-maze[] un @tbl:components-player[tabulās].
+
+==== Stāva komponentes
+
+Stāva komponentes pārvalda vertikālo progresu un kustību spēlē.
+Kā redzams @tbl:components-floor[tabulā], šīs komponentes pārvalda stāvu numurus,
+pašreizējā un nākamā stāva stāvokli un vertikālās kustības mehāniku.
+
+#components-table(
+  caption: "Ar stāviem saistītās komponentes",
+  `Floor`,
+  "Stāva numurs",
+  "Identificē, kurai entitātei ir kurš stāvs.",
+  `CurrentFloor`,
+  "Atzīmē pašreizējo stāvu",
+  "Identificē pašreizējo stāvu.",
+  `NextFloor`,
+  "Atzīmē nākamo stāvu",
+  "Identificē progresa mērķa līmeni, uz kuru jāpāriet. Var būt arī līmenis zemāk.",
+  `MovementState`,
+  "Veic stāvu vertikālo kustību",
+  "Kontrolē stāvu pārejas animācijas.",
+) <components-floor>
+
+==== Labirinta komponentes
+
+Labirinta struktūru pārvalda vairāki savstarpēji saistītas komponentes.
+Tabulā @tbl:components-maze[] ir redzamas sastāvdaļas, kas ir atbildīgas par
+labirinta izveidi un uzturēšanu.
+
+#components-table(
+  caption: "Ar labirintiem saistītās komponentes",
+  `HexMaze`,
+  "Galvenais labirinta marķieris",
+  "Identificē labirinta entitāti un pieprasa nepieciešamās atkarības.",
+  `Tile`,
+  "Apzīmē labirinta sešstūra plāksnes",
+  "Identificē labirinta vietas, pa kurām var staigāt.",
+  `Wall`,
+  "Apzīmē labirinta sienas",
+  "Identificē sadursmju robežas.",
+  `MazeConfig`,
+  "Glabā labirinta parametrus",
+  "Konfigurē labirinta ģenerēšanu ar rādiusu, pozīcijām un izkārtojumu.",
+  `Maze`,
+  "Glabā sešstūra labirinta datu",
+  "Glabā pilnu labirinta struktūru, izmantojot jaucējtabulu (hashmap)",
+  `Walls`,
+  "Apzīmē sienu konfigurāciju",
+  [Pārvalda sienas stāvokļus, izmantojot bitu karodziņus @bitflags.],
+) <components-maze>
+
+==== Spēlētāja komponentes
+
+Spēlētāju kustību un mijiedarbību nodrošina specializētu komponenšu kopums.
+@tbl:components-player[tabulā] ir redzamas sastāvdaļas, kas pārvalda ar
+spēlētāju saistītās funkcijas.
+
+#components-table(
+  caption: "Ar spēlētāju saistītās komponentes",
+  `Player`,
+  "Apzīmē spēlētāja entitāti",
+  "Identificē spēlētāju un pieprasa nepieciešamās sastāvdaļas.",
+  `CurrentPosition`,
+  "Glabā spēlētāj pozīciju",
+  "nosaka pašreizējo atrašanās vietu labirintā.",
+  `MovementSpeed`,
+  "Glabā kustības ātrumu",
+  "Nosaka spēlētāja pārvietošanās ātrumu.",
+  `MovementTarget`,
+  "Glabā pārvietošanās mērķi",
+  "Pārvalda spēlētāju pārvietošanās virzienus.",
+) <components-player>
+
+
+=== Notikumi
+
+Notikumi Bevy nodrošina paziņojumu apmaiņas mehānismu, kas nodrošina brīvu
+sasaisti starp sistēmām.
+Šī uz notikumiem balstītā arhitektūra ļauj dažādām sistēmas daļām spēles daļām
+sazināties bez tiešas atkarības.
+Notikumi ir īpaši noderīgi lietotāja ievades, fizikas mijiedarbības un spēles
+stāvokļa pāreju apstrādei @bevy-cheatbook[nod. ~14.11].
+Notikumi arī ir iedalīti trīs galvenajās grupās: ar labirintu, pāreju uz citu stāvu
+un ar spēlētāju saistīti notikumi, kas redzams @tbl:events-maze[],
+@tbl:events-floor[] un @tbl:events-player[tabulās].
+
+==== Labirintu notikumi
+
+Labirinta notikumi pārvalda labirinta entitāšu dzīves ciklu spēlē. Kā redzams
+@tbl:events-maze[tabulā], šie notikumi pārvalda labirinta izveidi, atjaunošanu
+un likvidēšanu.
+
+#events-table(
+  caption: "Ar labirintiem saistīti notikumi",
+  `SpawnMaze`,
+  "Izveido jaunu labirintu",
+  "Inicializē labirintu ar norādīto grīdu un konfigurāciju.",
+  `RespawnMaze`,
+  "Atjauno esošo labirintu",
+  "Atjauno labirintu.",
+  `DespawnMaze`,
+  "Noņem labirintu",
+  "Izdzēš labirinta entitātes norādītajam stāvam.",
+) <events-maze>
+
+==== Stāvu notikumi
+
+Stāvu pārejas sistēma izmanto vienu uzskaitītu notikumu tipu (sk.
+@tbl:events-floor), kas pārvalda vertikālo kustību starp stāviem.
+
+#figure(
+  caption: "Ar stāviem saistīti notikumi",
+  kind: table,
+  tablex(
+    columns: (1fr, 1fr, 2fr),
+    [*Notikums*],
+    [*Variants*],
+    [*Pielietojums*],
+    `TransitionFloor`,
+    `Ascend`,
+    "Izraisa visu stāvu augšupejošu pāreju.",
+    `TransitionFloor`,
+    `Descend`,
+    "Izraisa visu stāvu lejupejošu pāreju.",
+  ),
+) <events-floor>
+
+==== Spēlētāju notikumi
+
+Ar spēlētāju saistītie notikumi pārvalda spēlētāja entitātes dzīves ciklu (sk.
+@tbl:events-player).
+Līdzīgi kā labirintu notikumiem, šie apstrādā spēlētāja izveidošanu, atjaunošanu
+un likvidēšanu.
+
+#events-table(
+  caption: "Ar spēlētaju saistīti notikumi",
+  `SpawnPlayer`,
+  "Izveido spēlētāja entitāti",
+  "Inicializē jaunu spēlētāju starta pozīcijā.",
+  `RespawnPlayer`,
+  "Atjauno spēlētāju",
+  "Atiestata spēlētāju uz pašreizējā stāva sākuma pozīciju.",
+  `DespawnPlayer`,
+  "Noņem spēlētāju",
+  "Izdzēš spēlētāja entitātes.",
+) <events-player>
+
+=== Resursi
+
+Bevy resursi kalpo kā globāli stāvokļa konteineri, kuriem var piekļūt jebkura
+sistēma.
+Atšķirībā no komponentiem, kas ir piesaistīti konkrētām entitātēm, resursi
+nodrošina spēles mēroga datus un konfigurāciju.
+Tie ir īpaši noderīgi kopīgu stāvokļu un iestatījumu pārvaldībai, kas var
+ietekmē vairākas sistēmas@bevy-cheatbook[nod. ~14.6].
+Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārvaldībai
+(sk. @tbl:resources)
+
+#resources-table(
+  caption: "Globālie resursi",
+  `MazePluginLoaded`,
+  "Spraudņa stāvokļa marķieris",
+  "Norāda labirinta spraudņa inicializāciju.",
+  `GlobalMazeConfig`,
+  "Labirinta vizuālie iestatījumi",
+  "Uzglabā globālos labirinta izskata parametrus.",
+) <resources>
+
+Resurss "`GlobalMazeConfig`" ir īpaši svarīgs, jo tas pārvalda labirinta vizuālo
+attēlojumu, ietverot tādus parametrus kā sešstūra lielums, sienu biezums un
+vertikālais augstums.
+
 == Daļējs funkciju projektējums
+
 #todo("pievienot funkciju projektējumu +diagrammas")
 /* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
 * obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
@@ -641,7 +835,7 @@ programmatūru, meklējot kļūdas un problēmas pirmkodā. [12] Rīks satur vai
 problēmu kopas, kas var tikt izmantotas analīzē. Tika izmantota „clang-analyzer“ problēmu
 kopa. Vieglākai statisko testu darbināšanai tika izmantots vienkāršs programmēšanas valodas
 „Python“ skripts, kas atlasa visus failus, kuru paplašinājums ir „cpp“ (valodas „C++“ pirmkoda
-fails) vai „h“ (galvenes fails) un darbina statiskās analīzes rīku ar katru failu atsevišķi (skat.
+fails) vai „h“ (galvenes fails) un darbina statiskās analīzes rīku ar katru failu atsevišķi (sk.
 izpildes rezultātu attēlā 4.3.). */
 
 == Dinamiskā testēšana
@@ -659,6 +853,8 @@ būtisku informāciju, piemēram, test nosaukumu, unikālo identifikatoru, aprak
 izpildes soļus, gaidāmo rezultātu un faktisko rezultātu (veiksmīga testa
 gadījumā apzīmēts ar "Ok", bet neveiksmīgu -- ar "Err").
 Izvēlētie testu gadījumi ir detalizēti aprakstīti #todo("tab") tabulā.
+
+#todo("add tests table")
 
 === Automatizēti testi
 
@@ -703,20 +899,17 @@ Augstas koda kvalitātes nodrošināšana ir jebkura projekta būtisks aspekts.
 Lai to panāktu, tiek izmantoti vairāki rīki un prakses, kas palīdz uzturēt tīru,
 efektīvu un uzticamu koda.
 
-Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy"@clippy, kas analizē
-iespējamās problēmas un iesaka uzlabojumus (skat. @static-tests nodaļu).
+Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy#footnote[https://doc.rust-lang.org/clippy/usage.html]<clippy>", kas analizē
+iespējamās problēmas un iesaka uzlabojumus (sk. @static-tests nodaļu).
 
-Kopā ar "Clippy" tiek arī izmantots "Rustfmt"@rustfmt, koda formatētājs, lai
+Kopā ar "Clippy" tiek arī izmantots "Rustfmt#footnote[https://github.com/rust-lang/rustfmt]<rustfmt>", koda formatētājs, lai
 uzturētu vienotu koda formatējumu visā projektā. Šis rīks automātiski formatē
-kodu saskaņā ar Rust stila vadlīnijām@rust-style.
+kodu saskaņā ar Rust stila
+vadlīnijām#footnote[https://doc.rust-lang.org/nightly/style-guide/]<rust-style>.
 
 Turklāt visas publiskās funkcijas un datu struktūras
 hexlab bibliotēkā ir dokumentētas@hexlab-docs. Šajā dokumentācijā ir ietverti
 detalizēti apraksti un lietošanas piemēri, kas ne tikai palīdz saprast kodu, bet
-arī kalpo kā dokumentācijas testēšanas veids. Darbinot "cargo doc"@cargo-doc,
-tiek ģenerēja un validēja dokumentācija, nodrošinot, ka piemēri ir pareizi un
-aktuāli.
-
 Programmatūras prasības specifikācija ir izstrādāta, ievērojot LVS 68:1996
 standarta "Programmatūras prasību specifikācijas ceļvedis"@lvs_68 un LVS 72:1996
 standarta "Ieteicamā prakse programmatūras projektējuma aprakstīšanai"@lvs_72
@@ -730,7 +923,7 @@ standarta prasības.
 Pirmkods tiek pārvaldīts, izmantojot "git"@git versiju kontroles sistēmu.
 Repozitorijs tiek izvietots platformā "GitHub".
 Rīku konfigurācija ir definēta vairākos failos:
-- "justfile"@justfile -- satur atkļūdošanas un
+- "justfile#footnote[https://just.systems/man/en/]<justfile>" -- satur atkļūdošanas un
   laidiena komandas dažādām vidēm:
   - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
   - laidiena kompilācijas ar iespējotu optimizāciju.
@@ -742,7 +935,7 @@ Rīku konfigurācija ir definēta vairākos failos:
     - publicē bināros failus GitHub platformā;
     - izvieto tīmekļa versiju itch.io@itch-io platformā.
 
-Versiju specifikācija notiek pēc semantiskās versiju atlases@sem_ver (MAJOR.MINOR.PATCH):
+Versiju specifikācija notiek pēc semantiskās versiju atlases@sem-ver (MAJOR.MINOR.PATCH):
 + MAJOR -- galvenā versija, nesaderīgas izmaiņas, būtiskas koda izmaiņas.
 + MINOR -- atpakaļsaderīgas funkcionalitātes papildinājumi.
 + PATCH -- ar iepriekšējo versiju saderīgu kļūdu labojumi.

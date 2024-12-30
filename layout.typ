@@ -11,7 +11,7 @@
 #let project(
   university: "",
   faculty: "",
-  type: "",
+  thesis_type: "",
   title: [],
   authors: (),
   advisor: "",
@@ -104,7 +104,7 @@
     upper(
       text(
         size: 16pt,
-        type,
+        thesis_type,
       ),
     ),
   )
@@ -150,6 +150,12 @@
   )
   /* Title page config end */
 
+  // Start page numbering
+  set page(
+    numbering: "1",
+    number-align: center,
+  )
+
   // WARNING: remove before sending
   outline(title: "TODOs", target: figure.where(kind: "todo"))
 
@@ -186,11 +192,18 @@
     it
   }
 
-  set ref(supplement: it => { }) // disable default reference suppliments
+  // disable default reference suppliments
+  set ref(supplement: it => { })
+
+  // Custom show rule for references
   show ref: it => {
     let el = it.element
 
-    if el != none and el.func() == heading {
+    if el == none {
+      return it
+    }
+
+    if el.func() == heading {
       return link(
         el.location(),
         numbering(
@@ -200,6 +213,43 @@
       )
     }
 
+    if el.func() == figure {
+      let kind = el.kind
+
+      // Map for different kinds of supplements
+      let supplement_map = (
+        i-figured-table: "tab.",
+        i-figured-image: "att.",
+      )
+
+      // Get the supplement value properly
+      let supplement = if type(it.supplement) != function {
+        it.supplement
+      } else {
+        if kind in supplement_map {
+          supplement_map.at(kind)
+        } else {
+          ""
+        }
+      }
+      // Create counter based on the kind
+      return link(
+        el.location(),
+        numbering(
+          el.numbering,
+          ..counter(figure.where(kind: kind)).at(
+            el.location(),
+          ),
+        ) + if supplement != "" {
+          " " + supplement
+        } else {
+          ""
+        },
+      )
+    }
+
+
+    // Default case for non-figure elements
     it
   }
   /* --- Figure/Table config end --- */
@@ -232,11 +282,6 @@
   )
   /* ToC config end */
 
-  // Start page numbering
-  set page(
-    numbering: "1",
-    number-align: center,
-  )
 
 
   // show link: set text(fill: blue.darken(20%))

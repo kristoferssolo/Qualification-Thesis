@@ -201,3 +201,54 @@
 #let red(body) = {
   text(body, fill: rgb(255, 0, 0))
 }
+
+#let components-table(
+  caption: str,
+  ..body,
+) = {
+  figure(
+    caption: caption,
+    kind: table,
+    tablex(
+      columns: 3,
+      [*Komponente*],
+      [*Apraksts*],
+      [*Pielietojums*],
+      ..body,
+    ),
+  )
+}
+
+#let events-table(
+  caption: str,
+  ..body,
+) = {
+  figure(
+    caption: caption,
+    kind: table,
+    tablex(
+      columns: 3,
+      [*Notikums*],
+      [*Apraksts*],
+      [*Pielietojums*],
+      ..body,
+    ),
+  )
+}
+
+#let resources-table(
+  caption: str,
+  ..body,
+) = {
+  figure(
+    caption: caption,
+    kind: table,
+    tablex(
+      columns: 3,
+      [*Resurss*],
+      [*Apraksts*],
+      [*Pielietojums*],
+      ..body,
+    ),
+  )
+}

@@ -7,22 +7,22 @@ typst:
     - Haug
     - Martin
     - Typst Projekta Izstrādātāji
-  url: https://typst.app/
-hex_grid:
+  url: {value: "https://typst.app/", date: 2024-12-02}
+hex-grid:
   type: Web
   title: Hexagonal Grids
   author: Red Blob Games
-  url: {value: "https://www.redblobgames.com/grids/hexagons/", date: 2024-09-10}
-bevy_examples:
+  url: {value: "https://www.redblobgames.com/grids/hexagons/", date: 2024-09-15}
+bevy-examples:
   type: Web
   title: Bevy Examples
   author:
-  url: {value: "https://bevyengine.org/examples/", date: 2024-09-10}
-bevy_cheatbook:
+  url: {value: "https://bevyengine.org/examples/", date: 2024-09-14}
+bevy-cheatbook:
   type: Web
   title: Unofficial Bevy Cheat Book
   author:
-  url: {value: "https://bevy-cheatbook.github.io/", date: 2024-09-10}
+  url: {value: "https://bevy-cheatbook.github.io/", date: 2024-09-14}
 lvs_68:
   type: Book
   title: Programmatūras prasību specifikācijas ceļvedis
@@ -48,11 +48,11 @@ backtracking:
   type: Web
   title: Backtracking
   url: https://en.wikipedia.org/wiki/Backtracking
-maze_generation:
+maze-generation:
   type: Web
   title: Maze Generation
   url: https://rosettacode.org/wiki/Maze_generation
-bevy_quickstart:
+bevy-quickstart:
   type: Web
   title: Bevy New 2D
   url: https://github.com/TheBevyFlock/bevy_new_2d
@@ -60,7 +60,7 @@ git:
   type: Web
   title: Versijas kontroles sistēmas git dokumentācija
   url: https://git-scm.com/doc
-sem_ver:
+sem-ver:
   type: Web
   title: Semantiskā versiju veidošana
   url: https://semver.org/
@@ -71,26 +71,6 @@ omg-uml:
   date: 2015-03
   url: https://www.omg.org/spec/UML/2.5/PDF
   page-total: 794
-clippy:
-  type: Web
-  title: Clippy
-  author: Rust Projekta Izstādātāji
-  url: https://doc.rust-lang.org/clippy/usage.html
-rustfmt:
-  type: Web
-  title: Rustfmt
-  author: Rust Projekta Izstādātāji
-  url: https://github.com/rust-lang/rustfmt
-cargo-doc:
-  type: Web
-  title: cargo-doc
-  author: Rust Projekta Izstādātāji
-  url: https://doc.rust-lang.org/cargo/commands/cargo-doc.html
-rust-style:
-  type: Web
-  title: Rust stila ceļvedis
-  author: Rust Projekta Izstādātāji
-  url: https://doc.rust-lang.org/nightly/style-guide/
 hexlab:
   type: Web
   title: Hexlab bibliotēka
@@ -101,14 +81,9 @@ hexlab-docs:
   title: Hexlab bibliotēkas dokumentācija
   author: Kristiāns Francis Cagulis
   url: https://docs.rs/hexlab/latest/hexlab/
-justfile:
-  type: Web
-  title: Just programmētāja rokasgrāmata
-  author: Casey Rodarmor
-  url: https://just.systems/man/en/
 gh-release:
   type: Web
-  title: Par laidieniem
+  title: About Releases
   author: GitHub komanda
   url: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
 gh-actions:
@@ -142,3 +117,27 @@ cargo-tarpaulin:
   title: Tarpaulin
   author: xd009642
   url: https://crates.io/crates/cargo-tarpaulin
+ecs:
+  type: Web
+  title: ECS
+  url: https://en.wikipedia.org/wiki/Entity_component_system
+bevy-ecs:
+  type: Web
+  title: Bevy ECS
+  url: https://bevyengine.org/learn/quick-start/getting-started/ecs/
+SRP:
+  type: Web
+  title: Single-responsibility principle
+  url: https://en.wikipedia.org/wiki/Single-responsibility_principle
+SoC:
+  type: Web
+  title: Separation of concerns
+  url: https://en.wikipedia.org/wiki/Separation_of_concerns
+bitflags:
+  type: Book
+  title: Patterns for Beginning Programmers
+  author: David Bernstein
+  chapter: Bit Flags
+  page-total: 197
+  page-range: 58-64
+  url: https://pressbooks.lib.jmu.edu/programmingpatterns/
