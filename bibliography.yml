@@ -107,4 +107,39 @@ begginer-patterns:
   chapter: Bit Flags
   page-total: 197
   page-range: 58-64
-  url: https://pressbooks.lib.jmu.edu/programmingpatterns/
+  url: "https://pressbooks.lib.jmu.edu/programmingpatterns/"
+clippy:
+  type: Web
+  title: Clippy
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/stable/clippy/
+cargo-doc:
+  type: Web
+  title: cargo-doc
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/stable/cargo/
+rust-style:
+  type: Web
+  title: Rust stila ceļvedis
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/stable/style-guide/
+rust-lang-doc:
+  type: Web
+  title: Rust Dokumentācija
+  author: Rust Projekta Izstādātāji
+  url: https://doc.rust-lang.org/stable/
+rustfmt:
+  type: Web
+  title: Rustfmt
+  author: Rust Projekta Izstādātāji
+  url: https://github.com/rust-lang/rustfmt
+gh-release:
+  type: Web
+  title: About Releases
+  author: GitHub komanda
+  url: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
+gh-actions:
+  type: Web
+  title: GitHub Actions dokumentācija
+  author: GitHub komanda
+  url: https://docs.github.com/en/actions

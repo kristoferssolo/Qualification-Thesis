@@ -8,7 +8,7 @@
 
 #show: project.with(
   university: "Latvijas Universitāte",
-  faculty: "Eksakto zinātņu un tehnoloģiju fakultāte",
+  faculty: [Eksakto zinātņu un tehnoloģiju fakultāte\ Datorikas nodaļa],
   thesis_type: "Kvalifikācijas darbs",
   title: [Spēles izstrāde, izmantojot\ Bevy spēļu dzinēju],
   authors: ("Kristiāns Francis Cagulis, kc22015",),
@@ -21,15 +21,16 @@
 / Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku.
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
-/ ECS: entitāšu komponenšu sistēma (angl. Entity-Component-System#footnote[https://en.wikipedia.org/wiki/Entity_component_system]);
+/ ECS: entitāšu komponenšu sistēma (angl. Entity-Component-System)@ecs;
 / GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
-/ Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table#footnote[https://en.wikipedia.org/wiki/Hash_table]) ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
+/ Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table)#footnote[https://en.wikipedia.org/wiki/Hash_table] ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
 / Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus.
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
-/ Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>);
+/ Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up)#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>;
 / Pasaules resursi: #todo("add World resource")
 / Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību.
+/ Procedurāla ģenerēšana: datu algoritmiskas izstrādes metode, kurā tiek kombinēts cilvēka radīts saturs un algoritmi, kas apvienoti ar datora ģenerētu nejaušību.
 / Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade.
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
 / Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai.
@@ -53,12 +54,30 @@ procedurālu labirintu ģenerēšanu, spēlētāju navigācijas sistēmu, papild
 integrāciju un vertikālās progresijas mehāniku, vienlaikus ievērojot minimālisma
 dizaina filozofiju.
 
-Spēles pamatā ir sešstūra formas plāksnes, kas, savukārt, veido sešstūra
-formas labirintus, kuri rada atšķirīgu vizuālo un navigācijas izaicinājumu.
-Spēlētāju uzdevums ir pārvietoties pa šiem labirintiem, lai sasniegtu katra
-līmeņa beigas. Spēlētājiem progresējot, tie sastopas ar arvien sarežģītākiem
-labirintiem, kuros nepieciešama stratēģiska domāšana, izpēte un papildspēju
-izmantošana.
+// Spēles pamatā ir sešstūra formas plāksnes, kas, savukārt, veido sešstūra
+// formas labirintus, kuri rada atšķirīgu vizuālo un navigācijas izaicinājumu.
+// Spēlētāju uzdevums ir pārvietoties pa šiem labirintiem, lai sasniegtu katra
+// līmeņa beigas. Spēlētājiem progresējot, tie sastopas ar arvien sarežģītākiem
+// labirintiem, kuros nepieciešama stratēģiska domāšana, izpēte un papildspēju
+// izmantošana.
+
+Spēles pamatā ir procedurāli ģenerēti sešstūra labirinti, kas katrā spēlē rada
+unikālu vizuālo un navigācijas izaicinājumu. Procedurālās ģenerēšanas sistēma
+nodrošina, ka:
+
+- Katrs labirints tiek unikāli ģenerēts "uzreiz"#footnote[Attiecas uz gandrīz
+  tūlītēju labirintu ģenerēšanu, kas notiek milisekunžu
+  laikā.], nodrošinot "bezgalīgu"#footnote[Lai gan sistēma izmanto `u64` sēklas,
+  kas ir galīgas, iespējamo labirinta konfigurāciju skaits ir ārkārtīgi liels,
+  tādējādi praktiskiem mērķiem nodrošinot praktiski bezgalīgu labirintu
+  skaitu.] daudzveidību.
+- Labirinta sarežģītību var dinamiski pielāgot spēlētājam progresējot.
+- Uzglabāšanas prasības tiek samazinātas līdz minimumam, ģenerējot labirintus reāllaikā.
+
+Spēlētāju uzdevums ir pārvietoties pa šiem procesuāli ģenerētajiem labirintiem,
+lai sasniegtu katra līmeņa beigas. Turpinot progresēt, spēlētāji saskaras ar
+arvien sarežģītākiem labirintiem, kuros nepieciešama stratēģiskā domāšana,
+izpēte un papildu prasmju izmantošana.
 
 Spēlētājam progresējot, tie sastopas ar dažādiem uzlabojumiem un
 papildspējām, kas stratēģiski izvietoti labirintos. Šī funkcija padziļina spēlēšanas
@@ -115,7 +134,7 @@ ietvaros.
 == Produkta perspektīva
 "Maze Ascension" ir izstrādāta kā daudzplatformu spēle, izmantojot nepārtrauktas
 integrācijas un nepārtrauktas izvietošanas (CI/CD)
-darbplūsma#footnote[https://github.com/resources/articles/devops/ci-cd]<pipeline>, lai
+darbplūsma,#footnote[https://github.com/resources/articles/devops/ci-cd]<pipeline> lai
 vienkāršotu izstrādes un izplatīšanas procesu.
 Šī darbplūsma ir konfigurēts tā, lai kompilētu spēli vairākām platformām,
 tostarp Linux, macOS, Windows un WebAssembly (WASM).
@@ -123,8 +142,8 @@ Tas nodrošina, ka spēle ir pieejama plašai auditorijai, nodrošinot konsekven
 un saistošu pieredzi dažādās operētājsistēmās un vidēs.
 
 Spēle tiek izplatīta, izmantojot "GitHub
-releases#footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>"
-un itch.io#footnote("https://itch.io/")<itch-io>, kas ir
+releases"#footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>
+un itch.io,#footnote[https://itch.io/]<itch-io> kas ir
 populāra neatkarīgo spēļu platforma, kas ļauj viegli piekļūt un izplatīt spēles
 visā pasaulē. Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu
 un kopienas iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un
@@ -190,7 +209,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 - Tehniskie pieņēmumi:
   - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu
     palaist uz Bevy spēles dzinēja balstītas spēles.
-  - ierīcei jāatbalsta WebGL2#footnote("https://registry.khronos.org/webgl/specs/latest/2.0/"),
+  - ierīcei jāatbalsta WebGL2,#footnote("https://registry.khronos.org/webgl/specs/latest/2.0/")
     lai nodrošinātu pareizu atveidošanu @webgl2.
 - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
 - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
@@ -210,7 +229,7 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   - Nepieciešamie Bevy spraudņi un atkarības, kā norādīts projekta "Cargo.toml" failā.
 - Lietotāja vides pieņēmumi:
   - Spēlētājiem ir pamata izpratne par labirinta navigāciju un mīklu risināšanas koncepcijām.
-  - Lietotāji var piekļūt un lejupielādēt spēles no itch.io@itch-io platformas.
+  - Lietotāji var piekļūt un lejupielādēt spēles no itch.io platformas.
   - Spēlētājiem ir ievadierīces (tastatūra/pele), ar kurām kontrolēt spēli.
 
 = Programmatūras prasību specifikācija
@@ -345,8 +364,7 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
   [
     Ievades dati tiek saņemti no pasaules resursiem un komponentiem:
     + Labirinta spraudņa resurss;
-    + `EguiContext`#footnote("https://docs.rs/bevy_egui/latest/bevy_egui/")<bevy_egui>
-      komponente;
+    + "EguiContext" komponente;#footnote[https://docs.rs/bevy_egui/latest/bevy_egui/]<bevy_egui>
     + Labirinta konfigurācija un stāva komponentes saistībā ar pašreizējā stāva
       komponenti;
     + Globālais labirinta konfigurācijas resurss.
@@ -354,9 +372,9 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
   [
     + Pārbauda, vai labirinta straudņa resurss eksistē pasaulē.
       + Ja nav, iziet no sistēmas un nedara neko.
-    + Saņem `EguiContext`@bevy_egui komponentu no primārā loga.
+    + Saņem `EguiContext` komponentu no primārā loga.
     + Saņem labirinta konfigurāciju un stāvu komponentus no pašreizējā stāva.
-    + Izveido jaunu "Maze Controls" logu, izmantojot `egui`@bevy-egui.
+    + Izveido jaunu "Maze Controls" logu, izmantojot "egui".
     + Ja globālais labirinta konfigurācijas resurss ir pieejams:
       + Parāda galveno virsrakstu "Maze Configuration".
       + Pievieno vadības elementus:
@@ -390,7 +408,7 @@ Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (sk. @tbl:h
 
 Modularitātes un atkārtotas lietojamības apsvērumu dēļ labirinta ģenerēšanas
 funkcionalitāte tika pārnesta uz ārēju bibliotēku
-"hexlib#footnote[https://crates.io/crates/hexlab]<hexlab>". Šis lēmums
+"hexlib".#footnote[https://crates.io/crates/hexlab]<hexlab> Šis lēmums
 ļauj labirinta ģenerēšanas loģiku atkārtoti izmantot dažādos projektos un
 lietojumprogrammās, veicinot atkārtotu koda izmantošanu.
 Iekapsulējot labirinta ģenerēšanu atsevišķā bibliotēkā, to ir vieglāk pārvaldīt
@@ -811,6 +829,33 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
 == Daļējs funkciju projektējums
 
 #todo("pievienot funkciju projektējumu +diagrammas")
+
+=== Plākšņu pārvaldas sistēma
+
+Projekta sākotnējā plānošanas posmā tika apsvēra iespēja labirinta elementu
+pārvaldībai izmantot
+"`bevy_ecs_tilemap`" bibliotēku.#footnote[https://crates.io/crates/bevy_ecs_tilemap]<bevy-ecs-tilemap>
+Tomēr pēc rūpīgas izvērtēšanas tika secināts, ka tā neatbilst konkrētajam
+projekta lietojuma gadījumam sekojošu iemeslu dēļ:
++ Uz failiem balstīta plākšņu ielāde: "`bevy_ecs_tilemap`" galvenokārt paļaujas uz
+  plākšņu ielādi no ārējiem failiem. Šajā projektā ir nepieciešami dinamiski,
+  procedurāli ģenerēti labirinti, tāpēc šī pieeja nav īsti piemērota.
++ Elastības ierobežojumi: bibliotēkas plākšņu datu struktūra nav viegli
+  pielāgojama nepieciešamajai datu struktūrai, kurai ir nepieciešama
+  sarežģītākām telpiskām attiecībām starp plāksnēm.
++ Prasības attiecībā uz sienu veidošanu: katrai sistēmas labirinta plāksnei
+  var būt 0-6 sienas, kas tiek ģenerētas nejauši. Šādu dinamisku sienu ģenerēšanas
+  līmeni nav viegli sasniegt izmantojot "`bevy_ecs_tilemap`".
+
+#indent-par[
+  Tā vietā, lai izmantotu "`bevy_ecs_tilemap`", tika izlemts izstrādāt pielāgotu
+  risinājumu, kas tieši integrējas ar labirinta ģenerēšanas algoritmu. Šī
+  pieeja ļauj:
+]
+- vienkāršāku integrācija ar procesuālo labirintu ģenerēšanu;
+- optimālāku veiktspēja projekta lietošanas gadījumam;
+- lielāku kontroli pār labirinta vizuālo attēlojumu.
+
 /* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
 * obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
 * piemēru (use case) diagrammas */
@@ -825,14 +870,14 @@ testēšana, izmantojot gan automatizētus rīkus, gan manuālu pārbaudi.
 
 == Statiskā testēšana <static-tests>
 Statiskā testēšana ir svarīga daļa no projekta kvalitātes nodrošināšanas.
-"Clippy#footnote[https://doc.rust-lang.org/clippy/usage.html]<clippy>"
+"Clippy"
 tiek izmantots koda analīzei, meklējot potenciālas problēmas un
 neoptimālus risinājumus. Papildus noklusētajiem noteikumiem, tika aktivizēti
 stingrāki koda kvalitātes pārbaudes līmeņi: "`pedantic`" režīms nodrošina
 padziļinātu koda stila pārbaudi, "`nursery`" aktivizē eksperimentālās pārbaudes,
 un "`unwrap_used`" un "`expect_used`" brīdina par potenciāli nedrošu kļūdu
 apstrādi. Šie papildu noteikumi palīdz uzturēt augstāku koda kvalitāti un
-samazināt potenciālo kļūdu skaitu.
+samazināt potenciālo kļūdu skaitu @clippy.
 
 
 /* Programmatūras statiskai testēšanai ir izmantots rīks „clang-tidy“, kas analizē
@@ -871,7 +916,7 @@ funkcionalitāti, savukārt testu mapē esošie vienībtesti un integrācijas te
 pārbauda sarežģītākus gadījumus.
 Izmantojot "cargo-tarpaulin", testu pārklājums ir $81,69%$ (116 no 142
 iekļautajām rindiņām), tomēr šis rādītājs pilnībā neatspoguļo faktisko
-pārklājumu, jo rīkam ir ierobežojumi attiecībā uz "inline#footnote[https://doc.rust-lang.org/nightly/reference/attributes/codegen.html?highlight=inline]"
+pārklājumu, jo rīkam ir ierobežojumi attiecībā uz "inline"#footnote[https://doc.rust-lang.org/nightly/reference/attributes/codegen.html?highlight=inline]
 funkcijām un citi tehniski ierobežojumi @cargo-tarpaulin.
 
 
@@ -904,16 +949,15 @@ Augstas koda kvalitātes nodrošināšana ir jebkura projekta būtisks aspekts.
 Lai to panāktu, tiek izmantoti vairāki rīki un prakses, kas palīdz uzturēt tīru,
 efektīvu un uzticamu koda.
 
-Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy@clippy", kas analizē
+Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy"@clippy, kas analizē
 iespējamās problēmas un iesaka uzlabojumus (sk. @static-tests nodaļu).
 
-Kopā ar "Clippy@clippy" tiek arī izmantots "Rustfmt#footnote[https://github.com/rust-lang/rustfmt]<rustfmt>", koda formatētājs, lai
+Kopā ar "Clippy" tiek arī izmantots "Rustfmt" @rustfmt, koda formatētājs, lai
 uzturētu vienotu koda formatējumu visā projektā. Šis rīks automātiski formatē
 kodu saskaņā ar Rust stila
-vadlīnijām#footnote[https://doc.rust-lang.org/nightly/style-guide/]<rust-style>.
+vadlīnijām @rust-style.
 
-Turklāt visas publiskās funkcijas un datu struktūras
-hexlab bibliotēkā ir
+Turklāt visas publiskās funkcijas un datu struktūras "hexlab" bibliotēkā ir
 dokumentētas#footnote[https://docs.rs/hexlab/latest/hexlab/]<hexlab-docs>.
 Šajā dokumentācijā ir ietverti detalizēti apraksti un lietošanas piemēri, kas ne
 tikai palīdz saprast kodu, bet programmatūras prasības specifikācija ir
@@ -926,14 +970,14 @@ programmatūras projektējuma aprakstīšanai" standarta prasības @lvs_68 @lvs_
 
 == Konfigurācijas pārvaldība
 
-Pirmkods tiek pārvaldīts, izmantojot "git#footnote[https://git-scm.com/doc]<git>" versiju kontroles sistēmu.
+Pirmkods tiek pārvaldīts, izmantojot "git"#footnote[https://git-scm.com/doc]<git> versiju kontroles sistēmu.
 Repozitorijs tiek izvietots platformā "GitHub".
 Rīku konfigurācija ir definēta vairākos failos:
-- "justfile#footnote[https://just.systems/man/en/]<justfile>" -- satur atkļūdošanas un
+- "justfile"#footnote[https://just.systems/man/en/]<justfile> -- satur atkļūdošanas un
   laidiena komandas dažādām vidēm:
   - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
   - laidiena kompilācijas ar iespējotu optimizāciju.
-- "GitHub Actions#footnote[https://docs.github.com/en/actions]<gh-actions>" darbplūsmas, kas apstrādā:
+- "GitHub Actions"@gh-actions darbplūsmas, kas apstrādā:
   - koda kvalitātes pārbaudes (vienībtesti, statiskie testi, formatēšana,
     dokumentācijas izveide).
   - kompilācijas un izvietotošanas darbplūsma, kas:
@@ -941,7 +985,7 @@ Rīku konfigurācija ir definēta vairākos failos:
     - publicē bināros failus GitHub platformā;
     - izvieto tīmekļa versiju itch.io@itch-io platformā.
 
-Versiju specifikācija notiek pēc semantiskās versiju atlases@sem-ver (MAJOR.MINOR.PATCH):
+Versiju specifikācija notiek pēc semantiskās versiju atlases (MAJOR.MINOR.PATCH) @sem-ver:
 + MAJOR -- galvenā versija, nesaderīgas izmaiņas, būtiskas koda izmaiņas.
 + MINOR -- atpakaļsaderīgas funkcionalitātes papildinājumi.
 + PATCH -- ar iepriekšējo versiju saderīgu kļūdu labojumi.
@@ -949,8 +993,8 @@ Versiju specifikācija notiek pēc semantiskās versiju atlases@sem-ver (MAJOR.M
 == Darbietilpības novērtējums
 #todo("uzrakstīt darbietilpības novērtējumu")
 
-// = Secinājumi
-// #todo("uzrakstīt secinājumus")
+= Secinājumi
+#todo("uzrakstīt secinājumus")
 
 #bibliography(
   title: "Izmantotā literatūra un avoti",
