@@ -3,7 +3,10 @@
 #import "@preview/tablex:0.0.9": tablex, rowspanx, colspanx, cellx
 #import "@preview/wordometer:0.1.3": word-count, total-words
 #import "layout.typ": project, indent-par
+#import "@preview/fletcher:0.5.3" as fletcher: diagram, node, edge
+#import fletcher.shapes: diamond
 #import "utils.typ": *
+#import "diagrams.typ": *
 #show: word-count
 
 #show: project.with(
@@ -829,6 +832,145 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
 == Daļējs funkciju projektējums
 
 #todo("pievienot funkciju projektējumu +diagrammas")
+
+
+
+#figure(
+  caption: "Stāva pārejas diagramma",
+  kind: image,
+  diagram(
+    terminal-node((0, 0)),
+    std-edge(),
+
+    action-node((0, 1), [Pārbaudīt stāva\ pārejas notikumu]),
+    std-edge(),
+
+    decision-node((0, 2), [Vai stāvi\ kustās?]),
+    std-edge("l,d", [jā]),
+    std-edge("r,d", [nē]),
+
+    terminal-node((-1, 3), extrude: (0, 3)),
+
+    action-node((1, 3), [Iegūt pašreizējo\ stāvu]),
+    std-edge(),
+
+    decision-node((1, 4), [Stāva\ notikuma\ tips?]),
+    std-edge("d", [Pacelties]),
+    std-edge("r,d,d", [Nolaisties]),
+
+    decision-node((1, 5), [Vai nākamais\ stāvs eksistē?]),
+    std-edge("d", [jā]),
+    std-edge("l,d", [nē]),
+
+    action-node((0, 6), [Izsaukt jauna stāva\ izveides notikumu]),
+    std-edge("d,d,r"),
+
+    action-node((1, 6), [Aprēķināt katra stāva\ jaunās $Y$ koordinātas]),
+    std-edge("d"),
+
+    action-node((1, 7), [Pārvieto visus stāvus\ uz jaunajām $Y$ koordinātām]),
+    std-edge("d"),
+
+    decision-node((2, 6), [Pašreizējais\ stāvs $== 1$?]),
+    std-edge("d,d,l", [jā]),
+    std-edge("l", [nē]),
+
+    terminal-node((1, 8), extrude: (0, 3)),
+  ),
+) <floor-transition-diagram>
+
+#figure(
+  caption: "Spēlētaja pārejas diagramma",
+  kind: image,
+  diagram(
+    terminal-node((0, 0)),
+    std-edge(),
+
+    action-node((0, 1), [Pārbaudīt stāva\ pārejas notikumu]),
+    std-edge(),
+
+    decision-node((0, 2), [Vai stāvi\ kustās?]),
+    std-edge("l,d", [jā]),
+    std-edge("r,d", [nē]),
+
+    terminal-node((-1, 3), extrude: (0, 3)),
+
+    action-node((1, 3), [Iegūt pašreizējo\ stāvu]),
+    std-edge(),
+
+    decision-node((1, 4), [Stāva\ notikuma\ tips?]),
+    std-edge("d", [Pacelties]),
+    std-edge("r,d,d", [Nolaisties]),
+
+    decision-node((1, 5), [Vai nākamais\ stāvs eksistē?]),
+    std-edge("d", [jā]),
+    std-edge("l,d", [nē]),
+
+    action-node((0, 6), [Izsaukt jauna stāva\ izveides notikumu]),
+    std-edge("d,d,r"),
+
+    action-node((1, 6), [Aprēķināt katra stāva\ jaunās $Y$ koordinātas]),
+    std-edge("d"),
+
+    action-node((1, 7), [Pārvieto visus stāvus\ uz jaunajām $Y$ koordinātām]),
+    std-edge("d"),
+
+    decision-node((2, 6), [Pašreizējais\ stāvs $== 1$?]),
+    std-edge("d,d,l", [jā]),
+    std-edge("l", [nē]),
+
+    terminal-node((1, 8), extrude: (0, 3)),
+  ),
+) <player-activity-diagram>
+
+
+// ```pintora
+// activityDiagram
+// start
+// partition "Ievades apstrāde" {
+// :Pārbaudīt spēlētāja ievadi;
+// if (Vai ir mērķpozīcija?) then (jā)
+// :Skip Movement;
+// else (nē)
+// :Saņemt virzienu no ievades;
+// if (Vai ir pareizs virziens?) then (jā)
+// if (Vai ir siena virzienā?) then (jā)
+// :Skip Movement;
+// else (nē)
+// :Iestata mērķpozīciju;
+// endif
+// else (nē)
+// :Skip Movement;
+// endif
+// endif
+// }
+//
+// partition "Movement Processing" {
+// :Calculate Movement Speed;
+// if (Has Target?) then (yes)
+// :Calculate Target Position;
+// if (Reached Target?) then (yes)
+// :Update Current Position;
+// :Clear Target;
+// else (no)
+// :Update Position;
+// endif
+// endif
+// }
+// partition "Floor Transition" {
+// :Check Player Position;
+// if (At End Position?) then (yes)
+// :Send Ascend Event;
+// else (no)
+// if (At Start Position?) then (yes)
+// if (Floor > 1?) then (yes)
+// :Send Descend Event;
+// endif
+// endif
+// endif
+// }
+// stop
+// ```
 
 === Plākšņu pārvaldas sistēma
 

@@ -1,5 +1,6 @@
 #import "@preview/i-figured:0.2.4"
 #import "@preview/tablex:0.0.9": tablex
+#import "@preview/pintorita:0.1.3"
 
 #let indent = 1cm
 
@@ -18,6 +19,7 @@
   date: "",
   body,
 ) = {
+
   set document(author: authors)
 
   set page(
@@ -39,6 +41,8 @@
   )
   show raw: set text(font: "JetBrainsMono NF")
 
+  show raw.where(lang: "pintora"): it => pintorita.render(it.text)
+
   show math.equation: set text(weight: 400)
 
   // Formatting for regular text
@@ -49,6 +53,7 @@
     spacing: 1.5em,
   )
   show heading: set block(spacing: 1.5em)
+
   set terms(separator: [ -- ])
 
   // Headings
@@ -168,6 +173,8 @@
   show figure.where(kind: "i-figured-table"): set figure.caption(position: top)
 
   show figure: set par(justify: false) // disable justify for figures (tables)
+  show figure.where(kind: table): set par(leading: 1em)
+  show figure.where(kind: image): set par(leading: 0.75em)
   show figure.caption: set text(size: 11pt)
 
   show figure.caption: it => {
