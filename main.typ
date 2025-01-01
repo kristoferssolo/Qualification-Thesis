@@ -400,13 +400,11 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [Labirinta pārvaldības saskarne],
     [#link(<dev_tools-F01>)[IRMF01]],
 
-    rowspanx(3)[Stāva pārvaldības modulis], // floor
-    [Stāva ielāde],
-    [],
-    [Stāva izlāde],
-    [],
-    [Stāvu kustība],
-    [],
+    rowspanx(2)[Stāva pārvaldības modulis], // floor
+    [Stāva kustība],
+    [#link(<floor-F01>)[SPMF01]],
+    [Stāvu pārejas apstrāde],
+    [#link(<floor-F02>)[SPMF02]],
 
     rowspanx(1)[Labirinta ģenerēšanas modulis], // hexlab
     [Labirinta būvētājs],
@@ -437,6 +435,12 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [#link(<screen-F03>)[SSPMF03]],
 
     rowspanx(3)[Papildspēju modulis], // power_up
+    [Spēlētāja ievades apstrāde],
+    [#link(<power-up-F01>)[PSMF01]],
+    [Ceļa rādīšanas papildspēja],
+    [#link(<power-up-F02>)[PSMF02]],
+    [Sienu pārlēkšanas papildspēja],
+    [#link(<power-up-F03>)[PSMF03]],
   ),
 ) <function-modules>
 
@@ -518,7 +522,78 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
 ) <dev_tools-F01>
 
 === Stāvu pārvaldības modulis
-#todo("uzrakstīt stāvu pārvaldības moduli")
+Stāvu pārvaldības modulis nodrošina vertikālo pārvietošanos starp spēles
+līmeņiem.
+Modulis sastāv no divām galvenajām funkcijām (sk. @fig:dpd-2-floor):
+stāvu kustības (sk. @tbl:floor-F01) un stāvu
+pārejas apstrādes (sk. @tbl:floor-F02).
+Stāvu kustības sistēma nodrošina plūstošu vertikālo pārvietošanos starp
+līmeņiem, savukārt pārejas apstrādes sistema koordinē pārejas starp pašreizējo
+un nākamo stāvu, reaģējot uz "TransitionFloor" notikumu (sk. @tbl:events-floor).
+
+#figure(
+  caption: [Stāvu pārvaldības moduļa 2. līmeņa DPD],
+  diagram(
+    spacing: (8em, 4em),
+    {
+      process((-1, 0), [Stāvu\ kustība])
+      dpd-edge("d,r,u", align(center)[Atjaunoti labirinta\ entitātes dati])
+
+      dpd-database((0, 0), [Operatīvā\ atmiņa])
+      dpd-edge("u,l,d", align(center)[Atjaunotie labirinta\ entitātes dati])
+
+      dpd-edge("u,r,d", align(center)[Labirinta\ konfigurācijas dati])
+      dpd-edge("uu,r,dd", align(center)[Labirinta entitātes dati])
+      dpd-edge("uuu,r,ddd", align(center)[Sistēmas notikumu dati])
+
+      process((1, 0), [Stāvu pārejas\ apstrāde])
+      dpd-edge("d,l,u", align(center)[Atjaunoti labirinta\ entitātes dati])
+    },
+  ),
+) <dpd-2-floor>
+
+#function-table(
+  "Stāvu kustība",
+  "SPMF01",
+  "Nodrošina plūstošu pāreju starp stāviem, pārvietojot tos vertikāli.",
+  [
+    + Labirinta entitātes ar galamērķa $Y$ pozīcijām.
+  ],
+  [
+    + Aprēķina kustības attālumus.
+    + Pārvieto stāvus uz galamērķi ar noteiktu ātrumu.
+    + Atjaunina stāvu pozīcijas datus.
+    + Noņem mērķa komponentes pēc sasniegšanas.
+  ],
+  [
+    + Atjaunināto stāva pozīcijas.
+  ],
+) <floor-F01>
+
+#function-table(
+  "Stāvu pārejas apstrāde",
+  "SPMF02",
+  "Apstrādā stāvu pārejas notikumus un koordinē pārejas starp stāviem.",
+  [
+    + Pārejas notikums.
+    + Stāvas entitātes.
+    + Pašreizējais stāvs.
+    + Nākamais stāvs.
+  ],
+  [
+    + Pārbauda vai ir aktīva pāreja.
+      + Ja ir, iziet no sistēmas un nedara neko.
+    + Aprēķina galamērķu pozīcijas.
+    + Pievieno mērķa komponentes stāvu entitātēm.
+    + Atjauno stāvu statusus:
+      + Noņem pašreizējā stāva komponenti no pašreizējā stāva entitātes.
+      + Pievieno nākamā stāva komponenti nākamā entitātei.
+      + Noņem nākamā stāva komponenti no nākamā stāva entitātes.
+  ],
+  [
+    + Atjaunināts stāvs.
+  ],
+) <floor-F02>
 
 === Labirinta ģenerēšanas modulis
 
@@ -599,8 +674,7 @@ pārvaldību katrā spēles stāvā. Moduļa darbības plūsma ir attēlota 2. l
 plūsmas diagrammā (sk. @fig:dpd-2-maze).
 
 Modulis nodrošina divas galvenās funkcijas: labirinta izveidi
-(#link(<maze-F01>)[LPMF01]) un labirinta atjaunošanu
-(#link(<maze-F02>)[LPMF02]).
+(sk. @tbl:maze-F01) un labirinta atjaunošanu (sk. @tbl:maze-F02).
 Labirinta izveides funkcija tiek izsaukta, kad nepieciešams izveidot jaunu
 stāvu, pārbaudot, vai šāds stāvs jau neeksistē.
 Funkcija ģenerē jaunu labirintu, izmantojot norādīto konfigurāciju, un izvieto
@@ -623,7 +697,7 @@ saglabājot to pašu stāva numuru un pozīciju telpā nemainot entitātes ID.
       dpd-edge("uu,r,dd", align(center)[Labirinta entitātes dati])
 
       process((1, 0), [Labirinta\ pārlāde])
-      dpd-edge("d,l,u", align(center)[Atjaunotie labirinta\ entitātes dati])
+      dpd-edge("d,l,u", align(center)[Atjaunoti labirinta\ entitātes dati])
     },
   ),
 ) <dpd-2-maze>
@@ -693,8 +767,7 @@ plūsma ir attēlota 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-player
 parāda četras galvenās funkcijas un to mijiedarbību ar datu glabātuvi.
 
 Spēlētāja kustība tiek realizēta divās daļās: ievades apstrāde
-(#link(<player-F02>)[SPMF02]) un kustības izpilde
-(#link(<player-F03>)[SPMF03]).
+(@tbl:player-F02) un kustības izpilde (@tbl:player-F03).
 Ievades apstrādes funkcija pārbauda tastatūras ievadi
 un, ņemot vērā labirinta sienu izvietojumu, nosaka nākamo kustības mērķi.
 Kustības izpildes funkcija nodrošina plūstošu pārvietošanos uz mērķa pozīciju,
@@ -841,10 +914,10 @@ punktiem, funkcija izsauc atbilstošu pārejas notikumu.
   "SPMF03",
   "Atjaunina spēlētāja pozīciju, veicot plūstošu pārvietošanos uz mērķa plāksnes pozīciju.",
   [
-    + Kustības mērķis
-    + Kustības ātrums
-    + Pašreizējā pozīcija
-    + Labirinta konfigurācija
+    + Kustības mērķis.
+    + Kustības ātrums.
+    + Pašreizējā pozīcija.
+    + Labirinta konfigurācija.
   ],
   [
     + Aprēķina mērķa pozīciju pasaules koordinātēs.
@@ -881,9 +954,9 @@ punktiem, funkcija izsauc atbilstošu pārejas notikumu.
 === Spēles stāvokļa pārvaldības modulis
 Spēles stāvokļa pārvaldības modulis nodrošina spēles dažādu stāvokļu pārvaldību
 un pārejas starp tiem. Modulis sastāv no trim galvenajām funkcijām: spēles
-sākšana (#link(<screen-F01>)[SSPMF01]), atgriešanās uz sākumekrānu
-(#link(<screen-F02>)[SSPMF02]) un sākumekrāna attēlošanas
-(#link(<screen-F03>)[SSPMF03]). Katra no šīm funkcijām apstrādā specifiskus
+sākšana (@tbl:screen-F01), atgriešanās uz sākumekrānu
+(@tbl:screen-F02) un sākumekrāna attēlošanas
+(@tbl:screen-F03). Katra no šīm funkcijām apstrādā specifiskus
 lietotāja ievades datus un atbilstoši atjaunina spēles stāvokli operatīvajā
 atmiņā.
 
@@ -976,7 +1049,6 @@ sākumekrānu.
   [
     + Pievieno interaktīvas pogas:
       - pogu "Play" ar pāreju uz spēli;
-      // - pogu "Credits" ar pāreju uz kredītiem;
       - pogu "Exit" (tikai platformām, kas nav WASM).
     + Pievieno novērotājus katrai pogai.
   ],
@@ -986,7 +1058,114 @@ sākumekrānu.
 ) <screen-F03>
 
 
-#todo("uzrakstīt papildspēju moduli")
+=== Papildspēju modulis
+
+Papildspēju modulis nodrošina spēlētājam papildu iespējas labirinta izpētē,
+piedāvājot divas galvenās funkcijas: sienu pārlēkšanu un izejas ceļa parādīšanu
+(sk. @fig:dpd-2-powerup).
+
+#figure(
+  caption: [Papildspēju moduļa 2. līmeņa DPD],
+  diagram(
+    spacing: (8em, 4em),
+    {
+      data-store((0, 0), [Spēlētājs])
+      dpd-edge("r", align(center)[Tastatūras\ ievades dati])
+
+      process((1, -1), [Ceļa rādīšanas\ papildspēja])
+      dpd-edge(
+        "dr",
+        align(center)[Ceļa marķieru\ dati],
+        label-pos: 0.4,
+      )
+
+      process((1, 0), [Spēlētāja\ ievades apstrāde])
+      dpd-edge("r", align(center)[Papildspēju\ notikumu dati])
+
+      process((1, 1), [Sienu pārlēkšanas\ papildspēja])
+      dpd-edge(
+        "ur",
+        align(center)[Atjaunoti spēlētāja\ entitātes dati],
+        label-pos: 0.3,
+      )
+
+      dpd-database((2, 0), [Operatīvā\ atmiņa])
+      dpd-edge("u,l", align(center)[Papildspēju\ notikumu dati], label-pos: 0.6)
+      dpd-edge("d,l", align(center)[Papildspēju\ notikumu dati], label-pos: 0.6)
+    },
+  ),
+) <dpd-2-powerup>
+
+#function-table(
+  "Spēlētāja ievades apstrāde",
+  "PSMF01",
+  "Apstrādā spēlētāja tastatūras ievadi un aktivizē attiecīgo papildspēju.",
+  [
+    + Tastatūras ievade.
+    + Globālā konfigurācija.
+    + Papildspējas atdzišanas stāvoklis.
+    + Atdzišanas laiks.
+  ],
+  [
+    + Pārbauda lēkšanas papildspējas ievadi.
+      + Iegūst lēkšanas taustiņu no konfigurācijas.
+      + Ja taustiņš nospiests un nav atdzišanas periodā.
+        + Izsauc lēkšanas notikumu.
+    + Pārbauda ceļa rādīšanas papildspējas ievadi.
+      + Iegūst ceļa rādīšanas taustiņu no konfigurācijas
+      + Ja taustiņš nospiests un nav atdzišanas periodā.
+        + Izsauc ceļa parādīšanas notikumu.
+  ],
+  [
+    + Papilspējas notikums.
+  ],
+) <power-up-F01>
+
+#function-table(
+  "Ceļa rādīšanas papildspēja",
+  "PSMF02",
+  "Rāda ceļu uz izeju noteiktu laiku periodu.",
+  [
+    + Papilspējas notikums.
+    + Pašreizējā spēlētāja pozīcija.
+    + Labirinta konfigurācija.
+    + Laiks.
+  ],
+  [
+    + Aprēķina īsāko ceļu no pašreizējās pozīcijas līdz labirinta izejai.
+    + Izveido ceļa marķieru entitātes.
+    + Seko līdzi atlikušajam laikam.
+      + Ja laiks pārsniedz 10 sekundes, izdzēš ceļa marķierus.
+  ],
+  [
+    + Ceļa vizualizācijas dati.
+  ],
+) <power-up-F02>
+
+#function-table(
+  "Sienu pārlēkšanas papildspēja",
+  "PSMF03",
+  "Ļauj pārlēkt pāri sienām.",
+  [
+    + Lēciena pozīcijas dati
+    + Papilspējas notikums.
+    + Kustības mērķis.
+    + Kustības ātrums.
+    + Pašreizējā spēlētāja pozīcija.
+    + Labirinta konfigurācija.
+  ],
+  [
+    + Aprēķina mērķa pozīciju pasaules koordinātēs.
+    + Pārbauda sienas esamību.
+    + Pārvieto spēlētāju uz mērķi ar noteiktu ātrumu.
+    + Atjaunina pozīcijas datus.
+  ],
+  [
+    + Atjauninātā pozīcija.
+    + Transformācijas dati.
+  ],
+) <power-up-F03>
+
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
@@ -1029,6 +1208,8 @@ ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veikt
 - Divkodolu procesors.
 
 === Ārējās saskarnes prasības
+
+#todo("Ārējās saskarnes prasības")
 
 = Programmatūras projektējuma apraksts
 == Datu struktūru projektējums
@@ -1230,8 +1411,6 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
 == Daļējs funkciju projektējums
 
 #todo("pievienot funkciju projektējumu +diagrammas")
-
-
 
 #figure(
   caption: "Stāva pārejas diagramma",

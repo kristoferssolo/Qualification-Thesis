@@ -30,7 +30,7 @@ izdrukai.
     Darba vadītājs: *prof. Mg. dat. Jānis Iljins ~~\_\_.01.2025.*]
 
   v(vspace)
-  [Recenzents: #todo("write reviewer name")*recenzenta grāds, vārds, uzvārds*]
+  [Recenzents: _grāds, vārds, uzvārds_ #long-underline]
 
 
   v(vspace)
