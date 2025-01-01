@@ -1,5 +1,7 @@
 #import "@preview/fletcher:0.5.3" as fletcher: diagram, node, edge
-#import fletcher.shapes: diamond
+#import fletcher.shapes: diamond, ellipse
+#import "@preview/cetz:0.3.1"
+#import cetz: draw
 
 #let default-node-stroke = 1pt
 #let default-edge-stroke = 1pt
@@ -47,7 +49,7 @@
 
 // Standard arrow edge
 #let std-edge(..args) = {
-  edge(..args, "-|>", label-pos: 0.1, stroke: default-edge-stroke)
+  edge(label-pos: 0.1, stroke: default-edge-stroke, ..args, "-|>")
 }
 
 // Fork/parallel function
@@ -120,4 +122,79 @@
   }
 
   elements
+}
+
+#let data-store(pos, text) = {
+  node(
+    pos,
+    text,
+    inset: 20pt,
+    stroke: default-node-stroke,
+  )
+}
+
+#let process(..args) = {
+  node(
+    inset: 10pt,
+    shape: ellipse,
+    stroke: default-node-stroke,
+    ..args,
+  )
+}
+
+#let dpd-edge(..args) = {
+  edge(
+    label-pos: 0.5,
+    stroke: default-edge-stroke,
+    label-anchor: "center",
+    label-fill: white,
+    corner-radius: 4pt,
+    ..args,
+    "-|>",
+  )
+}
+
+// Database shape
+#let database(node, extrude) = {
+  let (w, h) = node.size
+
+  // Calculate dimensions for the cylinder parts
+  let ellipse-height = h * 0.15
+
+  let cap-ratio = 0.2 // Cap height will be 30% of width
+  let cap-height = w * cap-ratio
+
+  // Main body sides (without bottom line)
+  draw.line(
+    (-w, -h + cap-height), // Start at top-left
+    (-w, h - cap-height),  // Left side
+  )
+  draw.line(
+    (w, h - cap-height),   // To bottom-right
+    (w, -h + cap-height),  // Right side
+  )
+
+  // Top ellipse
+  draw.circle(
+    (0, h - cap-height),
+    radius: (w, cap-height),
+  )
+
+  // Bottom elliptical cap (front arc only)
+  draw.arc(
+    (-w, -h + cap-height),
+    radius: (w, cap-height),
+    start: 180deg,
+    delta: 180deg,
+  )
+}
+
+#let dpd-database(..args) = {
+  node(
+    shape: database,
+    height: 4em,
+    stroke: default-node-stroke,
+    fill: white,
+    ..args,
+  )
 }

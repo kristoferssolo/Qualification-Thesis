@@ -193,11 +193,23 @@ brīža.
 nepieciešams automātiskai spēles gaitas pārvaldībai. */
 
 Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņa DPD
-(sk. @fig:dpd-0)
+(sk. @fig:dpd-0).
 
 #figure(
   caption: [\0. līmeņa DPD],
-  image("assets/images/dpd/dpd0.svg"),
+  diagram(
+    data-store((0, 0), [Spēlētājs]),
+    dpd-edge("rr,ddd,ll", [Ievades ierīces\ dati]),
+    process((0, 3), [Spēle], inset: 20pt),
+    dpd-edge(
+      "lll,uuu,rrr",
+      [Vizuālās\ izvades dati],
+    ),
+    dpd-edge(
+      "l,uuu,r",
+      [Audio\ izvades dati],
+    ),
+  ),
 ) <dpd-0>
 
 == Vispārējie ierobežojumi
@@ -239,16 +251,16 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 == Funkcionālās prasības
 \1. līmeņa datu plūsmas diagramma (sk. @fig:dpd-1) ilustrē galvenos
 procesus spēles "Maze Ascension" sistēmā.
-Diagrammā attēloti septiņi galvenie procesi:
-ievades apstrādāšanas modulis,
-spēles stāvokļa pārvalības modulis,
+Diagrammā attēloti seši galvenie procesi, viens izstrādes process un viens
+ārējs (bibliotēkas) process(-i) process:
+stāva pārvaldības modulis,
+labirinta ģenerēšanas un pārvaldības moduļi,
 spēlētāja modulis,
-labirinta ģenerēšanas modulis,
-spēles līmeņu pārvaldības modulis,
-atveidošanas jeb renderēšanas un skaņas jeb audio moduļi.
+spēles stāvokļa pārvalības modulis,
+papildspēju modulis
+un izstrādes rīku modulis.
 Šie procesi mijiedarbojas ar vienu datu krātuvi -- operatīvo atmiņu (RAM) -- un vienu
 ārējo lietotāju -- spēlētājs.
-#todo("update module list")
 
 Ievades apstrādes modulis uztver un apstrādā spēlētāja ievades datus.
 Spēles stāvokļa modulis pārrauga vispārējo spēles stāvokli.
@@ -264,12 +276,120 @@ Renderēšanas un audio moduļi pārvalda attiecīgi vizuālo un audio izvadi.
 
 #figure(
   caption: [\1. līmeņa DPD],
-  image("assets/images/dpd/dpd1.svg"),
+  diagram({
+    dpd-database((0, 0), [Operatīvā\ atmiņa], snap: -1)
+    dpd-edge(
+      "u,ull",
+      align(center)[Visi spēles\ dati],
+      shift: (-29pt, 0),
+      label-pos: 0.8,
+    ) // dev_tools
+    dpd-edge(
+      "uuu",
+      align(center)[Visi spēles\ dati],
+      shift: -20pt,
+    ) // bevy
+    dpd-edge("rru,u", [Stāva dati]) // floor
+    dpd-edge(
+      (2.5, 0),
+      align(center)[Labirinta\ konfigurācijas dati],
+      label-sep: -0.5em,
+      shift: -22pt,
+    ) // hexlab
+    dpd-edge(
+      "rrd,d",
+      align(center)[Labirinta\ izkārtojuma dati],
+      shift: 20pt,
+      label-pos: 0.501,
+      label-sep: 4em,
+    ) // maze
+    dpd-edge(
+      "d,drr",
+      align(center)[Labirinta\ konfigurācijas dati],
+      shift: (-29pt, 0),
+      label-pos: 0.7,
+    ) // maze
+    dpd-edge(
+      "ddd",
+      align(center)[Spēlētaja\ dati],
+      shift: 10pt,
+      label-pos: 0.4,
+    ) // player
+    dpd-edge(
+      "d,dll",
+      align(center)[Spēles\ stāvokļa dati],
+      shift: (29pt, 0),
+      label-pos: 0.7,
+    ) // screns
+    dpd-edge(
+      (-2.5, 0),
+      align(center)[Papildspēju\ stāvokļa dati],
+      shift: 15pt,
+      label-sep: -0.5em,
+    ) // power_ups
+
+    process(
+      (0, -3),
+      [Bevy],
+      inset: 20pt,
+      extrude: (-4pt, 0),
+      stroke: (thickness: 1pt, dash: "dashed"),
+    )
+    dpd-edge("uu", align(center)[Vizuālās\ izvades dati])
+    dpd-edge("l,uu,r", align(center)[Audio\ izvades dati])
+    dpd-edge("ddd", [Ievades dati], shift: (-20pt, -20pt), label-pos: 0.3)
+
+    data-store((0, -5), [Spēlētājs])
+    dpd-edge(
+      "r,dd,l",
+      align(center)[Neapstrādāti ievades\ ierīces dati],
+      label-sep: -0.3em,
+    )
+
+    process((-2, -2), [Izstrādes rīku\ modulis])
+    dpd-edge(
+      "d,drr",
+      align(center)[Atjaunoti\ spēles dati],
+      label-pos: 0.4,
+    )
+
+    process((2, -2), [Stāva pārvaldības\ modulis])
+    dpd-edge("ddll", align(center)[Atjaunoti\ stāva dati])
+
+    process((2.5, 0), [Labirinta\ ģenerēšanas\ modulis])
+    dpd-edge((0, 0), align(center)[Labirinta\ izkārtojuma dati], shift: -10pt)
+
+    process((2, 2), [Labirinta\ pārvaldības\ modulis])
+    dpd-edge(
+      "ll,uu",
+      align(center)[Labirinta dati],
+      label-pos: 0.3,
+      shift: (0, 22pt),
+    )
+
+    process((0, 3), [Spēlētāja\ modulis])
+    dpd-edge(
+      "uuu",
+      align(center)[Atjaunoti\ spēlētāja\ dati],
+      shift: 20pt,
+      label-pos: 0.3,
+    )
+
+    process((-2, 2), [Spēles stāvokļa\ pārvaldības modulis])
+    dpd-edge(
+      "u,urr",
+      align(center)[Atjaunoti spēles\ stāvokļa dati],
+      shift: (0, 10pt),
+      label-pos: 0.3,
+    )
+
+    process((-2.5, 0), [Papildspēju\ modulis])
+    dpd-edge((0, 0), align(center)[Papildspēju\ dati], shift: 15pt)
+  }),
 ) <dpd-1>
 
-
 === Funkciju sadalījums moduļos
-Tabulā @tbl:function-modules ir sniegts visaptverošs spēles funkcionalitātes
+Tabulā @tbl:function-modules[] ir sniegts visaptverošs spēles funkcionalitātes
 sadalījums pa tās galvenajiem moduļiem. Katram modulim ir noteikti konkrēti
 pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 
@@ -330,6 +450,8 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [#link(<screen-F02>)[SSPMF02]],
     [Attēlot sākumekrānu],
     [#link(<screen-F03>)[SSPMF03]],
+
+    rowspanx(3)[Papildspēju modulis], // power_up
   ),
 ) <function-modules>
 
