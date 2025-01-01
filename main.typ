@@ -644,24 +644,53 @@ programmu.
 #todo("uzrakstīt spēlētāja moduli")
 
 === Spēles stāvokļa pārvaldības modulis
-#todo("uzrakstīt spēles stāvokļa pārvaldības moduli")
+Spēles stāvokļa pārvaldības modulis nodrošina spēles dažādu stāvokļu pārvaldību
+un pārejas starp tiem. Modulis sastāv no trim galvenajām funkcijām: spēles
+sākšana (#link(<screen-F01>)[SSPMF01]), atgriešanās uz sākumekrānu
+(#link(<screen-F02>)[SSPMF02]) un sākumekrāna attēlošanas
+(#link(<screen-F03>)[SSPMF03]). Katra no šīm funkcijām apstrādā specifiskus
+lietotāja ievades datus un atbilstoši atjaunina spēles stāvokli operatīvajā
+atmiņā.
+
+Moduļa 2. līmeņa DPD diagramma (sk. @fig:dpd-2-screen) parāda, ka lietotājs
+mijiedarbojas ar sistēmu caur diviem galvenajiem ievades veidiem: pogu izvēli
+sākumekrānā un "Escape" taustiņa nospiešanu spēles laikā.
+
+Spēles sākšanas funkcija inicializē nepieciešamos resursus un
+sistēmas, kad lietotājs izvēlas sākt jaunu spēli. Atgriešanās funkcija
+apstrādā lietotāja pieprasījumu pārtraukt aktīvo spēli un atgriežas uz
+sākumekrānu.
 
 #figure(
-  caption: [\2. līmeņa DPD],
+  caption: [Spēles stāvokļa pārvaldības moduļa 2. līmeņa DPD],
   diagram({
-    dpd-database((0, 0), [Operatīvā\ atmiņa], snap: -1)
+    data-store((0, 0), [Spēlētājs])
+    dpd-edge("rrr", align(center)[Tastatūras\ ievades dati])
+    dpd-edge("u,rrr", align(center)[Izvēlētās\ pogas dati], label-pos: 0.6)
 
-    process((-2, 0), [SSPMF01:\ Spēles sākšana])
-    dpd-edge("r", [Ekrāna stāvoklis])
+    process((3, -1), [Spēles\ sākšana])
+    dpd-edge("rrr,d", align(center)[Spēles\ stāvokļa dati], label-pos: 0.4)
 
-    process((2, 0), [SSPMF02:\ Atgriešanās])
-    dpd-edge("l", [Tastatūras ievade])
+    process((3, 0), [Atgriešanās\ uz sākumekrānu])
+    dpd-edge("rrr", align(center)[Spēles\ stāvokļa dati])
 
-    process((0, 2), [SSPMF03:\ Sākumekrāns])
-    dpd-edge("u", [UI elementi])
-    dpd-edge("d", [Pogu stāvokļi])
+    process((3, 1), [Attēlot\ sākumekrānu])
+    dpd-edge(
+      "rrr,u",
+      align(center)[Atjaunoti spēles\ stāvokļa dati],
+      label-pos: 0.3,
+      shift: -20pt,
+    )
+
+    dpd-database((6, 0), [Operatīvā\ atmiņa])
+    dpd-edge(
+      "d,lll",
+      align(center)[Atjaunoti spēles\ stāvokļa dati],
+      label-pos: 0.7,
+      shift: -20pt,
+    )
   }),
-) <dpd-2-floor>
+) <dpd-2-screen>
 
 #function-table(
   "Spēles sākšana",
