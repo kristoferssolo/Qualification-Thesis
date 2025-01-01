@@ -199,15 +199,15 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   caption: [\0. līmeņa DPD],
   diagram(
     data-store((0, 0), [Spēlētājs]),
-    dpd-edge("rr,ddd,ll", [Ievades ierīces\ dati]),
+    dpd-edge("rr,ddd,ll", align(center)[Ievades ierīces\ dati]),
     process((0, 3), [Spēle], inset: 20pt),
     dpd-edge(
       "lll,uuu,rrr",
-      [Vizuālās\ izvades dati],
+      align(center)[Vizuālās\ izvades dati],
     ),
     dpd-edge(
       "l,uuu,r",
-      [Audio\ izvades dati],
+      align(center)[Audio\ izvades dati],
     ),
   ),
 ) <dpd-0>
@@ -403,9 +403,6 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [*Funkcija*],
     [*Identifikators*],
     /* -------------- */
-    // rowspanx(1)[Audio modulis], // audio
-    // [Skaņas efektu atskaņošana],
-    // [],
 
     rowspanx(1)[Izstrādes rīku modulis], // dev_tools
     [Labirinta pārvaldības saskarne],
@@ -414,7 +411,7 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     rowspanx(3)[Stāva pārvaldības modulis], // floor
     [Stāva ielāde],
     [],
-    [Stāva #red("izlāde")],
+    [Stāva izlāde],
     [],
     [Stāvu kustība],
     [],
@@ -440,7 +437,7 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [],
     [Spēlētāja #red("pacelšanās")],
     [],
-    [Spēlētāja #red("nolaušainās")],
+    [Spēlētāja #red("nolaišainās")],
     [],
 
     rowspanx(3)[Spēles stāvokļa pārvaldības modulis], // screens
@@ -459,6 +456,22 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 // #todo("uzrakstīt audio moduli")
 
 === Izstrādes rīku modulis
+
+#figure(
+  caption: [Izstrādes rīku moduļa 2. līmeņa DPD],
+  diagram(
+    spacing: 10em,
+    {
+      data-store((0, 0), [Spēlētājs])
+      dpd-edge("r", align(center)[Labirinta\ konfigurācijas dati])
+
+      dpd-database((2, 0), [Operatīvā\ atmiņa])
+
+      process((1, 0), [Labirinta\ pārvaldības\ saskarne])
+      dpd-edge("r", align(center)[Labirinta\ izkārtojuma dati])
+    },
+  ),
+) <dpd-2-dev_tools>
 
 Dotais modulis ir izstrādes rīks, kas paredzēts lietotāja saskarnes elementu
 attēlošanai un apstrādei, lai konfigurētu labirinta parametrus.
@@ -523,16 +536,15 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
 #todo("uzrakstīt stāvu pārvaldības moduli")
 
 === Labirinta ģenerēšanas modulis
-#todo("uzrakstīt labirinta ģenerēšanas moduli")
 
 Apakšnodaļa ietver labirinta moduļa funkcijas. Moduļa funkcionalitāte ir
 izmantota sešstūraina labirinta ģenerēšanai.
 Moduļa funkciju datu
-plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-maze-gen)
+plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-hexlab)
 Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (sk. @tbl:hexlab-F01)
 
-Modularitātes un atkārtotas lietojamības apsvērumu dēļ labirinta ģenerēšanas
-funkcionalitāte tika pārnesta uz ārēju bibliotēku
+Modularitātes un atkārtotas lietojamības apsvērumu dēļ, labirinta ģenerēšanas
+funkcionalitāte ir izveidota kā ārēja bibliotēka
 "hexlib".#footnote[https://crates.io/crates/hexlab]<hexlab> Šis lēmums
 ļauj labirinta ģenerēšanas loģiku atkārtoti izmantot dažādos projektos un
 lietojumprogrammās, veicinot atkārtotu koda izmantošanu.
@@ -543,8 +555,17 @@ programmu.
 
 #figure(
   caption: [Labirinta ģenerēšanas moduļa 2. līmeņa DPD],
-  image("assets/images/dpd/dpd2/maze-gen.svg"),
-) <dpd-2-maze-gen>
+  diagram(
+    spacing: 8em,
+    {
+      dpd-database((0, 0), [Operatīvā\ atmiņa])
+      dpd-edge("l,u,r", align(center)[Labirinta\ konfigurācijas dati])
+
+      process((0, -1), [Labirinta\ būvētājs])
+      dpd-edge("r,d,l", align(center)[Labirinta\ izkārtojuma dati])
+    },
+  ),
+) <dpd-2-hexlab>
 
 #function-table(
   "Labirinta būvētājs",
@@ -614,8 +635,8 @@ programmu.
     Izvades datu sistēmai nav.
   ],
   [
-    + "Stāvs _x_ jau eksistē."
-    + "Neizdevās ģenerēt labirintu stāvam x."
+    + "Stāvs $x$ jau eksistē."
+    + "Neizdevās ģenerēt labirintu stāvam $x$."
   ],
 ) <maze-F01>
 
@@ -624,6 +645,23 @@ programmu.
 
 === Spēles stāvokļa pārvaldības modulis
 #todo("uzrakstīt spēles stāvokļa pārvaldības moduli")
+
+#figure(
+  caption: [\2. līmeņa DPD],
+  diagram({
+    dpd-database((0, 0), [Operatīvā\ atmiņa], snap: -1)
+
+    process((-2, 0), [SSPMF01:\ Spēles sākšana])
+    dpd-edge("r", [Ekrāna stāvoklis])
+
+    process((2, 0), [SSPMF02:\ Atgriešanās])
+    dpd-edge("l", [Tastatūras ievade])
+
+    process((0, 2), [SSPMF03:\ Sākumekrāns])
+    dpd-edge("u", [UI elementi])
+    dpd-edge("d", [Pogu stāvokļi])
+  }),
+) <dpd-2-floor>
 
 #function-table(
   "Spēles sākšana",
@@ -794,9 +832,9 @@ pašreizējā un nākamā stāva stāvokli un vertikālās kustības mehāniku.
   `NextFloor`,
   "Atzīmē nākamo stāvu",
   "Identificē progresa mērķa līmeni, uz kuru jāpāriet. Var būt arī līmenis zemāk.",
-  `MovementState`,
-  "Veic stāvu vertikālo kustību",
-  "Kontrolē stāvu pārejas animācijas.",
+  `FloorYTarget`,
+  "Stāva nākamā Y pozīcija",
+  "Identificē stāva Y koordināti, uz kuru tas jāpārvieto.",
 ) <components-floor>
 
 ==== Labirinta komponentes
@@ -821,11 +859,11 @@ labirinta izveidi un uzturēšanu.
   "Konfigurē labirinta ģenerēšanu ar rādiusu, pozīcijām un izkārtojumu.",
   `Maze`,
   "Glabā sešstūra labirinta datu",
-  "Glabā pilnu labirinta struktūru, izmantojot jaucējtabulu (hashmap)",
+  "Glabā pilnu labirinta struktūru, izmantojot jaucējtabulu.",
   `Walls`,
   "Apzīmē sienu konfigurāciju",
-  [Pārvalda sienas stāvokļus, izmantojot bitu karodziņus
-    @begginer-patterns.],
+  [Pārvalda sienas stāvokļus, izmantojot bitu karodziņus.
+    @begginer-patterns],
 ) <components-maze>
 
 ==== Spēlētāja komponentes

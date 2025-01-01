@@ -49,7 +49,13 @@
 
 // Standard arrow edge
 #let std-edge(..args) = {
-  edge(label-pos: 0.1, stroke: default-edge-stroke, ..args, "-|>")
+  edge(
+    label-pos: 0.1,
+    stroke: default-edge-stroke,
+    label-size: 10pt,
+    ..args,
+    "-|>",
+  )
 }
 
 // Fork/parallel function
@@ -149,6 +155,7 @@
     label-anchor: "center",
     label-fill: white,
     corner-radius: 4pt,
+    label-size: 10pt,
     ..args,
     "-|>",
   )
