@@ -80,9 +80,9 @@ pieredzi, veicinot izpēti un eksperimentēšanu ar dažādām spēju kombināci
 radot dinamiskākus un aizraujošākus spēles scenārijus.
 
 No tehniskā viedokļa darbā tiek pētīta šo funkciju īstenošana, izmantojot
-Bevy entitāšu komponentu sistēmas (ECS) arhitektūru. Tas ietver stabilu spēles vides
-sistēmu izstrādi, stāvokļa pārvaldības mehānismus un efektīvu Bevy iebūvēto
-funkcionalitāšu izmantošanu.
+Bevy entitāšu komponentu sistēmas (tuprmāk tekstā -- ECS) arhitektūru.
+Tas ietver stabilu spēles vides sistēmu izstrādi, stāvokļa pārvaldības
+mehānismus un efektīvu Bevy iebūvēto funkcionalitāšu izmantošanu.
 
 No darbības sfēras apzināti izslēgta daudzspēlētāju funkcionalitāte un sarežģīti
 grafiskie efekti, koncentrējoties uz pulētu viena spēlētāja pieredzi ar skaidru,
@@ -96,20 +96,55 @@ ceļvedis" un LVS 72:1996 "Ieteicamā prakse programmatūras projektējuma
 aprakstīšanai" standarta prasības @lvs_68 @lvs_72.
 
 == Pārskats
-Dokumenta ievads satur ...
+Šis dokuments sniedz detalizētu programmatūras prasību specifikāciju spēlei
+"Maze Ascension", aprakstot tās arhitektūru, galvenās komponentes un to
+mijiedarbību.
+Dokumentā ir apkopota informācija par spēles tehnisko implementāciju, izmantojot
+Bevy spēļu dzinēju un ECS arhitektūru.
 
-/* Dokumenta ievads satur tā nolūku, izstrādājamās programmatūras skaidrojumu,
-vispārīgu programmatūras mērķi un funkciju klāstu, saistību ar citiem
-dokumentiem, kuru prasības tika izmantotas dokumenta izstrādāšanas gaitā, kā arī
-pārskatu par dokumenta daļu saturu ar dokumenta struktūras skaidrojumu. */
+Ievada sadaļa iepazīstina ar projekta pamatkonceptu, definējot spēles galvenos
+mērķus un uzdevumus.
+Šajā nodaļā tiek aprakstīta spēles ideja -- procedurāli ģenerēts labirints ar
+sešstūrainu lauku, kas piedāvā unikālu spēles pieredzi katrā spēles reizē.
+Tiek skaidrota arī spēles vertikālās progresijas sistēma un papildspēju
+mehānikas, kas padara spēli izaicinošāku un interesantāku.
 
-Pirmajā nodaļa tiek aprakstīti ...
+Programmatūras prasību specifikācijas sadaļa detalizē sistēmas funkcionālās
+prasības un arhitektūru.
+Izmantojot datu plūsmas diagrammas, tiek ilustrēta sistēmas moduļu mijiedarbība
+un datu plūsmas starp tiem.
+Šajā sadaļā tiek aprakstīti pieci galvenie moduļi: spēles stāvokļa pārvaldības
+modulis, labirinta pārvaldības modulis, spēlētāja modulis, stāvu pārvaldības
+modulis un papildspēju modulis.
+Katram modulim ir detalizēts funkciju apraksts, kas dokumentēts, izmantojot
+funkciju tabulas.
 
-Otrajā nodaļā tiek ...
+Programmatūras projektējuma sadaļa sniedz detalizētu tehnisko specifikāciju.
+Datu struktūru projektējuma apakšsadaļā tiek aprakstītas ECS arhitektūras
+komponentes, notikumi un resursi.
+Daļējā funkciju projektējuma apakšsadaļā tiek detalizēta plākšņu pārvaldības
+sistēma un citas būtiskas funkcijas.
+Saskarņu projektējuma apakšsadaļā tiek aprakstīta lietotāja saskarnes
+arhitektūra un implementācija.
 
-Trešajā nodaļā tiek aprakstīta ...
+Testēšanas dokumentācijas sadaļa aptver gan statisko, gan dinamisko testēšanu.
+Statiskās testēšanas apakšsadaļā tiek aprakstītas koda kvalitātes pārbaudes
+metodes un rīki.
+Dinamiskās testēšanas apakšsadaļā tiek detalizēta gan manuālā integrācijas
+testēšana, gan automatizēto testu implementācija, sniedzot konkrētus piemērus un
+rezultātus.
 
-#todo("uzrakstīt dokumenta pārskatu")
+Projekta organizācijas sadaļa apraksta projekta pārvaldības aspektus.
+Kvalitātes nodrošināšanas apakšsadaļa detalizē izmantotās metodes un rīkus koda
+kvalitātes uzturēšanai.
+Konfigurācijas pārvaldības apakšsadaļa apraksta versiju kontroles sistēmu un
+izstrādes procesu, bet darbietilpības novērtējuma apakšsadaļa sniedz projekta
+resursu un laika patēriņa analīzi.
+
+Secinājumu sadaļā tiek apkopoti galvenie projekta sasniegumi, izaicinājumi un to
+risinājumi.
+Šeit tiek izvērtēta izvēlēto tehnoloģiju un metožu efektivitāte, kā arī sniegti
+ieteikumi turpmākai projekta attīstībai.
 
 #set heading(numbering: "1.1.")
 = Vispārējais apraksts
@@ -489,7 +524,7 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
   "IRMF01",
   [Apstrādā un izvada labirinta konfigurācijas vadības elementus lietotāja saskarnē.],
   [
-    Ievades dati tiek saņemti no pasaules resursiem un komponentiem:
+    Ievades dati tiek saņemti no pasaules resursiem un komponentēm:
     + Labirinta spraudņa resurss;
     + "EguiContext" komponente;#footnote[https://docs.rs/bevy_egui/latest/bevy_egui/]<bevy_egui>
     + Labirinta konfigurācija un stāva komponentes saistībā ar pašreizējā stāva
@@ -499,8 +534,8 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
   [
     + Pārbauda, vai labirinta straudņa resurss eksistē pasaulē.
       + Ja nav, iziet no sistēmas un nedara neko.
-    + Saņem `EguiContext` komponentu no primārā loga.
-    + Saņem labirinta konfigurāciju un stāvu komponentus no pašreizējā stāva.
+    + Saņem `EguiContext` komponenti no primārā loga.
+    + Saņem labirinta konfigurāciju un stāvu komponentes no pašreizējā stāva.
     + Izveido jaunu "Maze Controls" logu, izmantojot "egui".
     + Ja globālais labirinta konfigurācijas resurss ir pieejams:
       + Parāda galveno virsrakstu "Maze Configuration".
@@ -1206,10 +1241,6 @@ ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veikt
 - 4GB operatīvās atmiņas (RAM);
 - Integrēta grafiskā karte;
 - Divkodolu procesors.
-
-=== Ārējās saskarnes prasības
-
-#todo("Ārējās saskarnes prasības")
 
 = Programmatūras projektējuma apraksts
 == Datu struktūru projektējums
