@@ -21,30 +21,22 @@
 #set heading(numbering: none)
 = Apzīmējumu saraksts
 
-/ Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku.
+/ Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku;
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
 / ECS: entitāšu komponenšu sistēma (angl. Entity-Component-System)@ecs;
 / GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
-/ Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table)#footnote[https://en.wikipedia.org/wiki/Hash_table] ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām.
-/ Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus.
+/ Interpolācija: starpvērtību atrašana pēc funkcijas doto vērtību virknes;
+/ Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table)#footnote[https://en.wikipedia.org/wiki/Hash_table] ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām;
+/ Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus;
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
 / Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up)#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>;
-/ Pasaules resursi: #todo("add World resource")
-/ Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību.
-/ Procedurāla ģenerēšana: datu algoritmiskas izstrādes metode, kurā tiek kombinēts cilvēka radīts saturs un algoritmi, kas apvienoti ar datora ģenerētu nejaušību.
-/ Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade.
-/ Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā.
-/ Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai.
-
-/* Pēdējos gados spēļu izstrādes joma ir piedzīvojusi strauju popularitātes
-* pieaugumu, ko veicināja neatkarīgo spēļu skaita pieaugums un jaudīgu spēļu
-* dzinēju pieejamība. Starp šiem dzinējiem Bevy izceļas kā mūsdienīgs atvērtā
-* koda risinājums, kas izmanto Rust programmēšanas valodu, lai nodrošinātu
-* drošību un veiktspēju. Šajā diplomdarbā tiek pētīts Bevy spēļu dzinēja
-* potenciāls, izstrādājot minimālistisku labirinta izpētes spēli "Maze
-* Ascension". */
+/ Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību;
+/ Procedurāla ģenerēšana: datu algoritmiskas izstrādes metode, kurā tiek kombinēts cilvēka radīts saturs un algoritmi, kas apvienoti ar datora ģenerētu nejaušību;
+/ Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade;
+/ Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā;
+/ Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai;
 
 = Ievads
 == Nolūks
@@ -428,17 +420,15 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [Labirinta #red("izlāde")],
     [],
 
-    rowspanx(5)[Spēlētāja modulis], // player
+    rowspanx(4)[Spēlētāja modulis], // player
     [Spēlētāja ielāde],
-    [],
+    [#link(<player-F01>)[SPMF01]],
     [Spēlētāja ievades apstrāde],
-    [],
+    [#link(<player-F02>)[SPMF02]],
     [Spēlētāja kustība],
-    [],
-    [Spēlētāja #red("pacelšanās")],
-    [],
-    [Spēlētāja #red("nolaišainās")],
-    [],
+    [#link(<player-F03>)[SPMF03]],
+    [Spēlētāja pāreja],
+    [#link(<player-F04>)[SPMF04]],
 
     rowspanx(3)[Spēles stāvokļa pārvaldības modulis], // screens
     [Spēles sākšana],
@@ -641,7 +631,199 @@ programmu.
 ) <maze-F01>
 
 === Spēlētāja modulis
-#todo("uzrakstīt spēlētāja moduli")
+Spēlētāja modulis ir atbildīgs par spēlētāja entītijas pārvaldību, kas ietver
+tās izveidi, kustību apstrādi un mijiedarbību ar spēles vidi. Moduļa darbības
+plūsma ir attēlota 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-player), kas
+parāda četras galvenās funkcijas un to mijiedarbību ar datu glabātuvi.
+
+Spēlētāja kustība tiek realizēta divās daļās: ievades apstrāde
+(#link(<player-F02>)[SPMF02]) un kustības izpilde
+(#link(<player-F03>)[SPMF03]).
+Ievades apstrādes funkcija pārbauda tastatūras ievadi
+un, ņemot vērā labirinta sienu izvietojumu, nosaka nākamo kustības mērķi.
+Kustības izpildes funkcija nodrošina plūstošu pārvietošanos uz mērķa pozīciju,
+izmantojot interpolāciju starp pašreizējo un mērķa pozīciju.
+
+Stāvu pārejas apstrāde (#link(<player-F04>)[SPMF04]) nepārtraukti uzrauga spēlētāja pozīciju
+attiecībā pret stāva izeju un sākumu. Kad spēlētājs sasniedz kādu no šiem
+punktiem, funkcija izsauc atbilstošu pārejas notikumu.
+
+#figure(
+  caption: [Spēlētāja moduļa 2. līmeņa DPD],
+  diagram(
+    spacing: (6em, 2em),
+    {
+      data-store((0, 0), [Spēlētājs])
+      dpd-edge(
+        "u,r",
+        align(center)[Tastatūras\ ievades dati],
+        label-pos: 0.6,
+        shift: (10pt, 0),
+      )
+
+      process((1, -2), [Spēlētāja\ ielāde])
+      dpd-edge(
+        "rr,dd",
+        align(center)[Spēlētāja\ entitātes dati],
+        label-pos: 0.2,
+        shift: (-10pt, -29pt),
+      )
+
+      process((1, -1), [Spēlētāja\ ievades apstrāde])
+      dpd-edge(
+        "dr,r",
+        align(center)[Atjaunoti spēlētāja\ entitātes dati],
+        label-pos: 0.35,
+        shift: (0, -20pt),
+      )
+
+      process((1, 0), [Spēlētāja\ kustība])
+      dpd-edge(
+        "dd,rr,uu",
+        align(center)[Atjaunoti spēlētāja\ entitātes dati],
+        label-pos: 0.2,
+        shift: (0, -29pt),
+      )
+      process((1, 3), [Spēlētāja\ pāreja])
+      dpd-edge(
+        "rr,uuu",
+        align(center)[Notikuma dati],
+        label-pos: 0.2,
+        label-sep: -0.2em,
+        shift: (9pt, 5pt),
+      )
+
+      dpd-database((3, 0), [Operatīvā\ atmiņa])
+      dpd-edge(
+        "uu,ll",
+        align(center)[Labirinta\ konfigurācijas dati],
+        label-pos: 0.6,
+        shift: (19pt, -10pt),
+      )
+      dpd-edge(
+        "u,ll",
+        align(center)[Labirinta\ konfigurācijas dati],
+        label-pos: 0.75,
+        shift: (-29pt, -10pt),
+      )
+      dpd-edge(
+        "u,ll",
+        align(center)[Spēlētāja\ entitātes dati],
+        label-pos: 0.55,
+        shift: (-19pt, 10pt),
+      )
+      dpd-edge(
+        "ll",
+        align(center)[Spēlētāja\ entitātes dati],
+        label-pos: 0.7,
+      )
+      dpd-edge(
+        "ll",
+        align(center)[Labirinta\ konfigurācijas dati],
+        label-pos: 0.35,
+        label-sep: -0.5em,
+        shift: 19pt,
+      )
+      dpd-edge(
+        "ddd,ll",
+        align(center)[Spēlētāja\ entitātes dati],
+        label-pos: 0.8,
+        shift: (19pt, 20pt),
+      )
+      dpd-edge(
+        "ddd,ll",
+        align(center)[Pašreizējā\ stāva dati],
+        label-pos: 0.6,
+        label-sep: -0.2em,
+        shift: (9pt, 5pt),
+      )
+    },
+  ),
+) <dpd-2-player>
+
+#function-table(
+  "Spēlētāja ielāde",
+  "SPMF01",
+  "Izveido spēlētāja entitāti ar visām nepieciešamajiem komponentēm.",
+  [
+    + Labirinta konfigurācija.
+    + Globālā konfigurācija.
+  ],
+  [
+    + Iegūst sākuma pozīciju no labirinta konfigurācijas.
+    + Izveido spēlētāja entitāti ar:
+      - pašreizējo pozīciju;
+      - tekstūru;
+      - krāsu.
+  ],
+  [
+    + Spēlētāja entitāte.
+  ],
+) <player-F01>
+
+#function-table(
+  "Spēlētāja ievades apstrāde",
+  "SPMF02",
+  "Apstrādā spēlētāja tastatūras ievadi un aprēķina nākamo kustības plāksi.",
+  [
+    + Tastatūras ievade.
+    + Pašreizējā pozīcija.
+    + Labirinta konfigurācija.
+  ],
+  [
+    + Pārbauda vai ir aktīva kustība.
+      + Ja ir, iziet no sistēmas un nedara neko.
+    + Nosaka kustības virzienu no ievades.
+    + Pārbauda sienu šķēršļus.
+      + Ja kustības virzienā ir siena, iziet no sistēmas un nedara neko.
+    + Aprēķina nākamo pozīciju.
+  ],
+  [
+    + Kustības mērķa plāksnes pozīcija.
+  ],
+) <player-F02>
+
+#function-table(
+  "Spēlētāja kustība",
+  "SPMF03",
+  "Atjaunina spēlētāja pozīciju, veicot plūstošu pārvietošanos uz mērķa plāksnes pozīciju.",
+  [
+    + Kustības mērķis
+    + Kustības ātrums
+    + Pašreizējā pozīcija
+    + Labirinta konfigurācija
+  ],
+  [
+    + Aprēķina mērķa pozīciju pasaules koordinātēs.
+    + Pārvieto spēlētāju uz mērķi ar noteiktu ātrumu.
+    + Atjaunina pozīcijas datus.
+  ],
+  [
+    + Atjauninātā pozīcija.
+    + Transformācijas dati.
+  ],
+) <player-F03>
+
+#function-table(
+  "Stāvu pāreja",
+  "SPMF04",
+  "Pārbauda vai spēlētājs ir sasniedzis stāva izeju vai sākumu un inicializē vertikālo pāreju.",
+  [
+    + Pašreizējā pozīcija.
+    + Pašreizējais stāvs.
+    + Labirinta konfigurācija.
+  ],
+  [
+    + Pārbauda vai pozīcija sakrīt ar izeju.
+      + Ja sakrīt, izsauc pacelšanās notikumu uz iziet no sistēmas.
+    + Pārbauda vai pozīcija sakrīt ar sākumu.
+      + Ja sakrīt, pārbauda vai iespējama nolaišanās.
+        + Ja ir iespējama, izsauc nolaišanās notikumu uz iziet no sistēmas.
+  ],
+  [
+    + Stāva pārejas notikums.
+  ],
+) <player-F04>
 
 === Spēles stāvokļa pārvaldības modulis
 Spēles stāvokļa pārvaldības modulis nodrošina spēles dažādu stāvokļu pārvaldību
