@@ -1741,7 +1741,48 @@ Versiju specifikācija notiek pēc semantiskās versiju atlases (MAJOR.MINOR.PAT
 + PATCH -- ar iepriekšējo versiju saderīgu kļūdu labojumi.
 
 == Darbietilpības novērtējums
-#todo("uzrakstīt darbietilpības novērtējumu")
+Projekta darbietilpības novērtēšanai tika izmantota QSM (angl. Quantitative
+Software Management, latv. kvantitatīvā programmatūra vadība) metodoloģija, kas
+balstās uz $550$ verificētu programmatūras projektu datubāzi @QSM.
+Izmantojot "tokei" rīku @tokei, tika veikta detalizēta projekta koda analīze,
+kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas, bet
+saistītā "hexlab" bibliotēka -- $979$ rindiņas, kopā veidojot $2906$ loģiskās koda
+rindiņas, neiekļaujot tukšās rindiņas un komentārus (sk. @fig:tokei-maze-ascension[]
+un @fig:tokei-hexlab).
+
+Saskaņā ar QSM etalontabulu "Business Systems Implementation Unit (New and
+Modified IU) Benchmarks", pirmās kvartiles projekti ($25%$ mazākie no $550$
+biznesa sistēmu projektiem) vidēji ilgst $3,2$ mēnešus, ar vidēji $1,57$
+izstrādātājiem un mediāno projekta apjomu -- $1889$ koda rindiņas.
+Ņemot vērā, ka projekta autors ir students ar ierobežotu pieredzi, tiek
+izmantota pirmās kvartiles $50%$ diapazona augšējā robeža -- $466$ rindiņas
+personmēnesī.
+Tādējādi minimālais nepieciešamais koda apjoms trīs mēnešu darbam būtu $3 times 466
+= 1398$ rindiņas.
+
+Projekta faktiskais koda apjoms ($2906$ rindiņas) vairāk nekā divkārt pārsniedz šo
+minimālo slieksni, kas nepārprotami apliecina projekta atbilstību trīs mēnešu
+darbietilpības prasībai.
+Turklāt jāņem vērā projekta papildu sarežģītības faktori:
+- Bevy dzinēja un ECS arhitektūras apgūšana;
+- Procesuālās ģenerēšanas algoritma izstrāde "hexlab" bibliotēkai;
+- "hexlab" bibliotēkas izstrāde ar plašu dokumentāciju, ieskaitot API
+  dokumentāciju, lietošanas piemērus un integrācijas vadlīnijas.
+
+#indent-par[
+  Šie faktori būtiski palielina projekta faktisko darbietilpību, jo prasa ne tikai
+  koda rakstīšanu, bet arī izpēti, dokumentēšanu un optimizāciju.
+]
+
+#figure(
+  caption: [Tokei rīka rezultāts "Maze Ascension" spēlei],
+  image("assets/images/tokei/maze-ascension.png"),
+) <tokei-maze-ascension>
+
+#figure(
+  caption: [Tokei rīka rezultāts "hexlab" bibliotēkai],
+  image("assets/images/tokei/hexlab.png"),
+) <tokei-hexlab>
 
 = Secinājumi
 #todo("uzrakstīt secinājumus")
