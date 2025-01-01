@@ -412,13 +412,11 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     [Labirinta būvētājs],
     [#link(<hexlab-F01>)[LGMF01]],
 
-    rowspanx(3)[Labirinta pārvaldības modulis], // maze
+    rowspanx(2)[Labirinta pārvaldības modulis], // maze
     [Labirinta ielāde],
     [#link(<maze-F01>)[LPMF01]],
-    [Labirinta #red("pārlāde")],
-    [],
-    [Labirinta #red("izlāde")],
-    [],
+    [Labirinta pārlāde],
+    [#link(<maze-F02>)[LPMF02]],
 
     rowspanx(4)[Spēlētāja modulis], // player
     [Spēlētāja ielāde],
@@ -441,9 +439,6 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
     rowspanx(3)[Papildspēju modulis], // power_up
   ),
 ) <function-modules>
-
-// === Audio modulis
-// #todo("uzrakstīt audio moduli")
 
 === Izstrādes rīku modulis
 
@@ -599,36 +594,97 @@ programmu.
 ) <hexlab-F01>
 
 === Labirinta pārvaldības modulis
-#todo("uzrakstīt labirinta pārvaldības moduli")
+Labirinta pārvaldības modulis ir atbildīgs par labirintu ģenerēšanu un
+pārvaldību katrā spēles stāvā. Moduļa darbības plūsma ir attēlota 2. līmeņa datu
+plūsmas diagrammā (sk. @fig:dpd-2-maze).
+
+Modulis nodrošina divas galvenās funkcijas: labirinta izveidi
+(#link(<maze-F01>)[LPMF01]) un labirinta atjaunošanu
+(#link(<maze-F02>)[LPMF02]).
+Labirinta izveides funkcija tiek izsaukta, kad nepieciešams izveidot jaunu
+stāvu, pārbaudot, vai šāds stāvs jau neeksistē.
+Funkcija ģenerē jaunu labirintu, izmantojot norādīto konfigurāciju, un izvieto
+to atbilstošā augstumā spēles pasaulē.
+
+Labirinta atjaunošanas funkcija ļauj pārģenerēt esošā stāva labirintu,
+saglabājot to pašu stāva numuru un pozīciju telpā nemainot entitātes ID.
+
+#figure(
+  caption: [Labirinta pārvaldības moduļa 2. līmeņa DPD],
+  diagram(
+    spacing: (8em, 4em),
+    {
+      process((-1, 0), [Labirinta\ ielāde])
+      dpd-edge("d,r,u", align(center)[Labirinta entitātes dati])
+
+      dpd-database((0, 0), [Operatīvā\ atmiņa])
+      dpd-edge("u,l,d", align(center)[Labirinta\ konfigurācijas dati])
+      dpd-edge("u,r,d", align(center)[Labirinta\ konfigurācijas dati])
+      dpd-edge("uu,r,dd", align(center)[Labirinta entitātes dati])
+
+      process((1, 0), [Labirinta\ pārlāde])
+      dpd-edge("d,l,u", align(center)[Atjaunotie labirinta\ entitātes dati])
+    },
+  ),
+) <dpd-2-maze>
 
 #function-table(
   "Labirinta ielāde",
   "LPMF01",
-  [ Izveidot jaunu labirinta stāvu spēles pasaulē. ],
+  "Izveido jaunu labirinta stāvu spēles pasaulē.",
   [
-    Ievades dati tiek saņemti no:
-    + SpawnMaze notikuma (saturoša stāva numuru un konfigurāciju)
-    + Bevy ECS komponentiem un resursiem
+    + Labirinta konfigurācija.
+    + Globālā konfigurācija.
   ],
   [
     + Pārbauda, vai labirints šim stāvam jau eksistē.
       + Ja eksistē, parāda 1. paziņojumu un iziet no sistēmas.
-    + Ģenerē jaunu labirintu balstoties uz nodoto konfigurāciju.
+    + Ģenerē jaunu labirintu balstoties uz doto konfigurāciju.
     + Aprēķina vertikālo nobīdi jaunajam stāvam.
     + Izveido jaunu entitāti, kas pārstāv labirinta stāvu, pievienojot tam
       atbilstošās komponente.
     + Atkarībā no tā, vai tas ir pašreizējais vai nākamais stāvs, pievieno
       attiecīgo komponenti.
-    + Izsauc atsevišķu funkciju labirinta plākšņu izveidei. #todo("rework")
+    + Izveido jaunas entitātes, kas pārstāv labirinta plāksnes, kā bērnu
+      elementus labirinta entitātei.
+    + Katrai labirinta plāksnei atbilstoši labirinta konfigurācijai, izveido
+      sienas bērnu entitātes.
   ],
   [
-    Izvades datu sistēmai nav.
+    + Labirinta entitāte.
   ],
   [
     + "Stāvs $x$ jau eksistē."
     + "Neizdevās ģenerēt labirintu stāvam $x$."
   ],
 ) <maze-F01>
+
+#function-table(
+  "Labirinta pārlāde",
+  "LPMF02",
+  "Izveido jaunu labirinta stāvu spēles pasaulē.",
+  [
+    + Stāva numurs, kuru atjaunot.
+    + Labirinta konfigurācija.
+    + Globālā konfigurācija.
+  ],
+  [
+    + Pārbauda, vai labirints doto stāvu eksistē.
+      + Ja neeksistē, parāda 1. paziņojumu un iziet no sistēmas.
+    + Ģenerē jaunu labirintu balstoties uz doto konfigurāciju.
+    + Izdzēš visus labirinta entitātes pēcnācēju entitātes.
+    + Izveido jaunas entitātes, kas pārstāv labirinta plāksnes, kā bērnu
+      elementus labirinta entitātei.
+    + Katrai labirinta plāksnei atbilstoši labirinta konfigurācijai, izveido
+      sienas bērnu entitātes.
+  ],
+  [
+    + Labirinta entitāte.
+  ],
+  [
+    + "Neizdevās atrast labirinta stāvu $x$."
+  ],
+) <maze-F02>
 
 === Spēlētāja modulis
 Spēlētāja modulis ir atbildīgs par spēlētāja entītijas pārvaldību, kas ietver
@@ -751,10 +807,7 @@ punktiem, funkcija izsauc atbilstošu pārejas notikumu.
   ],
   [
     + Iegūst sākuma pozīciju no labirinta konfigurācijas.
-    + Izveido spēlētāja entitāti ar:
-      - pašreizējo pozīciju;
-      - tekstūru;
-      - krāsu.
+    + Izveido spēlētāja entitāti ar pašreizējās pozīcijas komponenti.
   ],
   [
     + Spēlētāja entitāte.
@@ -932,34 +985,8 @@ sākumekrānu.
   ],
 ) <screen-F03>
 
-/* #function-table(
-"Mūzikas atskaņošana",
-"SSPMF03",
-"Sākt atskaņot spēles mūziku gameplay režīmā.",
-[ Ievades dati: + GameplayMusic resurss + AudioSource resurss ],
-[ + Izveido jaunu audio entitāšu + Pievieno AudioPlayer komponenti + Iestata atskaņošanas iestatījumus uz LOOP ],
-[ + Aktīva audio atskaņošanas entitāte ],
-[ Nav definēti specifiski kļūdu ziņojumi. ],
-) <screen-F03> */
 
-/* #function-table(
-"Mūzikas apturēšana",
-"SSPMF04",
-"Apturēt spēles mūziku, izejot no gameplay režīma.",
-[
-+ GameplayMusic resurss ar entitāte ID
-],
-[
-+ Pārbauda, vai eksistē mūzikas entitāte:
-+ Ja neeksistē, ...
-+ Ja eksistē, likvidē entitāte rekursīvi
-],
-[
-Izvades datu sistēmai nav.
-],
-) <screen-F04> */
-
-
+#todo("uzrakstīt papildspēju moduli")
 
 == Nefunkcionālās prasības
 === Veiktspējas prasības
@@ -1415,7 +1442,7 @@ Katrs testa scenārijs ir dokumentēta strukturētas tabulas formātā, ievēroj
 būtisku informāciju, piemēram, test nosaukumu, unikālo identifikatoru, aprakstu,
 izpildes soļus, gaidāmo rezultātu un faktisko rezultātu (veiksmīga testa
 gadījumā apzīmēts ar "Ok", bet neveiksmīgu -- ar "Err").
-Izvēlētie testu gadījumi ir detalizēti aprakstīti #todo("tab") tabulā.
+Izvēlētie testu gadījumi ir detalizēti aprakstīti #todo("attiecīgā tabula") tabulā.
 
 #todo("add tests table")
 
@@ -1433,7 +1460,7 @@ pārklājumu, jo rīkam ir ierobežojumi attiecībā uz "inline"#footnote[https:
 funkcijām un citi tehniski ierobežojumi @cargo-tarpaulin.
 
 
-#todo("double check which tests are actually impemented")
+#todo("double check which tests are actually imlemented")
 Arī spēles kods saglabā stabilu testēšanas stratēģiju.
 Dokumentācijas testi tiek rakstīti tieši koda dokumentācijā, kalpojot diviem
 mērķiem -- tie pārbauda koda pareizību un vienlaikus sniedz skaidrus lietošanas

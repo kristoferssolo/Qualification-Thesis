@@ -46,7 +46,15 @@ papilspējas.
       numbering: none,
       "Abstract",
     )
-    #todo("add english title")
+    #align(
+      center,
+      heading(
+        level: 2,
+        outlined: false,
+        numbering: none,
+        text(13pt, "Game development using Bevy game engine"),
+      ),
+    )
     The qualification work includes the game "Maze Ascension", which offers
     players the challenge to pass through procedurally generated hexagons
     mazes. The game is built using the Rust programming language and Bevy
