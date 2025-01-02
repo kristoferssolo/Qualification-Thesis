@@ -9,11 +9,13 @@
 #heading(numbering: none, outlined: false, "Dokumentārā lapa")
 
 Kvalifikācijas darbs "*Spēles izstrāde, izmantojot Bevy spēļu dzinēju*" ir
-izstrādāts Latvijas Universitātes eksakto zinātņu un tehnoloģiju fakultātē.
+izstrādāts Latvijas Universitātes Eksakto zinātņu un tehnoloģiju fakultātē,
+Datorikas nodaļā.
 
+#v(vspace / 3)
 Ar savu parakstu apliecinu, ka darbs izstrādāts patstāvīgi, izmantoti tikai tajā
 norādītie informācijas avoti un iesniegtā darba elektroniskā kopija atbilst
-izdrukai.
+izdrukai un/vai recenzentam uzrādītajai darba versijai.
 
 
 #context {
@@ -23,8 +25,8 @@ izdrukai.
     hanging-indent: 1cm,
   )
 
-  v(vspace)
-  [Darba autors: *Kristiāns Francis Cagulis, kc22015 ~~\_\_.01.2025.*]
+  v(vspace / 2)
+  [Autors: *Kristiāns Francis Cagulis, kc22015 ~~\_\_.01.2025.*]
 
   v(vspace)
   [Rekomendēju darbu aizstāvēšanai\
@@ -36,14 +38,8 @@ izdrukai.
 
   v(vspace)
   [Darbs iesniegs *\_\_.01.2025.*\
-    Kvalifikācijas darbu pārbaudījumu komisijas sekretārs(-e): #long-underline
+    Kvalifikācijas darbu pārbaudījumu komisijas sekretārs (elektronisks paraksts)
   ]
 
-  v(vspace)
-  [Darbs aizstāvēts kvalifikācijas darbu pārbaudījuma komisijas sēdē\
-    \_\_.01.2025. prot. Nr. #long-underline
-  ]
-  v(vspace / 2)
-  [Komisijas sekretārs(-e): #long-underline]
   v(vspace)
 }

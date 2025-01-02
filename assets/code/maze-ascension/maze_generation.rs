@@ -1,88 +1,159 @@
-pub(super) fn setup(
+/// Spawns a new maze floor in response to a SpawnMaze trigger event
+pub(super) fn spawn_maze(
+    trigger: Trigger<SpawnMaze>,
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
-    config: Res<MazeConfig>,
-    layout: Res<Layout>,
+    maze_query: Query<(Entity, &Floor, &Maze)>,
+    global_config: Res<GlobalMazeConfig>,
 ) {
-    let maze = MazeBuilder::new()
-        .with_radius(config.radius)
-        .with_seed(0)
-        .with_generator(GeneratorType::RecursiveBacktracking)
-        .build()
-        .expect("Something went wrong while creating maze");
+    let SpawnMaze { floor, config } = trigger.event();
 
-    let assets = create_base_assets(&mut meshes, &mut materials, &config);
-    commands
+    if maze_query.iter().any(|(_, f, _)| f.0 == *floor) {
+        warn!("Floor {} already exists, skipping creation", floor);
+        return;
+    }
+
+    let maze = match generate_maze(config) {
+        Ok(m) => m,
+        Err(e) => {
+            error!("Failed to generate maze for floor {floor}: {:?}", e);
+            return;
+        }
+    };
+
+    // Calculate vertical offset based on floor number
+    let y_offset = match *floor {
+        1 => 0,              // Ground/Initial floor (floor 1) is at y=0
+        _ => FLOOR_Y_OFFSET, // Other floors are offset vertically
+    } as f32;
+
+    let entity = commands
         .spawn((
-            Name::new("Floor"),
-            SpatialBundle {
-                transform: Transform::from_translation(Vec3::ZERO),
-                ..default()
-            },
+            Name::new(format!("Floor {}", floor)),
+            HexMaze,
+            maze.clone(),
+            Floor(*floor),
+            config.clone(),
+            Transform::from_translation(Vec3::ZERO.with_y(y_offset)),
+            Visibility::Visible,
         ))
-        .with_children(|parent| {
-            for tile in maze.values() {
-                spawn_single_hex_tile(
-                    parent,
-                    &assets,
-                    tile,
-                    &layout.0,
-                    config.height,
-                )
-            }
-        });
+        .insert_if(CurrentFloor, || *floor == 1) // Only floor 1 gets CurrentFloor
+        .insert_if(NextFloor, || *floor != 1) // All other floors get NextFloor
+        .id();
+
+    let assets = MazeAssets::new(&mut meshes, &mut materials, &global_config);
+    spawn_maze_tiles(
+        &mut commands,
+        entity,
+        &maze,
+        &assets,
+        config,
+        &global_config,
+    );
 }
 
-fn spawn_single_hex_tile(
+/// Spawns all tiles for a maze as children of the parent maze entity
+pub fn spawn_maze_tiles(
+    commands: &mut Commands,
+    parent_entity: Entity,
+    maze: &Maze,
+    assets: &MazeAssets,
+    maze_config: &MazeConfig,
+    global_config: &GlobalMazeConfig,
+) {
+    commands.entity(parent_entity).with_children(|parent| {
+        for tile in maze.values() {
+            spawn_single_hex_tile(
+                parent,
+                assets,
+                tile,
+                maze_config,
+                global_config,
+            );
+        }
+    });
+}
+
+/// Spawns a single hexagonal tile with appropriate transforms and materials
+pub(super) fn spawn_single_hex_tile(
     parent: &mut ChildBuilder,
     assets: &MazeAssets,
     tile: &HexTile,
-    layout: &HexLayout,
-    hex_height: f32,
+    maze_config: &MazeConfig,
+    global_config: &GlobalMazeConfig,
 ) {
-    dbg!(tile);
-    let world_pos = tile.to_vec3(layout);
-    let rotation = match layout.orientation {
+    let world_pos = tile.to_vec3(&maze_config.layout);
+    let rotation = match maze_config.layout.orientation {
+        // Pointy hexagons don't need additional rotation (0 degrees)
         HexOrientation::Pointy => Quat::from_rotation_y(0.0),
-        HexOrientation::Flat => Quat::from_rotation_y(FRAC_PI_6), // 30 degrees rotation
+        // Flat-top hexagons need 30 degrees (pi/6) rotation around Y axis
+        HexOrientation::Flat => Quat::from_rotation_y(FRAC_PI_6),
+    };
+
+    // Select material based on tile position: start, end, or default
+    let material = match tile.pos() {
+        pos if pos == maze_config.start_pos => assets
+            .custom_materials
+            .get(&RosePine::Pine)
+            .cloned()
+            .unwrap_or_default(),
+        pos if pos == maze_config.end_pos => assets
+            .custom_materials
+            .get(&RosePine::Love)
+            .cloned()
+            .unwrap_or_default(),
+        _ => assets.hex_material.clone(),
     };
 
     parent
         .spawn((
-            Name::new(format!("Hex {}", tile.to_string())),
-            PbrBundle {
-                mesh: assets.hex_mesh.clone(),
-                material: assets.hex_material.clone(),
-                transform: Transform::from_translation(world_pos)
-                    .with_rotation(rotation),
-                ..default()
-            },
+            Name::new(format!("Hex {}", tile)),
+            Tile,
+            Mesh3d(assets.hex_mesh.clone()),
+            MeshMaterial3d(material),
+            Transform::from_translation(world_pos).with_rotation(rotation),
         ))
         .with_children(|parent| {
-            spawn_walls(parent, assets, hex_height / 2., &tile.walls())
+            spawn_walls(parent, assets, tile.walls(), global_config)
         });
 }
 
+/// Spawns walls around a hexagonal tile based on the walls configuration
 fn spawn_walls(
     parent: &mut ChildBuilder,
     assets: &MazeAssets,
-    y_offset: f32,
     walls: &Walls,
+    global_config: &GlobalMazeConfig,
 ) {
+    // Base rotation for wall alignment (90 degrees counter-clockwise)
     let z_rotation = Quat::from_rotation_z(-FRAC_PI_2);
+    let y_offset = global_config.height / 2.;
 
     for i in 0..6 {
         if !walls.contains(i) {
             continue;
         }
 
+        // Calculate the angle for this wall
+        // FRAC_PI_3 = 60 deg
+        // Negative because going clockwise
+        // i * 60 produces: 0, 60, 120, 180, 240, 300
         let wall_angle = -FRAC_PI_3 * i as f32;
 
-        let x_offset = (HEX_SIZE - WALL_SIZE) * f32::cos(wall_angle);
-        let z_offset = (HEX_SIZE - WALL_SIZE) * f32::sin(wall_angle);
+        // cos(angle) gives x coordinate on unit circle
+        // sin(angle) gives z coordinate on unit circle
+        // Multiply by wall_offset to get actual distance from center
+        let x_offset = global_config.wall_offset() * f32::cos(wall_angle);
+        let z_offset = global_config.wall_offset() * f32::sin(wall_angle);
+
+        // x: distance along x-axis from center
+        // y: vertical offset from center
+        // z: distance along z-axis from center
         let pos = Vec3::new(x_offset, y_offset, z_offset);
 
+        // 1. Rotate around x-axis to align wall with angle
+        // 2. Add FRAC_PI_2 (90) to make wall perpendicular to angle
         let x_rotation = Quat::from_rotation_x(wall_angle + FRAC_PI_2);
         let final_rotation = z_rotation * x_rotation;
 
@@ -90,52 +161,18 @@ fn spawn_walls(
     }
 }
 
+/// Spawns a single wall segment with the specified rotation and position
 fn spawn_single_wall(
     parent: &mut ChildBuilder,
-    asstets: &MazeAssets,
+    assets: &MazeAssets,
     rotation: Quat,
     offset: Vec3,
 ) {
     parent.spawn((
         Name::new("Wall"),
-        PbrBundle {
-            mesh: asstets.wall_mesh.clone(),
-            material: asstets.wall_material.clone(),
-            transform: Transform::from_translation(offset)
-                .with_rotation(rotation),
-            ..default()
-        },
+        Wall,
+        Mesh3d(assets.wall_mesh.clone()),
+        MeshMaterial3d(assets.wall_material.clone()),
+        Transform::from_translation(offset).with_rotation(rotation),
     ));
-}
-
-fn create_base_assets(
-    meshes: &mut ResMut<Assets<Mesh>>,
-    materials: &mut ResMut<Assets<StandardMaterial>>,
-    config: &Res<MazeConfig>,
-) -> MazeAssets {
-    MazeAssets {
-        hex_mesh: meshes.add(generate_hex_mesh(HEX_SIZE, config.height)),
-        wall_mesh: meshes.add(generate_square_mesh(HEX_SIZE)),
-        hex_material: materials.add(white_material()),
-        wall_material: materials.add(Color::BLACK),
-    }
-}
-
-fn generate_hex_mesh(radius: f32, depth: f32) -> Mesh {
-    let hexagon = RegularPolygon {
-        sides: 6,
-        circumcircle: Circle::new(radius),
-    };
-    let prism_shape = Extrusion::new(hexagon, depth);
-    let rotation = Quat::from_rotation_x(FRAC_PI_2);
-
-    Mesh::from(prism_shape).rotated_by(rotation)
-}
-
-fn generate_square_mesh(depth: f32) -> Mesh {
-    let square = Rectangle::new(WALL_SIZE, WALL_SIZE);
-    let rectangular_prism = Extrusion::new(square, depth);
-    let rotation = Quat::from_rotation_x(FRAC_PI_2);
-
-    Mesh::from(rectangular_prism).rotated_by(rotation)
 }

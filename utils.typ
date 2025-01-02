@@ -142,11 +142,20 @@
   )
 }
 
-#let codeblock(filename, lang) = {
-  raw(
-    read(filename),
-    block: true,
-    lang: lang,
+#let codeblock(caption, filename, lang: "rust") = {
+  show figure: set block(breakable: true)
+  show raw: set par.line(numbering: "1")
+  set figure(numbering: "1")
+
+  figure(
+    caption: caption,
+    kind: "attachment",
+    supplement: "pielikums",
+    raw(
+      read(filename),
+      block: true,
+      lang: lang,
+    ),
   )
 }
 

@@ -7,7 +7,7 @@ typst:
     - Haug
     - Martin
     - Typst Projekta Izstrādātāji
-  url: {value: "https://typst.app/", date: 2024-12-20}
+  url: "https://typst.app/"
 hex-grid:
   type: Web
   title: Hexagonal Grids
@@ -44,11 +44,6 @@ maze-generation:
   title: Maze Generation
   author:
   url: https://rosettacode.org/wiki/Maze_generation
-bevy-quickstart:
-  type: Web
-  title: Bevy New 2D
-  author:
-  url: https://github.com/TheBevyFlock/bevy_new_2d
 sem-ver:
   type: Web
   title: Semantiskā versiju veidošana
@@ -84,7 +79,7 @@ the-rust-performance-book:
   url: https://nnethercote.github.io/perf-book
 cargo-tarpaulin:
   type: Web
-  title: Tarpaulin
+  title: Tarpaulin rīks
   author: xd009642
   url: {value: "https://crates.io/crates/cargo-tarpaulin", date: 2024-12-18}
 ecs:
@@ -94,7 +89,7 @@ ecs:
   url: {value: "https://en.wikipedia.org/wiki/Entity_component_system", date: 2024-09-12}
 bevy-ecs:
   type: Web
-  title: Bevy ECS
+  title: Ievads Bevy ECS
   author: Bevy Projekta Izstādātāji
   url: {value: "https://bevyengine.org/learn/quick-start/getting-started/ecs/", date: 2024-09-12}
 SRP:
@@ -117,12 +112,12 @@ begginer-patterns:
   url: "https://pressbooks.lib.jmu.edu/programmingpatterns/"
 clippy:
   type: Web
-  title: Clippy
+  title: Clippy dokumentācija
   author: Rust Projekta Izstādātāji
   url: https://doc.rust-lang.org/stable/clippy/
 cargo-doc:
   type: Web
-  title: cargo-doc
+  title: cargo-doc dokumentācija
   author: Rust Projekta Izstādātāji
   url: https://doc.rust-lang.org/stable/cargo/
 rust-style:
@@ -137,12 +132,12 @@ rust-lang-doc:
   url: https://doc.rust-lang.org/stable/
 rustfmt:
   type: Web
-  title: Rustfmt
+  title: Rustfmt dokumentācija
   author: Rust Projekta Izstādātāji
   url: https://github.com/rust-lang/rustfmt
 gh-release:
   type: Web
-  title: About Releases
+  title: About Releases dokumentācija
   author: GitHub komanda
   url: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
 gh-actions:
@@ -152,13 +147,13 @@ gh-actions:
   url: https://docs.github.com/en/actions
 tokei:
   type: Web
-  title: tokei
+  title: Tokei rīks
   author: XAMPPRocky
   url: https://crates.io/crates/tokei
 QSM:
   type: Web
   title: Software Project Performance Benchmark Tables
-  author: QSM, Inc.
+  author: QSM
   url: https://www.qsm.com/resources/qsm-benchmark-tables
 bevy-0.15:
   type: Web

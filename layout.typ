@@ -39,9 +39,10 @@
     lang: "lv",
     region: "lv",
   )
-  show raw: set text(font: "JetBrainsMono NF")
-
-  show raw.where(lang: "pintora"): it => pintorita.render(it.text)
+  show raw: set text(
+    font: "Fira Code",
+    features: (calt: 0),
+  )
 
   show math.equation: set text(weight: 400)
 
@@ -172,8 +173,7 @@
   )
 
   // WARNING: remove before sending
-  outline(title: "TODOs", target: figure.where(kind: "todo"))
-
+  // outline(title: "TODOs", target: figure.where(kind: "todo"))
   /* --- Figure/Table config start --- */
   show heading: i-figured.reset-counters
   show figure: i-figured.show-figure.with(numbering: "1.1.")
@@ -183,6 +183,8 @@
   show figure.where(kind: "i-figured-table"): set block(breakable: true)
   show figure.where(kind: "i-figured-table"): set figure.caption(position: top)
   show figure.where(kind: "attachment"): set figure.caption(position: top)
+  show figure.where(kind: raw): set figure.caption(position: top)
+
 
   show figure: set par(justify: false) // disable justify for figures (tables)
   show figure.where(kind: table): set par(leading: 1em)
@@ -208,7 +210,10 @@
         ),
       )
     }
-    if it.kind == "i-figured-\"attachment\"" {
+    if it.kind in (
+      "i-figured-raw",
+      "i-figured-\"attachment\"",
+    ) {
       return align(
         end,
         it.counter.display() + ". pielikums. " + text(it.body),
@@ -282,7 +287,6 @@
         },
       )
     }
-
 
     // Default case for non-figure elements
     it

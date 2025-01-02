@@ -20,8 +20,6 @@
 )
 #set heading(numbering: none)
 = Apzīmējumu saraksts
-/ Šūna:
-
 / Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku;
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
@@ -38,7 +36,8 @@
 / Režģis: Strukturēts šūnu izkārtojums, kas veido spēles pasaules pamata struktūru;
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā;
 / Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai;
-/ Šūna: Sešstūraina režģa viena pozīcija, kas definē telpu, kuru var aizņemt viena plāksne;
+/ Šūna: Sešstūraina režģa viena pozīcija, kas definē telpu, kuru var aizņemt viena plāksne.
+/ WASM: WebAssembly -- zema līmeņa assemblera tipa kods, kas var darboties modernos tīmekļa pārlūkos.
 
 = Ievads
 == Nolūks
@@ -50,13 +49,6 @@ Darba galvenā uzmanība ir vērsta uz būtisku spēles mehāniku ieviešanu, to
 procedurālu labirintu ģenerēšanu, spēlētāju navigācijas sistēmu, papildspēju
 integrāciju un vertikālās progresijas mehāniku, vienlaikus ievērojot minimālisma
 dizaina filozofiju.
-
-// Spēles pamatā ir sešstūra formas šūnas, kas, savukārt, veido sešstūra
-// formas labirintus, kuri rada atšķirīgu vizuālo un navigācijas izaicinājumu.
-// Spēlētāju uzdevums ir pārvietoties pa šiem labirintiem, lai sasniegtu katra
-// līmeņa beigas. Spēlētājiem progresējot, tie sastopas ar arvien sarežģītākiem
-// labirintiem, kuros nepieciešama stratēģiska domāšana, izpēte un papildspēju
-// izmantošana.
 
 Spēles pamatā ir procedurāli ģenerēti sešstūra labirinti, kas katrā spēlē rada
 unikālu vizuālo un navigācijas izaicinājumu. Procedurālās ģenerēšanas sistēma
@@ -96,8 +88,8 @@ tehnisko iespējamību.
 
 == Saistība ar citiem dokumentiem
 PPS ir izstrādāta, ievērojot LVS 68:1996 "Programmatūras prasību specifikācijas
-ceļvedis" un LVS 72:1996 "Ieteicamā prakse programmatūras projektējuma
-aprakstīšanai" standarta prasības @lvs_68 @lvs_72.
+ceļvedis" @lvs_68 un LVS 72:1996 "Ieteicamā prakse programmatūras projektējuma
+aprakstīšanai" standarta prasības @lvs_72.
 
 == Pārskats
 Šis dokuments sniedz detalizētu programmatūras prasību specifikāciju spēlei
@@ -248,14 +240,18 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
   + Programmēšanas valodas un Bevy spēles dzinēja tehniskie ierobežojumi;
   + Responsivitāte;
   + Starpplatformu savietojamība: Linux, macOS, Windows un WebAssembly.
-// + Izplatīšanas un izvietošanas ierobežojumi:
-//   + CI/CD darbplūsma.
+
+#indent-par[
+  Dokumentācijas izstrādei ir izmantots Typst rīks, kas nodrošina efektīvu darbu
+  ar tehnisko dokumentāciju, ieskaitot matemātiskas formulas, diagrammas un koda
+  fragmentus @typst.
+]
 
 == Pieņēmumi un atkarības
 - Tehniskie pieņēmumi:
   - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu
     palaist uz Bevy spēles dzinēja balstītas spēles.
-  - ierīcei jāatbalsta WebGL2,#footnote("https://registry.khronos.org/webgl/specs/latest/2.0/")
+  - ierīcei jāatbalsta WebGL2 #footnote("https://registry.khronos.org/webgl/specs/latest/2.0/"),
     lai nodrošinātu pareizu atveidošanu @webgl2.
 - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
 - ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
@@ -1700,9 +1696,7 @@ projekta lietojuma gadījumam sekojošu iemeslu dēļ:
 
 == Saskarņu projektējums
 Spēles saskarņu projektējums ietver divus galvenos skatus (sk. @fig:ui-flow) --
-galveno izvēlni, spēles saskarni -- un izstrādes rīkus.
-Katra saskarne ir veidota, ņemot vērā tās specifisko lietojuma gadījumu un
-lietotāju vajadzības.
+galveno izvēlni un spēles saskarni -- un izstrādes rīkus.
 
 #figure(
   caption: "Ekrānskatu plūsmu diagramma",
@@ -1714,7 +1708,7 @@ lietotāju vajadzības.
         stroke: 1pt,
         "<|-|>",
       )
-      action-node((1, 0), [Galvenais ekrāns], inset: 2em)
+      action-node((1, 0), [Spēles ekrāns], inset: 2em)
     },
   ),
 ) <ui-flow>
@@ -1725,8 +1719,6 @@ Galvenā izvēlne ir pirmais skats, ar ko saskaras lietotājs, uzsākot spēli (
 @fig:main-menu).
 Tā sastāv no spēles nosaukuma, "Play" -- sākt spēli pogas un "Quit" -- iziet
 pogas.
-Izvēlnes dizains ir minimālistisks un intuitīvs, izmantojot kontrastējošas
-krāsas un skaidru vizuālo hierarhiju.
 
 #figure(
   caption: "Galvenās izvēlnes skats",
@@ -1957,8 +1949,8 @@ no drošina piemēra koda pareizību, moduļu testi pārbauda iekšējo
 funkcionalitāti, savukārt testu mapē esošie vienībtesti un integrācijas testi
 pārbauda sarežģītākus gadījumus.
 Automatizēto testu izpildes rezultātu kopsavilkums ir redzams
-@fig:tests-hexlab[attēlā], savukārt detalizēts testu izpildes pārskats ir
 pieejams @tests-hexlab-full[pielikumā].
+@fig:tests-hexlab[attēlā], savukārt detalizēts testu izpildes pārskats ir
 
 Izmantojot "cargo-tarpaulin", testu pārklājums ir $81.69%$ (116 no 142
 iekļautajām rindiņām) (sk. @tarpaulin-hexlab[pielikumu]), tomēr šis rādītājs
@@ -1971,15 +1963,14 @@ funkcijām un citi tehniski ierobežojumi @cargo-tarpaulin.
   image("assets/images/tests/hexlab-minimized.png"),
 )<tests-hexlab>
 
-Arī spēles kods saglabā stabilu testēšanas stratēģiju.
-Dokumentācijas testi tiek rakstīti tieši koda dokumentācijā, kalpojot diviem
-mērķiem -- tie pārbauda koda pareizību un vienlaikus sniedz skaidrus lietošanas
-piemērus turpmākai uzturēšanai.
-Moduļu testi ir stratēģiski izvietoti līdzās implementācijas kodam tajā pašā
-failā, nodrošinot, ka katras komponentes funkcionalitāte tiek pārbaudīta
-izolēti.
-Šie testi attiecas uz tādām svarīgām spēles sistēmām kā spēlētāju kustība,
-sadursmju noteikšana, spēles stāvokļa pārvaldība u.c.
+#indent-par[
+  Arī spēles kods saglabā stabilu testēšanas stratēģiju.
+  Moduļu testi ir stratēģiski izvietoti līdzās implementācijas kodam tajā pašā
+  failā, nodrošinot, ka katras komponentes funkcionalitāte tiek pārbaudīta
+  izolēti.
+  Šie testi attiecas uz tādām svarīgām spēles sistēmām kā spēlētāju kustība,
+  sadursmju noteikšana, spēles stāvokļa pārvaldība u.c.
+]
 
 Visi testi tiek automātiski izpildīti kā nepārtrauktas integrācijas procesa
 daļa, nodrošinot tūlītēju atgriezenisko saiti par sistēmas stabilitāti un
@@ -2014,11 +2005,10 @@ dokumentētas#footnote[https://docs.rs/hexlab/latest/hexlab/]<hexlab-docs>.
 Šajā dokumentācijā ir ietverti detalizēti apraksti un lietošanas piemēri, kas ne
 tikai palīdz saprast kodu, bet programmatūras prasības specifikācija ir
 izstrādāta, ievērojot LVS 68:1996 standarta "Programmatūras prasību
-specifikācijas ceļvedis" un LVS 72:1996 standarta "Ieteicamā prakse
-programmatūras projektējuma aprakstīšanai" standarta prasības @lvs_68 @lvs_72.
-// Programmatūras projektējuma aprakstā iekļautās
-// aktivitāšu diagrammas ir izstrādātas, ievērojot UML 2.5 versijas
-// specifikāciju@omg-uml.
+specifikācijas ceļvedis" @lvs_68 un LVS 72:1996 standarta "Ieteicamā prakse
+programmatūras projektējuma aprakstīšanai" standarta prasības @lvs_72.
+Programmatūras projektējuma aprakstā iekļautās aktivitāšu diagrammas ir veidotas
+atbilstoši UML (Unified Modeling Language) 2.5 specifikācijai @omg-uml.
 
 == Konfigurācijas pārvaldība
 
@@ -2029,7 +2019,7 @@ Rīku konfigurācija ir definēta vairākos failos:
   laidiena komandas dažādām vidēm:
   - atkļūdošanas kompilācijas ar iespējotu pilnu atpakaļsekošanu;
   - laidiena kompilācijas ar iespējotu optimizāciju.
-- "GitHub Actions"@gh-actions darbplūsmas, kas apstrādā:
+- "GitHub Actions" darbplūsmas, kas apstrādā @gh-actions:
   - koda kvalitātes pārbaudes (vienībtesti, statiskie testi, formatēšana,
     dokumentācijas izveide).
   - kompilācijas un izvietotošanas darbplūsma, kas:
@@ -2051,10 +2041,11 @@ kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas, bet
 saistītā "hexlab" bibliotēka -- $979$ rindiņas, kopā veidojot $2906$ loģiskās koda
 rindiņas, neiekļaujot tukšās rindiņas un komentārus (sk. @tokei-maze-ascension[]
 un @tokei-hexlab[pielikumus]).
+
 Saskaņā ar QSM etalontabulu "Business Systems Implementation Unit (New and
 Modified IU) Benchmarks", pirmās kvartiles projekti ($25%$ mazākie no $550$
 biznesa sistēmu projektiem) vidēji ilgst $3.2$ mēnešus, ar vidēji $1.57$
-izstrādātājiem un mediāno projekta apjomu -- $1889$ koda rindiņas.
+izstrādātājiem un mediāno projekta apjomu -- $1889$ koda rindiņas @QSM.
 Ņemot vērā, ka projekta autors ir students ar ierobežotu pieredzi, tiek
 izmantota pirmās kvartiles $50%$ diapazona augšējā robeža -- $466$ rindiņas
 personmēnesī.
@@ -2118,8 +2109,8 @@ Projekta turpmākās attīstības iespējas ietver:
 )
 
 #include "attachments.typ"
-// #include "code.typ"
+#include "code.typ"
 #include "doc.typ"
 
-#pagebreak()
-#total-words words
+// #pagebreak()
+// #total-words words
