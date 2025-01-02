@@ -1801,10 +1801,152 @@ Integrācijas testēšana ir veikta manuāli, mijiedarboties ar spēles saskarni
 Katrs testa scenārijs ir dokumentēta strukturētas tabulas formātā, ievērojot
 būtisku informāciju, piemēram, test nosaukumu, unikālo identifikatoru, aprakstu,
 izpildes soļus, gaidāmo rezultātu un faktisko rezultātu (veiksmīga testa
-gadījumā apzīmēts ar "Ok", bet neveiksmīgu -- ar "Err").
-Izvēlētie testu gadījumi ir detalizēti aprakstīti #todo("attiecīgā tabula") tabulā.
+gadījumā apzīmēts ar "Ok", bet neveiksmīgu -- "Err").
+Izvēlētie testu gadījumi ir detalizētāk aprakstīti @tbl:manual-tests[tabulā].
 
-#todo("add tests table")
+
+#figure(
+  caption: "Manuālā testēšana",
+  kind: table,
+  tablex(
+    columns: (3.5em, 6em, auto, auto, 5.5em),
+    [*Testa ID*],
+    [*Testa nosaukums*],
+    [*Soļi*],
+    [*Sagaidāmais rezultāts*],
+    [*Faktiskais rezultāts*],
+    "MT01",
+    "Spēles palaišana",
+    [
+      + Palaist spēli
+      + Gaidīt ielādi
+    ],
+    [Parādās galvenā izvēlne ar "Play" pogu.],
+    "Ok",
+    "MT02",
+    "Labirinta ģenerēšana",
+    [
+      + Palaist spēli
+      + Nospiest "Play" pogu
+      + Gaidīt ielādi
+    ],
+    [Tiek uzģenerēts sešstūrains labirints ar sienām.],
+    "Ok",
+    "MT03",
+    "Stāvu pāreja (uz augšu)",
+    [
+      + Nokļūt līdz beigu šūnai
+      + Novērot animāciju
+    ],
+    [
+      + Plūstoša pāreja starp stāviem uz augšu
+      + Jauna stāva ģenerēšana
+    ],
+    "Ok",
+    "MT04",
+    "Stāvu pāreja (uz leju)",
+    [
+      + Nokļūt līdz sākuma šūnai
+      + Novērot animāciju
+    ],
+    [
+      + Plūstoša pāreja starp stāviem uz leju
+      + Jauns stāvs netiek ģenerēts
+    ],
+    "Ok",
+    "MT05",
+    "Papildspēju aktivizēšana",
+    [
+      + Aktivizēt papildspēju
+      + Gaidīt atjaunošanās laiku
+    ],
+    [
+      + Papildspēja aktivizējas
+      + Sākas atjaunošanās laiks
+    ],
+    "Err",
+    "MT06",
+    "Izstrādes rīku atvēršana",
+    [
+      + Palaist spēli izstrādes režīmā
+      + Nospiest "Play" pogu
+    ],
+    [Parādās "egui" panelis ar labirinta konfigurācijas opcijām],
+    "Ok",
+    "MT07",
+    [Labirinta parametru maiņa],
+    [
+      + Atvērt "egui" paneli
+      + Mainīt labirinta izmēru un citus parametrus
+    ],
+    [Tiek ģenerēts jauns labirints ar mainītajiem parametriem],
+    "Ok",
+    "MT08",
+    [Spēlētāja kustība],
+    [
+      + Izmantot WASD vadību
+      + Mēģināt šķērsot sienas
+    ],
+    [
+      + Plūstoša kustība brīvajā telpā
+      + Sadursmes ar sienām strādā
+    ],
+    "Ok",
+    "MT09",
+    [Windows palaišana],
+    [
+      + Kompilēt spēli Windows platformai
+      + Palaist .exe failu
+      + Veikt pamata funkcionalitātes testu
+    ],
+    [Spēle darbojas Windows vidē bez kļūdām],
+    "Ok",
+    "MT10",
+    [Linux palaišana],
+    [
+      + Kompilēt spēli Linux platformai
+      + Palaist bināro failu
+      + Veikt pamata funkcionalitātes testu
+    ],
+    [Spēle darbojas Linux vidē bez kļūdām],
+    "Ok",
+    "MT11",
+    [macOS palaišana],
+    [
+      + Kompilēt spēli macOS platformai
+      + Palaist .dmg pakotni
+      + Veikt pamata funkcionalitātes testu
+    ],
+    [Spēle darbojas macOS vidē bez kļūdām],
+    "Err",
+    "MT12",
+    [WASM palaišana],
+    [
+      + Kompilēt spēli WASM mērķim
+      + Atvērt pārlūkā
+      + Veikt pamata funkcionalitātes testu
+    ],
+    [
+      + Spēle ielādējas pārlūkā
+      + Darbojas visas pamatfunkcijas
+    ],
+    "Ok",
+  ),
+) <manual-tests>
+
+#indent-par[
+  Divi testi no manuālās testēšanas plāna netika izpildīti.
+  Papildspēju tests (MT05) netika izpildīts, jo šī funkcionalitāte netika
+  implementēta projekta pirmajā versijā, atstājot to kā potenciālu nākotnes
+  papildinājumu.
+  Savukārt macOS platformas tests (MT11) netika izpildīts
+  tehnisku ierobežojumu dēļ -- projekta izstrādātājam nav pieejama Apple
+  aparatūra.
+]
+
+Tādējādi no divpadsmit definētajiem testiem desmit tika veiksmīgi izpildīti,
+viens netika implementēts (papildspējas), un viens tika daļēji izpildīts (macOS
+kompilēšana bez funkcionālās testēšanas).
 
 === Automatizēti testi
 
@@ -1814,19 +1956,25 @@ Testēšanas stratēģijā ir ieviesti vairāki pārbaudes līmeņi: dokumentāc
 no drošina piemēra koda pareizību, moduļu testi pārbauda iekšējo
 funkcionalitāti, savukārt testu mapē esošie vienībtesti un integrācijas testi
 pārbauda sarežģītākus gadījumus.
-Izmantojot "cargo-tarpaulin", testu pārklājums ir $81,69%$ (116 no 142
-iekļautajām rindiņām), tomēr šis rādītājs pilnībā neatspoguļo faktisko
-pārklājumu, jo rīkam ir ierobežojumi attiecībā uz "inline"#footnote[https://doc.rust-lang.org/nightly/reference/attributes/codegen.html?highlight=inline]
+Automatizēto testu izpildes rezultātu kopsavilkums ir redzams
+@fig:tests-hexlab[attēlā], savukārt detalizēts testu izpildes pārskats ir
+pieejams @tests-hexlab-full[pielikumā].
+
+Izmantojot "cargo-tarpaulin", testu pārklājums ir $81.69%$ (116 no 142
+iekļautajām rindiņām) (sk. @tarpaulin-hexlab[pielikumu]), tomēr šis rādītājs
+pilnībā neatspoguļo faktisko pārklājumu, jo rīkam ir ierobežojumi attiecībā uz
+"inline"#footnote[https://doc.rust-lang.org/nightly/reference/attributes/codegen.html?highlight=inline]
 funkcijām un citi tehniski ierobežojumi @cargo-tarpaulin.
 
+#figure(
+  caption: [Daļējs "hexlab" bibliotēkas testu rezultāts],
+  image("assets/images/tests/hexlab-minimized.png"),
+)<tests-hexlab>
 
-#todo("double check which tests are actually imlemented")
 Arī spēles kods saglabā stabilu testēšanas stratēģiju.
 Dokumentācijas testi tiek rakstīti tieši koda dokumentācijā, kalpojot diviem
 mērķiem -- tie pārbauda koda pareizību un vienlaikus sniedz skaidrus lietošanas
 piemērus turpmākai uzturēšanai.
-Šie testi ir īpaši vērtīgi, jo tie nodrošina, ka dokumentācija tiek sinhronizēta
-ar faktisko koda uzvedību.
 Moduļu testi ir stratēģiski izvietoti līdzās implementācijas kodam tajā pašā
 failā, nodrošinot, ka katras komponentes funkcionalitāte tiek pārbaudīta
 izolēti.
@@ -1901,12 +2049,11 @@ balstās uz $550$ verificētu programmatūras projektu datubāzi @QSM.
 Izmantojot "tokei" rīku @tokei, tika veikta detalizēta projekta koda analīze,
 kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas, bet
 saistītā "hexlab" bibliotēka -- $979$ rindiņas, kopā veidojot $2906$ loģiskās koda
-rindiņas, neiekļaujot tukšās rindiņas un komentārus (sk. @fig:tokei-maze-ascension[]
-un @fig:tokei-hexlab[pielukumus]).
-
+rindiņas, neiekļaujot tukšās rindiņas un komentārus (sk. @tokei-maze-ascension[]
+un @tokei-hexlab[pielikumus]).
 Saskaņā ar QSM etalontabulu "Business Systems Implementation Unit (New and
 Modified IU) Benchmarks", pirmās kvartiles projekti ($25%$ mazākie no $550$
-biznesa sistēmu projektiem) vidēji ilgst $3,2$ mēnešus, ar vidēji $1,57$
+biznesa sistēmu projektiem) vidēji ilgst $3.2$ mēnešus, ar vidēji $1.57$
 izstrādātājiem un mediāno projekta apjomu -- $1889$ koda rindiņas.
 Ņemot vērā, ka projekta autors ir students ar ierobežotu pieredzi, tiek
 izmantota pirmās kvartiles $50%$ diapazona augšējā robeža -- $466$ rindiņas
@@ -1970,19 +2117,8 @@ Projekta turpmākās attīstības iespējas ietver:
   "bibliography.yml",
 )
 
-#heading("Pielikumi", numbering: none)
-#figure(
-  caption: [Tokei rīka rezultāts "Maze Ascension" spēlei],
-  image("assets/images/tokei/maze-ascension.png"),
-) <tokei-maze-ascension>
-
-#figure(
-  caption: [Tokei rīka rezultāts "hexlab" bibliotēkai],
-  image("assets/images/tokei/hexlab.png"),
-) <tokei-hexlab>
-
+#include "attachments.typ"
 // #include "code.typ"
-
 #include "doc.typ"
 
 #pagebreak()

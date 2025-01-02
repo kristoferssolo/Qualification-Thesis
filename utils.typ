@@ -142,64 +142,12 @@
   )
 }
 
-#let entity-table(
-  caption: "",
-  id: (),
-  ..items,
-) = {
-  if id == () {
-    id = (
-      "id",
-      "serial8",
-      "primary key, not null",
-      "Unikālais identifikators",
-    )
-  }
-
-  return figure(
-    caption: caption,
-    kind: table,
-    tablex(
-      columns: (4cm, 3cm, auto, auto),
-      repeat-header: true,
-      /* Header */
-      [*Lauks*],
-      [*Datu tips*],
-      [*Lauka atribūti*],
-      [*Apraksts*],
-
-      ..entity-table-row(..id), // id row
-
-      ..for i in range(items.pos().len(), step: 4) {
-        entity-table-row(..items.pos().slice(i, i + 4))
-      },
-    ),
-  )
-}
-
-#let hyperlink-source(
-  author,
-  title,
-  link_str,
-  date,
-) = {
-  if link_str == "" {
-    [#author #title Aplūkots #date.display("[day].[month].[year]")]
-  } else {
-    [#author #title Pieejams: #link(link_str) aplūkots #date.display("[day].[month].[year]")]
-  }
-}
-
 #let codeblock(filename, lang) = {
   raw(
     read(filename),
     block: true,
     lang: lang,
   )
-}
-
-#let red(body) = {
-  text(body, fill: rgb(255, 0, 0))
 }
 
 #let components-table(
@@ -250,5 +198,48 @@
       [*Pielietojums*],
       ..body,
     ),
+  )
+}
+
+#let test-table(
+  caption: "",
+  ..items,
+) = {
+  if caption == "" {
+    caption = items.pos().first()
+  }
+  return longtable(
+    titles: (
+      "Testa gadījuma nosaukums",
+      "Testa identifikators",
+      "Apraksts",
+      "Soļi",
+      "Sagaidāmais rezultāts",
+      "Faktiskais rezultāts",
+    ),
+    caption: caption,
+    ..items,
+  )
+}
+
+
+#let entity-table-row(
+  ..items,
+) = {
+  (
+    items.pos().at(0),
+    upper(
+      raw(
+        items.pos().at(1),
+        block: false,
+      ),
+    ),
+    upper(
+      raw(
+        items.pos().at(2),
+        block: false,
+      ),
+    ),
+    items.pos().at(3),
   )
 }

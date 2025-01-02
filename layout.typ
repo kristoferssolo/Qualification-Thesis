@@ -1,6 +1,6 @@
 #import "@preview/i-figured:0.2.4"
 #import "@preview/tablex:0.0.9": tablex
-#import "@preview/pintorita:0.1.3"
+#import "@preview/headcount:0.1.0": *
 
 #let indent = 1cm
 
@@ -44,6 +44,16 @@
   show raw.where(lang: "pintora"): it => pintorita.render(it.text)
 
   show math.equation: set text(weight: 400)
+
+
+  // replace `.` with `,`
+  show math.equation: it => {
+    show regex("\d+\.\d+"): num => {
+      show ".": math.class("normal", ",")
+      num
+    }
+    it
+  }
 
   // Formatting for regular text
   set par(
@@ -167,10 +177,12 @@
   /* --- Figure/Table config start --- */
   show heading: i-figured.reset-counters
   show figure: i-figured.show-figure.with(numbering: "1.1.")
+  set figure(numbering: dependent-numbering("1.1"))
   set figure(placement: none)
 
   show figure.where(kind: "i-figured-table"): set block(breakable: true)
   show figure.where(kind: "i-figured-table"): set figure.caption(position: top)
+  show figure.where(kind: "attachment"): set figure.caption(position: top)
 
   show figure: set par(justify: false) // disable justify for figures (tables)
   show figure.where(kind: table): set par(leading: 1em)
@@ -194,6 +206,12 @@
           weight: "bold",
           it.body,
         ),
+      )
+    }
+    if it.kind == "i-figured-\"attachment\"" {
+      return align(
+        end,
+        it.counter.display() + ". pielikums. " + text(it.body),
       )
     }
     it
@@ -227,7 +245,9 @@
       let supplement_map = (
         i-figured-table: "tab.",
         i-figured-image: "att.",
+        attachment: "pielikums",
       )
+
 
       // Get the supplement value properly
       let supplement = if type(it.supplement) != function {
@@ -239,15 +259,23 @@
           ""
         }
       }
+
+      let number = if kind == "attachment" {
+        numbering(
+          el.numbering,
+          ..counter(figure.where(kind: kind)).at(el.location()),
+        ) + "." // Only add dot for attachments
+      } else {
+        numbering(
+          el.numbering,
+          ..counter(figure.where(kind: kind)).at(el.location()),
+        ) // No extra dot for tables and images
+      }
+
       // Create counter based on the kind
       return link(
         el.location(),
-        numbering(
-          el.numbering,
-          ..counter(figure.where(kind: kind)).at(
-            el.location(),
-          ),
-        ) + if supplement != "" {
+        number + if supplement != "" {
           " " + supplement
         } else {
           ""
