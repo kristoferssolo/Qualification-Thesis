@@ -54,14 +54,14 @@ Spēles pamatā ir procedurāli ģenerēti sešstūra labirinti, kas katrā spē
 unikālu vizuālo un navigācijas izaicinājumu. Procedurālās ģenerēšanas sistēma
 nodrošina, ka:
 
-- Katrs labirints tiek unikāli ģenerēts "uzreiz"#footnote[Attiecas uz gandrīz
+- katrs labirints tiek unikāli ģenerēts "uzreiz"#footnote[Attiecas uz gandrīz
   tūlītēju labirintu ģenerēšanu, kas notiek milisekunžu
   laikā.], nodrošinot "bezgalīgu"#footnote[Lai gan sistēma izmanto `u64` sēklas,
   kas ir galīgas, iespējamo labirinta konfigurāciju skaits ir ārkārtīgi liels,
   tādējādi praktiskiem mērķiem nodrošinot praktiski bezgalīgu labirintu
-  skaitu.] daudzveidību.
-- Labirinta sarežģītību var dinamiski pielāgot spēlētājam progresējot.
-- Uzglabāšanas prasības tiek samazinātas līdz minimumam, ģenerējot labirintus reāllaikā.
+  skaitu.] daudzveidību;
+- labirinta sarežģītību var dinamiski pielāgot spēlētājam progresējot;
+- uzglabāšanas prasības tiek samazinātas līdz minimumam, ģenerējot labirintus reāllaikā.
 
 #indent-par[
   Spēlētāju uzdevums ir pārvietoties pa šiem procesuāli ģenerētajiem labirintiem,

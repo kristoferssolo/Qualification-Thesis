@@ -26,7 +26,7 @@ tīmekļa versija, izmantojot WebAssembly tehnoloģiju.
   first-line-indent: 0cm,
   [*Atslēgvārdi:*],
 )
-Labirints
+Labirints,
 datorspēle,
 sistēmas prasības,
 programmatūras prasību specifikācija,
