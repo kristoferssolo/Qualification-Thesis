@@ -69,10 +69,12 @@ nodrošina, ka:
 - Labirinta sarežģītību var dinamiski pielāgot spēlētājam progresējot.
 - Uzglabāšanas prasības tiek samazinātas līdz minimumam, ģenerējot labirintus reāllaikā.
 
-Spēlētāju uzdevums ir pārvietoties pa šiem procesuāli ģenerētajiem labirintiem,
-lai sasniegtu katra līmeņa beigas. Turpinot progresēt, spēlētāji saskaras ar
-arvien sarežģītākiem labirintiem, kuros nepieciešama stratēģiskā domāšana,
-izpēte un papildu prasmju izmantošana.
+#indent-par[
+  Spēlētāju uzdevums ir pārvietoties pa šiem procesuāli ģenerētajiem labirintiem,
+  lai sasniegtu katra līmeņa beigas. Turpinot progresēt, spēlētāji saskaras ar
+  arvien sarežģītākiem labirintiem, kuros nepieciešama stratēģiskā domāšana,
+  izpēte un papildu prasmju izmantošana.
+]
 
 Spēlētājam progresējot, tie sastopas ar dažādiem uzlabojumiem un
 papildspējām, kas stratēģiski izvietoti labirintos. Šī funkcija padziļina spēlēšanas
@@ -1446,139 +1448,168 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
 #figure(
   caption: "Stāva pārejas diagramma",
   kind: image,
-  diagram(
-    terminal-node((0, 0)),
-    std-edge(),
+  diagram({
 
-    action-node((0, 1), [Pārbaudīt stāva\ pārejas notikumu]),
-    std-edge(),
+    terminal-node((0, 0))
+    std-edge()
 
-    decision-node((0, 2), [Vai stāvi\ kustās?]),
-    std-edge("l,d", [jā]),
-    std-edge("r,d", [nē]),
+    action-node((0, 1), [Pārbaudīt stāva\ pārejas notikumu])
+    std-edge()
 
-    terminal-node((-1, 3), extrude: (0, 3)),
+    decision-node((0, 2), [Vai stāvi\ kustās?])
+    std-edge("l,d", [jā])
+    std-edge("r,d", [nē])
 
-    action-node((1, 3), [Iegūt pašreizējo\ stāvu]),
-    std-edge(),
+    terminal-node((-1, 3), extrude: (0, 3))
 
-    decision-node((1, 4), [Stāva\ notikuma\ tips?]),
-    std-edge("d", [Pacelties]),
-    std-edge("r,d,d", [Nolaisties]),
+    action-node((1, 3), [Iegūt pašreizējo\ stāvu])
+    std-edge()
 
-    decision-node((1, 5), [Vai nākamais\ stāvs eksistē?]),
-    std-edge("d", [jā]),
-    std-edge("l,d", [nē]),
+    decision-node((1, 4), [Stāva\ notikuma\ tips?])
+    std-edge("d", [Pacelties])
+    std-edge("r,dd", [Nolaisties])
 
-    action-node((0, 6), [Izsaukt jauna stāva\ izveides notikumu]),
-    std-edge("d,d,r"),
+    decision-node((1, 5), [Vai nākamais\ stāvs eksistē?])
+    std-edge("d", [jā])
+    std-edge("l,d", [nē])
 
-    action-node((1, 6), [Aprēķināt katra stāva\ jaunās $Y$ koordinātas]),
-    std-edge("d"),
+    action-node((0, 6), [Izsaukt jauna stāva\ izveides notikumu])
+    std-edge("dd,r")
 
-    action-node((1, 7), [Pārvieto visus stāvus\ uz jaunajām $Y$ koordinātām]),
-    std-edge("d"),
+    action-node((1, 6), [Aprēķināt katra stāva\ jaunās $Y$ koordinātas])
+    std-edge("d")
 
-    decision-node((2, 6), [Pašreizējais\ stāvs $== 1$?]),
-    std-edge("d,d,l", [jā]),
-    std-edge("l", [nē]),
+    action-node((1, 7), [Pārvieto visus stāvus\ uz jaunajām $Y$ koordinātām])
+    std-edge("d")
 
-    terminal-node((1, 8), extrude: (0, 3)),
-  ),
+    decision-node((2, 6), [Pašreizējais\ stāvs $== 1$?])
+    std-edge("dd,l", [jā])
+    std-edge("l", [nē])
+
+    terminal-node((1, 8), extrude: (0, 3))
+  }),
 ) <floor-transition-diagram>
 
 #figure(
-  caption: "Spēlētaja pārejas diagramma",
+  caption: "Labirinta ģenerēšanas pārejas diagramma",
   kind: image,
   diagram(
-    terminal-node((0, 0)),
-    std-edge(),
+    spacing: (0em, 3em),
+    {
 
-    action-node((0, 1), [Pārbaudīt stāva\ pārejas notikumu]),
-    std-edge(),
+      terminal-node((0, 0))
+      std-edge()
 
-    decision-node((0, 2), [Vai stāvi\ kustās?]),
-    std-edge("l,d", [jā]),
-    std-edge("r,d", [nē]),
+      action-node((0, 1), [Izveido labirinta būvētāju])
+      std-edge()
 
-    terminal-node((-1, 3), extrude: (0, 3)),
+      decision-node((0, 2), [Vai rādius\ ir norādīts?])
+      std-edge("ll,d", [nē])
+      std-edge("d", [jā])
 
-    action-node((1, 3), [Iegūt pašreizējo\ stāvu]),
-    std-edge(),
+      action-node((-2, 3), [Nav rādiusa kļūda])
+      std-edge()
+      terminal-node((-2, 4), extrude: (0, 3))
 
-    decision-node((1, 4), [Stāva\ notikuma\ tips?]),
-    std-edge("d", [Pacelties]),
-    std-edge("r,d,d", [Nolaisties]),
+      action-node((0, 3), [Izveido labirinta glabātuvi])
+      std-edge()
 
-    decision-node((1, 5), [Vai nākamais\ stāvs eksistē?]),
-    std-edge("d", [jā]),
-    std-edge("l,d", [nē]),
+      decision-node((0, 4), [Starta pozīcija\ ir norādīta?])
+      std-edge("l,d", [jā])
+      std-edge("r,d", [nē])
 
-    action-node((0, 6), [Izsaukt jauna stāva\ izveides notikumu]),
-    std-edge("d,d,r"),
+      decision-node((1, 5), [Izmanto noklusējuma\ sākuma pozīciju\ (0, 0)])
+      std-edge("d,l")
 
-    action-node((1, 6), [Aprēķināt katra stāva\ jaunās $Y$ koordinātas]),
-    std-edge("d"),
 
-    action-node((1, 7), [Pārvieto visus stāvus\ uz jaunajām $Y$ koordinātām]),
-    std-edge("d"),
+      decision-node((-1, 5), [Pozīcija\ ir derīga?])
+      std-edge("l,d", [nē])
+      std-edge("r,d", [jā])
 
-    decision-node((2, 6), [Pašreizējais\ stāvs $== 1$?]),
-    std-edge("d,d,l", [jā]),
-    std-edge("l", [nē]),
+      action-node((-2, 6), [Nepareiza starta pozīcija kļūda])
+      std-edge()
+      terminal-node((-2, 7), extrude: (0, 3))
 
-    terminal-node((1, 8), extrude: (0, 3)),
+      action-node(
+        (0, 6),
+        [
+          #place(
+            top + right,
+            image("assets/images/fork.svg"),
+          )
+          \
+          \
+          Dziļuma meklēšanas\
+          labirinta ģenerēšanas\
+          algoritms
+        ],
+      )
+      std-edge()
+
+      action-node((0, 7), [Atgriež izveidotu labirintu])
+      std-edge()
+
+      terminal-node((0, 8), extrude: (0, 3))
+    },
   ),
-) <player-activity-diagram>
+) <hexlab-activity-diagram>
 
+#figure(
+  caption: "Meklēšanas dziļumā labirinta ģenerēšanas algoritms (apakšaktivitāte)",
+  kind: image,
+  diagram(
+    spacing: (0em, 3em),
+    {
+      terminal-node((0, 0))
+      std-edge()
 
-// ```pintora
-// activityDiagram
-// start
-// partition "Ievades apstrāde" {
-// :Pārbaudīt spēlētāja ievadi;
-// if (Vai ir mērķpozīcija?) then (jā)
-// :Skip Movement;
-// else (nē)
-// :Saņemt virzienu no ievades;
-// if (Vai ir pareizs virziens?) then (jā)
-// if (Vai ir siena virzienā?) then (jā)
-// :Skip Movement;
-// else (nē)
-// :Iestata mērķpozīciju;
-// endif
-// else (nē)
-// :Skip Movement;
-// endif
-// endif
-// }
-//
-// partition "Movement Processing" {
-// :Calculate Movement Speed;
-// if (Has Target?) then (yes)
-// :Calculate Target Position;
-// if (Reached Target?) then (yes)
-// :Update Current Position;
-// :Clear Target;
-// else (no)
-// :Update Position;
-// endif
-// endif
-// }
-// partition "Floor Transition" {
-// :Check Player Position;
-// if (At End Position?) then (yes)
-// :Send Ascend Event;
-// else (no)
-// if (At Start Position?) then (yes)
-// if (Floor > 1?) then (yes)
-// :Send Descend Event;
-// endif
-// endif
-// endif
-// }
-// stop
-// ```
+      action-node((0, 1), [Atzīmē pašreizējo pozīciju\ kā apmeklētu])
+      std-edge()
+
+      decision-node((0, 2), [Vai eksistē\ neapmeklēti\ kaimiņi?])
+      std-edge("l,d", [jā])
+      std-edge("r,d", [nē])
+
+      action-node((-1, 3), [Nejauši izvēlas\ neapmeklētu kaimiņu])
+      std-edge()
+
+      decision-node((-1, 4), [Kaimiņš eksistē\ un ir neapmeklēts?])
+      std-edge("l,d", [jā])
+      std-edge("d", [nē])
+
+      action-node((-1, 5), [Pārbauda nākamo\ virzienu])
+      std-edge("r,uuu")
+
+      action-node(
+        (-2, 5),
+        [Noņem sienas starp pašreizējo\ un kaimiņa pozīcijām],
+      )
+      std-edge()
+
+      action-node((-2, 6), [Izpilda doto algoritmu\ kaimiņa pozīcijai])
+      std-edge()
+
+      action-node((-2, 7), [Atgriežas uz\ iepriekšējo pozīciju])
+      std-edge()
+
+      action-node((-2, 8), [Pārvietojas uz šī\ kaimiņa pozīciju])
+      std-edge("rr,uuuuuu")
+
+      terminal-node((1, 3), extrude: (0, 3))
+      node(
+        snap: false,
+        stroke: black,
+        inset: 1em,
+        enclose: (
+          (0, 0),
+          (1, 3),
+          (-2, 8),
+          (-2, 5),
+        ),
+      )
+    },
+  ),
+) <dfs-diagram>
 
 === Plākšņu pārvaldas sistēma
 
@@ -1748,7 +1779,7 @@ Izmantojot "tokei" rīku @tokei, tika veikta detalizēta projekta koda analīze,
 kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas, bet
 saistītā "hexlab" bibliotēka -- $979$ rindiņas, kopā veidojot $2906$ loģiskās koda
 rindiņas, neiekļaujot tukšās rindiņas un komentārus (sk. @fig:tokei-maze-ascension[]
-un @fig:tokei-hexlab).
+un @fig:tokei-hexlab[pielukumus]).
 
 Saskaņā ar QSM etalontabulu "Business Systems Implementation Unit (New and
 Modified IU) Benchmarks", pirmās kvartiles projekti ($25%$ mazākie no $550$
@@ -1774,15 +1805,6 @@ Turklāt jāņem vērā projekta papildu sarežģītības faktori:
   koda rakstīšanu, bet arī izpēti, dokumentēšanu un optimizāciju.
 ]
 
-#figure(
-  caption: [Tokei rīka rezultāts "Maze Ascension" spēlei],
-  image("assets/images/tokei/maze-ascension.png"),
-) <tokei-maze-ascension>
-
-#figure(
-  caption: [Tokei rīka rezultāts "hexlab" bibliotēkai],
-  image("assets/images/tokei/hexlab.png"),
-) <tokei-hexlab>
 
 = Secinājumi
 #todo("uzrakstīt secinājumus")
@@ -1793,6 +1815,16 @@ Turklāt jāņem vērā projekta papildu sarežģītības faktori:
 )
 
 #heading("Pielikumi", numbering: none)
+#figure(
+  caption: [Tokei rīka rezultāts "Maze Ascension" spēlei],
+  image("assets/images/tokei/maze-ascension.png"),
+) <tokei-maze-ascension>
+
+#figure(
+  caption: [Tokei rīka rezultāts "hexlab" bibliotēkai],
+  image("assets/images/tokei/hexlab.png"),
+) <tokei-hexlab>
+
 // #include "code.typ"
 
 #include "doc.typ"
