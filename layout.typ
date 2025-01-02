@@ -39,10 +39,7 @@
     lang: "lv",
     region: "lv",
   )
-  show raw: set text(
-    font: "Fira Code",
-    features: (calt: 0),
-  )
+  show raw: set text(features: (calt: 0))
 
   show math.equation: set text(weight: 400)
 
