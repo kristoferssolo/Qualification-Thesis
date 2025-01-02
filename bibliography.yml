@@ -16,7 +16,7 @@ hex-grid:
 bevy-examples:
   type: Web
   title: Bevy Examples
-  author:
+  author: Bevy Projekta Izstrādātāji
   url: {value: "https://bevyengine.org/examples/", date: 2024-09-14}
 bevy-cheatbook:
   type: Web
@@ -42,14 +42,17 @@ lvs_72:
 maze-generation:
   type: Web
   title: Maze Generation
+  author:
   url: https://rosettacode.org/wiki/Maze_generation
 bevy-quickstart:
   type: Web
   title: Bevy New 2D
+  author:
   url: https://github.com/TheBevyFlock/bevy_new_2d
 sem-ver:
   type: Web
   title: Semantiskā versiju veidošana
+  author: Tom Preston-Werner
   url: {value: "https://semver.org/", date: 2024-09-17}
 omg-uml:
   type: Book
@@ -61,18 +64,18 @@ omg-uml:
 webgl2:
   type: Web
   title: Bevy + WebGPU
-  author:
+  author: Carter Anderson
   url: {value: "https://bevyengine.org/news/bevy-webgpu/", date: 2024-09-20}
 bevy-egui:
   type: Web
   title: Bevy Egui bibliotēkas dokumentācija
-  author:
+  author: Vladyslav Batyrenko
   url: {value: "https://docs.rs/bevy_egui/latest/bevy_egui/", date: 2024-09-26}
 bevy-inspector-egui:
   type: Web
   title: Bevy Inspector Egui bibliotēkas dokumentācija
-  author:
-  url: {value: "https://docs.rs/bevy-inspector-egui/0.28.0/bevy_inspector_egui/", date: 2024-09-26}
+  author: Jakob Hellermann
+  url: {value: "https://docs.rs/bevy-inspector-egui/latest/bevy_inspector_egui/", date: 2024-09-26}
 the-rust-performance-book:
   type: Book
   title: The Rust Performance Book
@@ -87,18 +90,22 @@ cargo-tarpaulin:
 ecs:
   type: Web
   title: ECS
+  author:
   url: {value: "https://en.wikipedia.org/wiki/Entity_component_system", date: 2024-09-12}
 bevy-ecs:
   type: Web
   title: Bevy ECS
+  author: Bevy Projekta Izstādātāji
   url: {value: "https://bevyengine.org/learn/quick-start/getting-started/ecs/", date: 2024-09-12}
 SRP:
   type: Web
   title: Single-responsibility principle
+  author:
   url: {value: "https://en.wikipedia.org/wiki/Single-responsibility_principle"}
 SoC:
   type: Web
   title: Separation of concerns
+  author:
   url: {value: "https://en.wikipedia.org/wiki/Separation_of_concerns"}
 begginer-patterns:
   type: Book
@@ -153,3 +160,8 @@ QSM:
   title: Software Project Performance Benchmark Tables
   author: QSM, Inc.
   url: https://www.qsm.com/resources/qsm-benchmark-tables
+bevy-0.15:
+  type: Web
+  title: Bevy 0.15
+  author: Bevy Projekta Izstādātāji
+  url: https://bevyengine.org/news/bevy-0-15/

@@ -4,6 +4,7 @@
 #let vspace = 1fr
 #let fill = box(width: 1fr, repeat(sym.space))
 #let long-underline = underline(box(width: 1fr, repeat(sym.space)))
+#set page(numbering: none)
 
 #heading(numbering: none, outlined: false, "Dokumentārā lapa")
 
@@ -30,7 +31,7 @@ izdrukai.
     Darba vadītājs: *prof. Mg. dat. Jānis Iljins ~~\_\_.01.2025.*]
 
   v(vspace)
-  [Recenzents: _grāds, vārds, uzvārds_ #long-underline]
+  [Recenzents: *Artūrs Driķis*]
 
 
   v(vspace)

@@ -25,7 +25,7 @@
 / Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku;
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
-/ ECS: entitāšu komponenšu sistēma (angl. Entity-Component-System)@ecs;
+/ ECS: entitāšu-komponenšu sistēma (angl. Entity-Component-System)@ecs;
 / Interpolācija: starpvērtību atrašana pēc funkcijas doto vērtību virknes;
 / Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table)#footnote[https://en.wikipedia.org/wiki/Hash_table] ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām;
 / Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus;
@@ -84,7 +84,7 @@ pieredzi, veicinot izpēti un eksperimentēšanu ar dažādām spēju kombināci
 radot dinamiskākus un aizraujošākus spēles scenārijus.
 
 No tehniskā viedokļa darbā tiek pētīta šo funkciju īstenošana, izmantojot
-Bevy entitāšu komponentu sistēmas (tuprmāk tekstā -- ECS) arhitektūru.
+Bevy entitāšu-komponentu sistēmas (tuprmāk tekstā -- ECS) arhitektūru.
 Tas ietver stabilu spēles vides sistēmu izstrādi, stāvokļa pārvaldības
 mehānismus un efektīvu Bevy iebūvēto funkcionalitāšu izmantošanu.
 
@@ -1930,7 +1930,40 @@ Turklāt jāņem vērā projekta papildu sarežģītības faktori:
 
 
 = Secinājumi
-#todo("uzrakstīt secinājumus")
+
+Kvalifikācijas darba ietvaros tika izstrādāta trīsdimensiju spēle, izmantojot
+Bevy spēļu dzinēju un Rust programmēšanas valodu un tās dokumentācija.
+Projekta izstrādes gaitā tika sasniegti vairāki nozīmīgi rezultāti un gūtas
+vērtīgas atziņas.
+
+Projekta galvenie sasniegumi ietver procedurāli ģenerēta sešstūraina labirinta
+implementāciju, kas balstās uz meklēšanas dziļumā (DFS) algoritmu.
+Šī funkcionalitāte tika veiksmīgi nodalīta atsevišķā "hexlab" bibliotēkā, kas
+padara to pieejamu atkārtotai izmantošanai citos projektos.
+Tika izveidota arī efektīva stāvu pārvaldības sistēma, kas nodrošina plūstošu
+pāreju starp dažādiem labirinta līmeņiem.
+
+Bevy spēļu dzinēja izmantošana ļāva efektīvi implementēt entitāšu-komponenšu
+sistēmu (ECS), kas nodrošina labu veiktspēju un koda organizāciju.
+Tomēr tika konstatēts, ka Bevy ekosistēma joprojām ir aktīvās izstrādes stadijā,
+ko apliecina projekta izstrādes laikā iznākusī jaunā versija (0.15).
+Ši versija ieviesa vairākas būtiskas izmaiņas, piemēram, "Required Components"
+(latv. nepieciešamo komponentu) konceptu uzlabotu animāciju sistēmu un daudz ko
+citu, kas radīja nepieciešamību pielāgot esošo kodu @bevy-0.15.
+Šāda strauja attīstība, no vienas puses, nodrošina jaunas iespējas un
+uzlabojumus, bet no otras puses, rada izaicinājumus saistībā ar dokumentācijas
+aktualitāti un bibliotēku savietojamību.
+
+Izstrādes procesā īpaša uzmanība tika pievērsta koda kvalitātei un
+dokumentācijai.
+Tika izveidota detalizēta tehniskā dokumentācija, kas ietver gan sistēmas
+arhitektūras aprakstu, gan atsevišķu komponenšu funkcionalitātes skaidrojumu.
+
+Projekta turpmākās attīstības iespējas ietver:
+- papildu labirinta ģenerēšanas algoritmu implementāciju;
+- spēles mehānikas paplašināšanu ar jaunām papildspējām;
+- grafiskās kvalitātes uzlabojumus;
+- tīkla spēles režīma ieviešanu.
 
 #bibliography(
   title: "Izmantotā literatūra un avoti",
