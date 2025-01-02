@@ -7,12 +7,12 @@ typst:
     - Haug
     - Martin
     - Typst Projekta Izstrādātāji
-  url: {value: "https://typst.app/", date: 2024-12-02}
+  url: {value: "https://typst.app/", date: 2024-12-20}
 hex-grid:
   type: Web
   title: Hexagonal Grids
   author: Red Blob Games
-  url: {value: "https://www.redblobgames.com/grids/hexagons/", date: 2024-09-15}
+  url: {value: "https://www.redblobgames.com/grids/hexagons/", date: 2024-12-20}
 bevy-examples:
   type: Web
   title: Bevy Examples

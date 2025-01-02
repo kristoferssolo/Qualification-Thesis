@@ -20,12 +20,12 @@
 )
 #set heading(numbering: none)
 = Apzīmējumu saraksts
+/ Šūna:
 
 / Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku;
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
 / ECS: entitāšu komponenšu sistēma (angl. Entity-Component-System)@ecs;
-/ GitHub#footnote[https://en.wikipedia.org/wiki/GitHub]: izstrādātāju platforma, kas ļauj izstrādātājiem izveidot, glabāt, pārvaldīt un kopīgot savu kodu;
 / Interpolācija: starpvērtību atrašana pēc funkcijas doto vērtību virknes;
 / Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table)#footnote[https://en.wikipedia.org/wiki/Hash_table] ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām;
 / Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus;
@@ -35,8 +35,10 @@
 / Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību;
 / Procedurāla ģenerēšana: datu algoritmiskas izstrādes metode, kurā tiek kombinēts cilvēka radīts saturs un algoritmi, kas apvienoti ar datora ģenerētu nejaušību;
 / Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade;
+/ Režģis: Strukturēts šūnu izkārtojums, kas veido spēles pasaules pamata struktūru;
 / Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā;
 / Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai;
+/ Šūna: Sešstūraina režģa viena pozīcija, kas definē telpu, kuru var aizņemt viena plāksne;
 
 = Ievads
 == Nolūks
@@ -49,7 +51,7 @@ procedurālu labirintu ģenerēšanu, spēlētāju navigācijas sistēmu, papild
 integrāciju un vertikālās progresijas mehāniku, vienlaikus ievērojot minimālisma
 dizaina filozofiju.
 
-// Spēles pamatā ir sešstūra formas plāksnes, kas, savukārt, veido sešstūra
+// Spēles pamatā ir sešstūra formas šūnas, kas, savukārt, veido sešstūra
 // formas labirintus, kuri rada atšķirīgu vizuālo un navigācijas izaicinājumu.
 // Spēlētāju uzdevums ir pārvietoties pa šiem labirintiem, lai sasniegtu katra
 // līmeņa beigas. Spēlētājiem progresējot, tie sastopas ar arvien sarežģītākiem
@@ -634,17 +636,19 @@ un nākamo stāvu, reaģējot uz "TransitionFloor" notikumu (sk. @tbl:events-flo
 
 === Labirinta ģenerēšanas modulis
 
-Apakšnodaļa ietver labirinta moduļa funkcijas. Moduļa funkcionalitāte ir
-izmantota sešstūraina labirinta ģenerēšanai.
-Moduļa funkciju datu
-plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-hexlab)
-Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (sk. @tbl:hexlab-F01)
+Moduļa funkcionalitāte ir izmantota sešstūraina labirinta ģenerēšanai,
+balstoties uz Amit Patel's "Hexagonal Grids"
+rakstu @hex-grid, kas jau ir
+kļuvis par _de facto_ standartu sešstūrainu režģu matemātikas un algoritmu
+implementācijai izstrādē.
+Moduļa funkciju datu plūsmas ir parādītas 2. līmeņa datu plūsmas diagrammā (sk. @fig:dpd-2-hexlab).
+Labirinta būvēšanas funkcija ir aprakstītas atsevišķā tabulā (sk. @tbl:hexlab-F01).
 
 Modularitātes un atkārtotas lietojamības apsvērumu dēļ, labirinta ģenerēšanas
 funkcionalitāte ir izveidota kā ārēja bibliotēka
-"hexlib".#footnote[https://crates.io/crates/hexlab]<hexlab> Šis lēmums
-ļauj labirinta ģenerēšanas loģiku atkārtoti izmantot dažādos projektos un
-lietojumprogrammās, veicinot atkārtotu koda izmantošanu.
+"hexlib".#footnote[https://crates.io/crates/hexlab]<hexlab>
+Šis lēmums ļauj labirinta ģenerēšanas loģiku atkārtoti izmantot dažādos
+projektos un lietojumprogrammās, veicinot atkārtotu koda izmantošanu.
 Iekapsulējot labirinta ģenerēšanu atsevišķā bibliotēkā, to ir vieglāk pārvaldīt
 un atjaunināt neatkarīgi no galvenās lietojumprogrammas, nodrošinot, ka
 labirinta ģenerēšanas algoritma uzlabojumus vai izmaiņas var veikt, neietekmējot
@@ -756,9 +760,9 @@ saglabājot to pašu stāva numuru un pozīciju telpā nemainot entitātes ID.
       atbilstošās komponente.
     + Atkarībā no tā, vai tas ir pašreizējais vai nākamais stāvs, pievieno
       attiecīgo komponenti.
-    + Izveido jaunas entitātes, kas pārstāv labirinta plāksnes, kā bērnu
+    + Izveido jaunas entitātes, kas pārstāv labirinta šūnas, kā bērnu
       elementus labirinta entitātei.
-    + Katrai labirinta plāksnei atbilstoši labirinta konfigurācijai, izveido
+    + Katrai labirinta šūnai atbilstoši labirinta konfigurācijai, izveido
       sienas bērnu entitātes.
   ],
   [
@@ -784,9 +788,9 @@ saglabājot to pašu stāva numuru un pozīciju telpā nemainot entitātes ID.
       + Ja neeksistē, parāda 1. paziņojumu un iziet no sistēmas.
     + Ģenerē jaunu labirintu balstoties uz doto konfigurāciju.
     + Izdzēš visus labirinta entitātes pēcnācēju entitātes.
-    + Izveido jaunas entitātes, kas pārstāv labirinta plāksnes, kā bērnu
+    + Izveido jaunas entitātes, kas pārstāv labirinta šūnas, kā bērnu
       elementus labirinta entitātei.
-    + Katrai labirinta plāksnei atbilstoši labirinta konfigurācijai, izveido
+    + Katrai labirinta šūnai atbilstoši labirinta konfigurācijai, izveido
       sienas bērnu entitātes.
   ],
   [
@@ -927,7 +931,7 @@ punktiem, funkcija izsauc atbilstošu pārejas notikumu.
 #function-table(
   "Spēlētāja ievades apstrāde",
   "SPMF02",
-  "Apstrādā spēlētāja tastatūras ievadi un aprēķina nākamo kustības plāksi.",
+  "Apstrādā spēlētāja tastatūras ievadi un aprēķina nākamo kustības šūnu.",
   [
     + Tastatūras ievade.
     + Pašreizējā pozīcija.
@@ -942,14 +946,14 @@ punktiem, funkcija izsauc atbilstošu pārejas notikumu.
     + Aprēķina nākamo pozīciju.
   ],
   [
-    + Kustības mērķa plāksnes pozīcija.
+    + Kustības mērķa šūnas pozīcija.
   ],
 ) <player-F02>
 
 #function-table(
   "Spēlētāja kustība",
   "SPMF03",
-  "Atjaunina spēlētāja pozīciju, veicot plūstošu pārvietošanos uz mērķa plāksnes pozīciju.",
+  "Atjaunina spēlētāja pozīciju, veicot plūstošu pārvietošanos uz mērķa šūnas pozīciju.",
   [
     + Kustības mērķis.
     + Kustības ātrums.
@@ -1301,7 +1305,7 @@ labirinta izveidi un uzturēšanu.
   "Galvenais labirinta marķieris",
   "Identificē labirinta entitāti un pieprasa nepieciešamās atkarības.",
   `Tile`,
-  "Apzīmē labirinta sešstūra plāksnes",
+  "Apzīmē labirinta sešstūra šūnu",
   "Identificē labirinta vietas, pa kurām var staigāt.",
   `Wall`,
   "Apzīmē labirinta sienas",
@@ -1421,7 +1425,7 @@ sistēma.
 Atšķirībā no komponentiem, kas ir piesaistīti konkrētām entitātēm, resursi
 nodrošina spēles mēroga datus un konfigurāciju.
 Tie ir īpaši noderīgi kopīgu stāvokļu un iestatījumu pārvaldībai, kas var
-ietekmē vairākas sistēmas@bevy-cheatbook[nod. ~14.6].
+ietekmē vairākas sistēmas @bevy-cheatbook[nod. ~14.6].
 Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārvaldībai
 (sk. @tbl:resources)
 
@@ -1443,173 +1447,222 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
 
 == Daļējs funkciju projektējums
 
-#todo("pievienot funkciju projektējumu +diagrammas")
+Labirinta ģenerēšanas process ir realizēts, izmantojot meklēšanas dziļumā
+algoritmu (angl. Depth-First Search, DFS)
+#footnote[https://en.wikipedia.org/wiki/Depth-first_search], kas ir viens no
+populārākajiem labirintu ģenerēšanas algoritmiem @maze-generation.
+Labirinta ģenerēšanas process ir attēlots aktivitāšu diagrammā (sk.
+@fig:hexlab-activity-diagram), kas parāda algoritma galvenos soļus, sākot ar
+labirinta būvētāja inicializāciju un beidzot ar gatava labirinta atgriešanu.
 
-#figure(
-  caption: "Stāva pārejas diagramma",
-  kind: image,
-  diagram({
+DFS algoritma implementācija (sk. @fig:dfs-diagram) izmanto
+rekursīvu pieeju, kur katrs rekursijas solis apstrādā vienu labirinta šūnu.
+Algoritms sākas ar sākotnējās pozīcijas atzīmēšanu kā apmeklētu un turpina ar
+nejaušu, neapmeklētu kaimiņu izvēli.
+Kad nejaušs kaimiņš ir izvēlēts, algoritms noņem sienu starp pašreizējo un
+izvēlēto šūnu, tad rekursīvi turpina procesu no jaunās pozīcijas.
+Šī pieeja nodrošina, ka izveidotais labirints ir pilnībā savienots un katrai
+šūnai var piekļūt no jebkuras citas šūnas.
 
-    terminal-node((0, 0))
-    std-edge()
+Algoritma īpatnība ir tāda, ka tas veido labirintus ar zemu sazarošanās faktoru
+un gariem koridoriem, jo tas izpēta katru zaru pēc iespējas tālāk, pirms
+atgriežas un mēģina citu ceļu.
 
-    action-node((0, 1), [Pārbaudīt stāva\ pārejas notikumu])
-    std-edge()
-
-    decision-node((0, 2), [Vai stāvi\ kustās?])
-    std-edge("l,d", [jā])
-    std-edge("r,d", [nē])
-
-    terminal-node((-1, 3), extrude: (0, 3))
-
-    action-node((1, 3), [Iegūt pašreizējo\ stāvu])
-    std-edge()
-
-    decision-node((1, 4), [Stāva\ notikuma\ tips?])
-    std-edge("d", [Pacelties])
-    std-edge("r,dd", [Nolaisties])
-
-    decision-node((1, 5), [Vai nākamais\ stāvs eksistē?])
-    std-edge("d", [jā])
-    std-edge("l,d", [nē])
-
-    action-node((0, 6), [Izsaukt jauna stāva\ izveides notikumu])
-    std-edge("dd,r")
-
-    action-node((1, 6), [Aprēķināt katra stāva\ jaunās $Y$ koordinātas])
-    std-edge("d")
-
-    action-node((1, 7), [Pārvieto visus stāvus\ uz jaunajām $Y$ koordinātām])
-    std-edge("d")
-
-    decision-node((2, 6), [Pašreizējais\ stāvs $== 1$?])
-    std-edge("dd,l", [jā])
-    std-edge("l", [nē])
-
-    terminal-node((1, 8), extrude: (0, 3))
-  }),
-) <floor-transition-diagram>
 
 #figure(
   caption: "Labirinta ģenerēšanas pārejas diagramma",
   kind: image,
-  diagram(
-    spacing: (0em, 3em),
-    {
+  scale(
+    75%,
+    reflow: true,
+    diagram(
+      spacing: (0em, 3em),
+      {
 
-      terminal-node((0, 0))
-      std-edge()
+        terminal-node((0, 0))
+        std-edge()
 
-      action-node((0, 1), [Izveido labirinta būvētāju])
-      std-edge()
+        action-node((0, 1), [Izveido labirinta būvētāju])
+        std-edge()
 
-      decision-node((0, 2), [Vai rādius\ ir norādīts?])
-      std-edge("ll,d", [nē])
-      std-edge("d", [jā])
+        decision-node((0, 2), [Vai rādius\ ir norādīts?])
+        std-edge("ll,d", [nē])
+        std-edge("d", [jā])
 
-      action-node((-2, 3), [Nav rādiusa kļūda])
-      std-edge()
-      terminal-node((-2, 4), extrude: (0, 3))
+        action-node((-2, 3), [Nav rādiusa kļūda])
+        std-edge()
+        terminal-node((-2, 4), extrude: (0, 3))
 
-      action-node((0, 3), [Izveido labirinta glabātuvi])
-      std-edge()
+        action-node((0, 3), [Izveido labirinta glabātuvi])
+        std-edge()
 
-      decision-node((0, 4), [Starta pozīcija\ ir norādīta?])
-      std-edge("l,d", [jā])
-      std-edge("r,d", [nē])
+        decision-node((0, 4), [Starta pozīcija\ ir norādīta?])
+        std-edge("l,d", [jā])
+        std-edge("r,d", [nē])
 
-      decision-node((1, 5), [Izmanto noklusējuma\ sākuma pozīciju\ (0, 0)])
-      std-edge("d,l")
+        decision-node((1, 5), [Izmanto noklusējuma\ sākuma pozīciju\ (0, 0)])
+        std-edge("d,l")
 
 
-      decision-node((-1, 5), [Pozīcija\ ir derīga?])
-      std-edge("l,d", [nē])
-      std-edge("r,d", [jā])
+        decision-node((-1, 5), [Pozīcija\ ir derīga?])
+        std-edge("l,d", [nē])
+        std-edge("r,d", [jā])
 
-      action-node((-2, 6), [Nepareiza starta pozīcija kļūda])
-      std-edge()
-      terminal-node((-2, 7), extrude: (0, 3))
+        action-node((-2, 6), [Nepareiza starta pozīcija kļūda])
+        std-edge()
+        terminal-node((-2, 7), extrude: (0, 3))
 
-      action-node(
-        (0, 6),
-        [
-          #place(
-            top + right,
-            image("assets/images/fork.svg"),
-          )
-          \
-          \
-          Dziļuma meklēšanas\
-          labirinta ģenerēšanas\
-          algoritms
-        ],
-      )
-      std-edge()
+        action-node(
+          (0, 6),
+          [
+            #place(
+              top + right,
+              image("assets/images/fork.svg"),
+            )
+            \
+            \
+            Dziļuma meklēšanas\
+            labirinta ģenerēšanas\
+            algoritms
+          ],
+        )
+        std-edge()
 
-      action-node((0, 7), [Atgriež izveidotu labirintu])
-      std-edge()
+        action-node((0, 7), [Atgriež izveidotu labirintu])
+        std-edge()
 
-      terminal-node((0, 8), extrude: (0, 3))
-    },
+        terminal-node((0, 8), extrude: (0, 3))
+      },
+    ),
   ),
 ) <hexlab-activity-diagram>
 
 #figure(
   caption: "Meklēšanas dziļumā labirinta ģenerēšanas algoritms (apakšaktivitāte)",
   kind: image,
-  diagram(
-    spacing: (0em, 3em),
-    {
+  scale(
+    75%,
+    reflow: true,
+    diagram(
+      spacing: (0em, 3em),
+      {
+        terminal-node((0, 0))
+        std-edge()
+
+        action-node((0, 1), [Atzīmē pašreizējo pozīciju\ kā apmeklētu])
+        std-edge()
+
+        decision-node((0, 2), [Vai eksistē\ neapmeklēti\ kaimiņi?])
+        std-edge("l,d", [jā])
+        std-edge("r,d", [nē])
+
+        action-node((-1, 3), [Nejauši izvēlas\ neapmeklētu kaimiņu])
+        std-edge()
+
+        decision-node((-1, 4), [Kaimiņš eksistē\ un ir neapmeklēts?])
+        std-edge("l,d", [jā])
+        std-edge("d", [nē])
+
+        action-node((-1, 5), [Pārbauda nākamo\ virzienu])
+        std-edge("r,uuu")
+
+        action-node(
+          (-2, 5),
+          [Noņem sienas starp pašreizējo\ un kaimiņa pozīcijām],
+        )
+        std-edge()
+
+        action-node((-2, 6), [Izpilda doto algoritmu\ kaimiņa pozīcijai])
+        std-edge()
+
+        action-node((-2, 7), [Atgriežas uz\ iepriekšējo pozīciju])
+        std-edge()
+
+        action-node((-2, 8), [Pārvietojas uz šī\ kaimiņa pozīciju])
+        std-edge("rr,uuuuuu")
+
+        terminal-node((1, 3), extrude: (0, 3))
+        node(
+          snap: false,
+          stroke: black,
+          inset: 1em,
+          enclose: (
+            (0, 0),
+            (1, 3),
+            (-2, 8),
+            (-2, 5),
+          ),
+        )
+      },
+    ),
+  ),
+) <dfs-diagram>
+
+#indent-par[
+  Stāva kustības aktivitāšu diagramma (sk. @fig:floor-transition-diagram) attēlo
+  divus procesus stāvu pārvaldībai.
+  Kreisajā pusē ir attēlota stāvu kustības loģika, kas sākas ar kustības
+  stāvokļa pārbaudi.
+  Ja kāds stāvs kustās, sistēma aprēķina kustības attālumu, balstoties uz ātrumu
+  un laika deltu, un atjaunina stāva $Y$ pozīciju. Šis process turpinās, līdz
+  tiek sasniegts mērķis, pēc kā tiek noņemta stāva galamērķa komponente.
+  Labajā pusē ir attēlota stāvu pārejas loģika, kas tiek izpildīta, kad neviens
+  stāvs nekustās.
+  Šī daļa aprēķina jaunās $Y$ koordinātes visiem stāviem, pievieno tiem
+  galamērķa komponentes un atjaunina pašreizējā un nākamā stāva marķierus.
+]
+#figure(
+  caption: "Stāva kustības sistēma",
+  kind: image,
+  scale(
+    75%,
+    reflow: true,
+    diagram({
       terminal-node((0, 0))
       std-edge()
 
-      action-node((0, 1), [Atzīmē pašreizējo pozīciju\ kā apmeklētu])
+      action-node((0, 1), [Pārbauda stāvu\ kustību])
       std-edge()
 
-      decision-node((0, 2), [Vai eksistē\ neapmeklēti\ kaimiņi?])
+      decision-node((0, 2), [Vai kāds stāvs\ kustās?])
       std-edge("l,d", [jā])
       std-edge("r,d", [nē])
 
-      action-node((-1, 3), [Nejauši izvēlas\ neapmeklētu kaimiņu])
-      std-edge()
-
-      decision-node((-1, 4), [Kaimiņš eksistē\ un ir neapmeklēts?])
-      std-edge("l,d", [jā])
-      std-edge("d", [nē])
-
-      action-node((-1, 5), [Pārbauda nākamo\ virzienu])
-      std-edge("r,uuu")
-
       action-node(
-        (-2, 5),
-        [Noņem sienas starp pašreizējo\ un kaimiņa pozīcijām],
+        (-1, 3),
+        [Aprēķināt kustības attālumu\ ($"ātrums" times Delta"laiks"$)],
       )
       std-edge()
 
-      action-node((-2, 6), [Izpilda doto algoritmu\ kaimiņa pozīcijai])
+      action-node((-1, 4), [Atjaunina stāva $Y$ pozīciju])
       std-edge()
 
-      action-node((-2, 7), [Atgriežas uz\ iepriekšējo pozīciju])
+      decision-node((-1, 5), [Vai sasniegts\ mērķis?])
+      std-edge("ld", [nē])
+      std-edge("d", [jā])
+
+      action-node((-2, 6), [Turpināt kustību])
+      std-edge("uu,r")
+
+      action-node((-1, 6), [Noņemt stāva\ galamērķa komponenti])
       std-edge()
 
-      action-node((-2, 8), [Pārvietojas uz šī\ kaimiņa pozīciju])
-      std-edge("rr,uuuuuu")
+      terminal-node((-1, 7))
 
-      terminal-node((1, 3), extrude: (0, 3))
-      node(
-        snap: false,
-        stroke: black,
-        inset: 1em,
-        enclose: (
-          (0, 0),
-          (1, 3),
-          (-2, 8),
-          (-2, 5),
-        ),
-      )
-    },
+
+      action-node((1, 3), [Aprēķina jaunās $Y$\ koordinātes visiem stāviem])
+      std-edge()
+
+      action-node((1, 4), [Pievienot stāva galamērķa\ komponenti katram stāvam])
+      std-edge()
+
+      action-node((1, 5), [Atjaunina pašreizējā un\ nākamā stāvu marķierus])
+      std-edge("l,uu,l")
+
+    }),
   ),
-) <dfs-diagram>
+) <floor-transition-diagram>
+
 
 === Plākšņu pārvaldas sistēma
 
@@ -1623,8 +1676,8 @@ projekta lietojuma gadījumam sekojošu iemeslu dēļ:
   procedurāli ģenerēti labirinti, tāpēc šī pieeja nav īsti piemērota.
 + Elastības ierobežojumi: bibliotēkas plākšņu datu struktūra nav viegli
   pielāgojama nepieciešamajai datu struktūrai, kurai ir nepieciešama
-  sarežģītākām telpiskām attiecībām starp plāksnēm.
-+ Prasības attiecībā uz sienu veidošanu: katrai sistēmas labirinta plāksnei
+  sarežģītākām telpiskām attiecībām starp šūnām.
++ Prasības attiecībā uz sienu veidošanu: katrai sistēmas labirinta šūnai
   var būt 0-6 sienas, kas tiek ģenerētas nejauši. Šādu dinamisku sienu ģenerēšanas
   līmeni nav viegli sasniegt izmantojot "`bevy_ecs_tilemap`".
 
@@ -1720,10 +1773,14 @@ funkcionalitāti pēc katras koda izmaiņas.
 
 = Programmas projekta organizācija
 
-Kvalifikācijas darba prasības paredz, ka programmatūru un dokumentāciju autors
-veido patstāvīgi, vadoties pēc darba vadītāja norādījumiem.
+Kvalifikācijas darba izstrāde ir individuāls process, kur autors uzņemas pilnu
+atbildību par programmatūras izveidi un dokumentāciju.
 
-#todo("uzrakstīt projekta organizāciju")
+Individuālā darba pieeja ļauj izvairīties no daudzām tipiskām projektu vadības
+problēmām.
+Tā kā nav nepieciešama koordinācija starp vairākiem izstrādātājiem, lēmumu
+pieņemšana ir tiešāka un ātrāka.
+Tas ir īpaši svarīgi, ņemot vērā kvalifikācijas darba ierobežoto laika periodu.
 
 == Kvalitātes nodrošināšana
 Augstas koda kvalitātes nodrošināšana ir jebkura projekta būtisks aspekts.
