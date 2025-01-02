@@ -28,13 +28,12 @@
 }
 
 // Common rounded rectangle node
-#let action-node(pos, text) = {
+#let action-node(..args) = {
   node(
-    pos,
-    text,
     corner-radius: 4pt,
     stroke: default-node-stroke,
     shape: rect,
+    ..args,
   )
 }
 

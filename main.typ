@@ -1131,8 +1131,16 @@ piedāvājot divas galvenās funkcijas: sienu pārlēkšanu un izejas ceļa par�
       )
 
       dpd-database((2, 0), [Operatīvā\ atmiņa])
-      dpd-edge("u,l", align(center)[Papildspēju\ notikumu dati], label-pos: 0.6)
-      dpd-edge("d,l", align(center)[Papildspēju\ notikumu dati], label-pos: 0.6)
+      dpd-edge(
+        "u,l",
+        align(center)[Papildspēju\ notikumu dati],
+        label-pos: 0.65,
+      )
+      dpd-edge(
+        "d,l",
+        align(center)[Papildspēju\ notikumu dati],
+        label-pos: 0.65,
+      )
     },
   ),
 ) <dpd-2-powerup>
@@ -1690,12 +1698,70 @@ projekta lietojuma gadījumam sekojošu iemeslu dēļ:
 - optimālāku veiktspēja projekta lietošanas gadījumam;
 - lielāku kontroli pār labirinta vizuālo attēlojumu.
 
-/* Apraksta svarīgākās, sarežģītākās funkcijas vai sistēmas darbības aspektus;
-* obligāti  jālieto vismaz 4 dažādi diagrammu veidi, izņemot DPD un lietošanas
-* piemēru (use case) diagrammas */
 == Saskarņu projektējums
-#todo("pievienot saskarnes (UI/UX)")
-/* 5-7 lietotāja saskarnes un to apraksts */
+Spēles saskarņu projektējums ietver divus galvenos skatus (sk. @fig:ui-flow) --
+galveno izvēlni, spēles saskarni -- un izstrādes rīkus.
+Katra saskarne ir veidota, ņemot vērā tās specifisko lietojuma gadījumu un
+lietotāju vajadzības.
+
+#figure(
+  caption: "Ekrānskatu plūsmu diagramma",
+  diagram(
+    spacing: 6em,
+    {
+      action-node((0, 0), [Galvenais ekrāns], inset: 2em)
+      edge(
+        stroke: 1pt,
+        "<|-|>",
+      )
+      action-node((1, 0), [Galvenais ekrāns], inset: 2em)
+    },
+  ),
+) <ui-flow>
+
+=== Galvenā izvēlne
+
+Galvenā izvēlne ir pirmais skats, ar ko saskaras lietotājs, uzsākot spēli (sk.
+@fig:main-menu).
+Tā sastāv no spēles nosaukuma, "Play" -- sākt spēli pogas un "Quit" -- iziet
+pogas.
+Izvēlnes dizains ir minimālistisks un intuitīvs, izmantojot kontrastējošas
+krāsas un skaidru vizuālo hierarhiju.
+
+#figure(
+  caption: "Galvenās izvēlnes skats",
+  image("assets/images/sceens/main.svg"),
+) <main-menu>
+
+=== Spēles skats
+
+Spēles skats apvieno pašu spēles pasauli ar minimālistisku lietotāja saskarni
+(sk, @fig:game-ui).
+Centrālo daļu aizņem spēles pasaule ar sešstūra labirintu, kas veido spēles
+galveno interaktīvo elementu.
+Ekrāna kreisajā apakšējā stūrī ir izvietoti papildspēju statusa indikatori, kas
+sniedz spēlētājam vizuālu atgriezenisko saiti par pieejamajām spējām un to
+atjaunošanās laiku.
+
+
+#figure(
+  caption: "Galvenās izvēlnes skats",
+  image("assets/images/sceens/game.svg"),
+) <game-ui>
+
+=== Izstrādes rīki
+Izstrādes rīki, kas redzami @fig:dev-tools-ui[attēlā], ir implementēti
+izmantojot "egui" bibliotēku @bevy_egui.
+Pirmais "Bevy Inspector Egui" noklusētais skats @bevy-inspector-egui, kas
+nodrošina detalizētu piekļuvi spēles entitāšu hierarhijai, komponenšu
+inspektoram un resursu pārvaldniekam.
+Otrs ir izvietots labirinta konfigurācijas panelis, kas ļauj kontrolēt labirinta
+izmēru, izkārtojumu un pielāgot ģenerēšanas parametrus,
+
+#figure(
+  caption: "Izstrādes rīku saskarne ar labirinta konfigurācijas paneli",
+  image("assets/images/sceens/dev-tools.png"),
+) <dev-tools-ui>
 
 = Testēšanas dokumentācija
 Šajā nodaļā ir aprakstīta spēles "Maze Ascension" testēšanas process.
