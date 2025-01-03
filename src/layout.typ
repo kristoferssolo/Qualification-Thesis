@@ -32,14 +32,21 @@
     paper: "a4",
   )
   set text(
-    font: "Times New Roman",
+    font: (
+      "Times New Roman",
+      "New Computer Modern",
+    ),
     size: 12pt,
     hyphenate: auto,
     lang: "lv",
     region: "lv",
   )
   show raw: set text(
-    font: "JetBrainsMono NF",
+    font: (
+      "JetBrainsMono NF",
+      "JetBrains Mono",
+      "Fira Code",
+    ),
     features: (calt: 0),
   )
 
@@ -192,29 +199,26 @@
     if it.kind == "i-figured-table" {
       return align(
         end,
-        emph(it.counter.display(it.numbering) + " tabula ")
-          + text(
-            weight: "bold",
-            it.body,
-          ),
+        emph(it.counter.display(it.numbering) + " tabula ") + text(
+          weight: "bold",
+          it.body,
+        ),
       )
     }
     if it.kind == "i-figured-image" {
       return align(
         start,
-        emph(it.counter.display(it.numbering) + " att. ")
-          + text(
-            weight: "bold",
-            it.body,
-          ),
+        emph(it.counter.display(it.numbering) + " att. ") + text(
+          weight: "bold",
+          it.body,
+        ),
       )
     }
     if (
-      it.kind
-        in (
-          "i-figured-raw",
-          "i-figured-\"attachment\"",
-        )
+      it.kind in (
+        "i-figured-raw",
+        "i-figured-\"attachment\"",
+      )
     ) {
       return align(
         end,
@@ -241,9 +245,7 @@
         numbering(
           el.numbering,
           ..counter(heading).at(el.location()),
-        )
-          + " "
-          + el.body,
+        ) + " " + el.body,
       )
     }
 
@@ -274,8 +276,7 @@
           numbering(
             el.numbering,
             ..counter(figure.where(kind: kind)).at(el.location()),
-          )
-            + "."
+          ) + "."
         ) // Only add dot for attachments
       } else {
         numbering(
@@ -287,12 +288,11 @@
       // Create counter based on the kind
       return link(
         el.location(),
-        number
-          + if supplement != "" {
-            " " + supplement
-          } else {
-            ""
-          },
+        number + if supplement != "" {
+          " " + supplement
+        } else {
+          ""
+        },
       )
     }
 
@@ -301,17 +301,13 @@
   }
   /* --- Figure/Table config end --- */
 
-  set list(
-    marker: (
-      [•],
-      [--],
-      [\*],
-      [·],
-    ),
-  )
-  set enum(
-    numbering: "1aiA)",
-  ) // TODO: make the same style as LaTeX: 1. | (a) | i. | A.
+  set list(marker: (
+    [•],
+    [--],
+    [\*],
+    [·],
+  ))
+  set enum(numbering: "1aiA)") // TODO: make the same style as LaTeX: 1. | (a) | i. | A.
 
   // Abstract
   include "abstract.typ"

@@ -11,32 +11,22 @@ on:
         type: string
 permissions:
   contents: write
+  packages: read
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Cache Microsoft fonts
-        id: cache-msfonts
-        uses: actions/cache@v3
+        uses: actions/checkout@v4
+      - name: Install Typst
+        uses: typst-community/setup-typst@v3
         with:
-          path: ~/.cache/ms-fonts
-          key: ${{ runner.os }}-msfonts-v1
-      - name: Install required fonts
+          typst-version: 0.12
+          cache-dependency-path: requirements.typ
+      - name: Compile Typst files
         run: |
-          sudo apt-get update
-          mkdir -p ~/.local/share/fonts
-          cp -r assets/fonts/* ~/.local/share/fonts/
-          fc-cache -f -v
-      - name: Compile main.typ
-        uses: lvignoli/typst-action@main
-        with:
-          source_file: |
-            main.typ
-            documentary_page.typ
-      - name: Rename main.pdf
-        run: mv main.pdf kval_darbs_kristians_cagulis_kc22015.pdf
+          typst compile --font-path=assets/fonts main.typ kval_darbs_kristians_cagulis_kc22015.pdf
+          typst compile --font-path=assets/fonts documentary_page.typ
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:

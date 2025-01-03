@@ -1,5 +1,4 @@
 #import "@preview/tablex:0.0.9": tablex
-#import "@preview/dashy-todo:0.0.1": todo
 #import "src/layout.typ": project, indent-par
 #import "src/layout.typ": indent
 
