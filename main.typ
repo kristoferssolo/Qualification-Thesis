@@ -2,11 +2,11 @@
 #import "@preview/i-figured:0.2.4"
 #import "@preview/tablex:0.0.9": tablex, rowspanx, colspanx, cellx
 #import "@preview/wordometer:0.1.3": word-count, total-words
-#import "layout.typ": project, indent-par
+#import "src/layout.typ": project, indent-par
 #import "@preview/fletcher:0.5.3" as fletcher: diagram, node, edge
 #import fletcher.shapes: diamond
-#import "utils.typ": *
-#import "diagrams.typ": *
+#import "src/utils.typ": *
+#import "src/diagrams.typ": *
 #show: word-count
 
 #show: project.with(
@@ -1482,7 +1482,6 @@ atgriežas un mēģina citu ceļu.
     diagram(
       spacing: (0em, 3em),
       {
-
         terminal-node((0, 0))
         std-edge()
 
@@ -1662,7 +1661,6 @@ atgriežas un mēģina citu ceļu.
 
       action-node((1, 5), [Atjaunina pašreizējā un\ nākamā stāvu marķierus])
       std-edge("l,uu,l")
-
     }),
   ),
 ) <floor-transition-diagram>
@@ -2108,9 +2106,8 @@ Projekta turpmākās attīstības iespējas ietver:
   "bibliography.yml",
 )
 
-#include "attachments.typ"
-#include "code.typ"
-#include "doc.typ"
+#include "src/attachments.typ"
+#include "src/code.typ"
 
 // #pagebreak()
 // #total-words words
