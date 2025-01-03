@@ -8,7 +8,7 @@
   "Anotācija",
 )
 Kvalifikācijas darbā ir izstrādāta spēle "Maze Ascension", kas piedāvā
-spēlētājiem izaicinājumu iziet cauri proceduāli ģenerētiem sešstūrainam
+spēlētājiem izaicinājumu iziet cauri procedurāli ģenerētiem sešstūrainam
 labirintiem. Spēle ir veidota, izmantojot Rust programmēšanas valodu un Bevy
 spēļu dzinēju.
 
@@ -32,7 +32,7 @@ sistēmas prasības,
 programmatūras prasību specifikācija,
 Bevy,
 ECS,
-papilspējas.
+papildspējas.
 
 
 #text(
@@ -74,7 +74,7 @@ papilspējas.
       [*Keywords:*],
     )
     Maze,
-    comtuper game,
+    computer game,
     system requirements,
     software requirements specification,
     Bevy,
