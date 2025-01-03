@@ -32,7 +32,8 @@ jobs:
         with:
           name: PDF
           path: |
-            *.pdf
+            kval_darbs_kristians_cagulis_kc22015.pdf
+            documentary_page.pdf
       - name: Get current date
         id: date
         run: echo "DATE=$(date +%Y-%m-%d-%H:%M)" >> $GITHUB_ENV

@@ -20,23 +20,26 @@
 )
 #set heading(numbering: none)
 = Apzīmējumu saraksts
-/ Audio: Skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku;
+/ Audio: skaņas komponentes, kas ietver gan skaņas efektus, gan fona mūziku;
 / CI/CD: nepārtraukta integrācija un nepārtraukta izvietošana;
 / DPD: datu plūsmas diagramma;
 / ECS: entitāšu-komponenšu sistēma (angl. Entity-Component-System)@ecs;
-/ Interpolācija: starpvērtību atrašana pēc funkcijas doto vērtību virknes;
+/ Entitāte: unikāls identifikators, kas apvieno saistītās komponentes;
 / Jaucējtabula#footnote[https://lv.wikipedia.org/wiki/Jauc%C4%93jtabula]: jeb heštabula (angl. hash table)#footnote[https://en.wikipedia.org/wiki/Hash_table] ir datu struktūra, kas saista identificējošās vērtības ar piesaistītajām vērtībām;
-/ Laidiens: Programmatūras versija, kas ir gatava izplatīšanai lietotājiem un satur īpašas funkcijas, uzlabojumus vai labojumus;
+/ Komponente: datu struktūra, kas satur tikai datus bez loģikas;
+/ Notikums: īslaicīga ziņojuma struktūra, kas tiek izmantota komunikācijai starp sistēmām;
 / PPA: programmatūras projektējuma apraksts;
 / PPS: programmatūras prasību specifikācija;
 / Papildspēja: objekts, kas kā spēles mehānika spēlētājam piešķir īslaicīgas priekšrocības vai papildu spējas (angl. power-up)#footnote[https://en.wikipedia.org/wiki/Power-up]<power-up>;
-/ Pirmkods: Cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību;
-/ Procedurāla ģenerēšana: datu algoritmiskas izstrādes metode, kurā tiek kombinēts cilvēka radīts saturs un algoritmi, kas apvienoti ar datora ģenerētu nejaušību;
-/ Renderēšana: Process, kurā tiek ģenerēts vizuāla izvade;
-/ Režģis: Strukturēts šūnu izkārtojums, kas veido spēles pasaules pamata struktūru;
-/ Spēlētājs: lietotāja ieraksts vienas virtuālās istabas kontekstā;
-/ Sēkla: Skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai;
-/ Šūna: Sešstūraina režģa viena pozīcija, kas definē telpu, kuru var aizņemt viena plāksne.
+/ Pirmkods: cilvēkam lasāmas programmēšanas instrukcijas, kas nosaka programmatūras darbību;
+/ Procedurāla ģenerēšana: algoritmisks satura radīšanas process, kas automātiski ģenerē datus izpildes laikā, nevis izmanto manuāli, iepriekš veidotu saturu;
+/ Renderēšana: process, kurā tiek ģenerēta vizuāla izvade;
+/ Resurss: globāli pieejama datu struktūra, kas nav piesaistīta konkrētai entitātei;
+/ Režģis: strukturēts šūnu izkārtojums, kas veido spēles pasaules pamata struktūru;
+/ Sistēma: loģikas vienība, kas apstrādā entitātes ar specifiskām komponentēm;
+/ Spēlētājs: entitāte, kas reprezentē lietotāja vadāmo objektu spēlē;
+/ Sēkla: skaitliska vērtība, ko izmanto nejaušo skaitļu ģeneratora inicializēšanai;
+/ Šūna: sešstūraina režģa viena pozīcija, kas definē telpu, kuru var aizņemt viena plāksne;
 / WASM: WebAssembly -- zema līmeņa assemblera tipa kods, kas var darboties modernos tīmekļa pārlūkos.
 
 = Ievads
@@ -64,7 +67,7 @@ nodrošina, ka:
 - uzglabāšanas prasības tiek samazinātas līdz minimumam, ģenerējot labirintus reāllaikā.
 
 #indent-par[
-  Spēlētāju uzdevums ir pārvietoties pa šiem procesuāli ģenerētajiem labirintiem,
+  Spēlētāju uzdevums ir pārvietoties pa šiem procedurāli ģenerētajiem labirintiem,
   lai sasniegtu katra līmeņa beigas. Turpinot progresēt, spēlētāji saskaras ar
   arvien sarežģītākiem labirintiem, kuros nepieciešama stratēģiskā domāšana,
   izpēte un papildu prasmju izmantošana.
@@ -76,9 +79,9 @@ pieredzi, veicinot izpēti un eksperimentēšanu ar dažādām spēju kombināci
 radot dinamiskākus un aizraujošākus spēles scenārijus.
 
 No tehniskā viedokļa darbā tiek pētīta šo funkciju īstenošana, izmantojot
-Bevy entitāšu-komponentu sistēmas (tuprmāk tekstā -- ECS) arhitektūru.
+Bevy entitāšu-komponenšu sistēmas (turpmāk tekstā -- ECS) arhitektūru.
 Tas ietver stabilu spēles vides sistēmu izstrādi, stāvokļa pārvaldības
-mehānismus un efektīvu Bevy iebūvēto funkcionalitāšu izmantošanu.
+mehānismus un efektīvu Bevy iebūvēto funkciju izmantošanu.
 
 No darbības sfēras apzināti izslēgta daudzspēlētāju funkcionalitāte un sarežģīti
 grafiskie efekti, koncentrējoties uz pulētu viena spēlētāja pieredzi ar skaidru,
@@ -171,39 +174,25 @@ Spēle tiek izplatīta, izmantojot "GitHub
 releases"#footnote[https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases]<gh-release>
 un itch.io,#footnote[https://itch.io/]<itch-io> kas ir
 populāra neatkarīgo spēļu platforma, kas ļauj viegli piekļūt un izplatīt spēles
-visā pasaulē. Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu
-un kopienas iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un
+visā pasaulē.
+Izmantojot šīs platformas, datorspēle gūst dažādu maksājumu modeļu un kopienas
+iesasaistes funkcijas, tādējādi palielinot spēles sasniedzamību un
 atpazīstamību.
 
-/* Lai gan spēle neizmanto mākoņpakalpojumus datu uzglabāšanai vai
-analīzei, CI/CD cauruļvads nodrošina, ka atjauninājumus un jaunas funkcijas var
-izvietot efektīvi un droši. Šāda konfigurācija ļauj ātri veikt iterāciju un
-nepārtraukti uzlabot spēli, nodrošinot, ka spēlētājiem vienmēr ir pieejama
-jaunākā versija ar jaunākajiem uzlabojumiem un kļūdu labojumiem. */
-
 == Darījumprasības
-Sistēmas izstrādē galvenā uzmanība tiks pievērsta sekojošu darījumprasību
-īstenošanai, lai nodrošinātu stabilu un saistošu lietotāja pieredzi:
+Sistēmas izstrādē tiek izvirzītas sekojošas darījumprasības, kas nodrošinās
+kvalitatīvu lietotāja pieredzi:
 
-+ Spēles progresēšana un līmeņu pārvaldība: Sistēma automātiski pārvaldīs
-  spēlētāju virzību pa spēles līmeņiem, nodrošinot vienmērīgu pāreju, kad
-  spēlētāji progresē un saskaras ar jauniem izaicinājumiem. Progress tiks
-  saglabāts lokāli spēlētāja ierīcē.
-+ Nevainojama piekļuve spēlēm: Spēlētāji varēs piekļūt spēlei un spēlēt to bez
-  nepieciešamības izveidot lietotāja kontu vai pieteikties. Tas nodrošina
-  netraucētu piekļuvi spēlei, ļaujot spēlētājiem nekavējoties sākt spēlēt.
-// + Paziņošanas sistēma: Spēlētāji saņems paziņojumus par svarīgiem spēles
-// atjauninājumiem, sasniegumiem un citu svarīgu informāciju, lai saglabātu viņu
-// iesaisti un informētību.
-+ Savietojamība ar vairākām platformām: sistēma būs pieejama vairākās
-  platformās, tostarp Linux, macOS, Windows un WebAssembly, nodrošinot plašu
-  pieejamību un sasniedzamību.
-+ Kopienas iesaiste: Spēle izmantos itch.io@itch-io kopienas
-  funkcijas, lai sadarbotos ar spēlētājiem, apkopotu atsauksmes un veicinātu
-  atbalstošu spēlētāju kopienu.
-+ Regulāri atjauninājumi un uzturēšana: CI/CD cauruļvadu veicinās regulārus
-  atjauninājumus un uzturēšanu, nodrošinot, ka spēle ir atjaunināta ar jaunākajām
-  funkcijām un uzlabojumiem.
+- Līmeņu pārvaldība: Sistēma nodrošinās automātisku spēles līmeņu pārvaldību un
+  vienmērīgu pāreju starp tiem, veidojot pakāpenisku grūtības pieaugumu.
+- Tieša piekļuve: Spēle būs pieejama bez lietotāja konta izveides vai
+  autentifikācijas, nodrošinot tūlītēju piekļuvi spēles saturam.
+- Platformu atbalsts: Sistēma tiks izstrādāta ar daudzplatformu atbalstu,
+  ietverot Linux, macOS, Windows un WebAssembly platformas.
+- Kopienas integrācija: Izmantojot itch.io@itch-io platformu, tiks nodrošināta
+  spēlētāju atsauksmju apkopošana un kopienas atbalsts.
+- Nepārtraukta izstrāde: Izmantojot CI/CD risinājumus, tiks nodrošināta regulāra
+  spēles atjaunināšana un uzturēšana.
 
 == Sistēmas lietotāji
 Sistēma ir izstrādāta, ņemot vērā vienu lietotāja tipu -- spēlētājs. Spēlētāji
@@ -211,9 +200,6 @@ ir personas, kas iesaistās spēlē, lai pārvietotos pa tās labirinta struktū
 Tā kā spēlei nav nepieciešami lietotāja konti vai autentifikācija, visiem
 spēlētājiem ir vienlīdzīga piekļuve spēles funkcijām un saturam no spēles sākuma
 brīža.
-
-/* "Sistēma" lietotājs ir atbildīgs par notikumu apstrādātāju izsaukšanu, kas
-nepieciešams automātiskai spēles gaitas pārvaldībai. */
 
 Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņa DPD
 (sk. @fig:dpd-0).
@@ -236,10 +222,29 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 ) <dpd-0>
 
 == Vispārējie ierobežojumi
+// + Izstrādes vides un tehnoloģijas ierobežojumi:
+//   + Programmēšanas valodas un Bevy spēles dzinēja tehniskie ierobežojumi;
+//   + Responsivitāte;
+//   + Starpplatformu savietojamība: Linux, macOS, Windows un WebAssembly.
+
+
 + Izstrādes vides un tehnoloģijas ierobežojumi:
-  + Programmēšanas valodas un Bevy spēles dzinēja tehniskie ierobežojumi;
-  + Responsivitāte;
-  + Starpplatformu savietojamība: Linux, macOS, Windows un WebAssembly.
+  + Bevy dzinēja tehniskie ierobežojumi:
+    + ECS arhitektūras specifika un tās ierobežojumi datu organizācijā;
+    + "Render Graph" sistēmas ierobežojumi grafisko elementu attēlošanā;
+    + atkarība no "wgpu"#footnote[https://wgpu.rs/] grafikas bibliotēkas iespējām.
+  + Rust programmēšanas valodas ierobežojumi:
+    + stingra atmiņas pārvaldība (angl. memory management) un īpašumtiesību (angl. ownership) sistēma;
+    + kompilācijas laika pārbaudes un to ietekme uz izstrādes procesu;
+    + WebAssembly kompilācijas specifika.
++ Platformu atbalsta ierobežojumi:
+  + Nepieciešamība nodrošināt savietojamību ar:
+    + darbvirsmas platformām (Linux, macOS, Windows);
+    + tīmekļa pārlūkprogrammām caur WebAssembly.
+  + Platformu specifiskās prasības attiecībā uz:
+    + grafikas renderēšanu;
+    + ievades apstrādi;
+    + veiktspējas optimizāciju.
 
 #indent-par[
   Dokumentācijas izstrādei ir izmantots Typst rīks, kas nodrošina efektīvu darbu
@@ -250,11 +255,11 @@ Ar lietotājiem saistītās datu plūsmas ir attēlotas sistēmas nultā līmeņ
 == Pieņēmumi un atkarības
 - Tehniskie pieņēmumi:
   - Spēlētāja ierīcei jāatbilst minimālajām aparatūras prasībām, lai varētu
-    palaist uz Bevy spēles dzinēja balstītas spēles.
-  - ierīcei jāatbalsta WebGL2 #footnote("https://registry.khronos.org/webgl/specs/latest/2.0/"),
-    lai nodrošinātu pareizu atveidošanu @webgl2.
-- tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly.
-- ekrāna izšķirtspējai jābūt vismaz 800x600 pikseļu, lai spēle būtu optimāla.
+    palaist uz Bevy spēles dzinēja balstītas spēles;
+  - ierīcei jāatbalsta WebGL2 #footnote("https://registry.khronos.org/webgl/specs/latest/2.0/");
+    lai nodrošinātu pareizu atveidošanu @webgl2;
+  - tīmekļa spēļu spēlēšanai (WebAssembly versija) pārlūkprogrammai jābūt mūsdienīgai un saderīgai ar WebAssembly;
+  - ekrāna izšķirtspējai jābūt vismaz $800 times 600$ pikseļi.
 - Veiktspējas atkarība:
   - Spēle ir atkarīga no Bevy spēles dzinēja (0.15).
 - Veiksmīga kompilēšana un izvietošana ir atkarīga no CI/CD darbplūsmai saderības ar:
@@ -499,7 +504,7 @@ pienākumi, un tas ietver funkcijas, kas veicina kopējo spēles sistēmu.
 
 Dotais modulis ir izstrādes rīks, kas paredzēts lietotāja saskarnes elementu
 attēlošanai un apstrādei, lai konfigurētu labirinta parametrus.
-Šis modulis, izmantojot "egui"@bevy-egui un "inspector-egui"@bevy-inspector-egui
+Šis modulis, izmantojot "bevy_egui"@bevy-egui un "inspector-egui"@bevy-inspector-egui
 bibliotēkas, izveido logu "Maze Controls" (labirinta vadības
 elementi), kurā tiek parādītas dažādas
 konfigurācijas opcijas, piemēram, sēkla, rādiuss, augstums, labirinta izmērs,
@@ -513,12 +518,6 @@ Svarīgi atzīmēt, ka šis modulis ir paredzēts lietošanai spēles izstrādes
 Laidiena versijās šī lietotāja saskarne nebūs pieejama, nodrošinot, ka
 gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
 
-// Moduļa funkcionalitāti var vizualizēt, izmantojot datu plūsmas diagrammu (DFD),
-// kurā būtu parādītas ievades no spēles pasaules (piemēram, pašreizējā stāva un
-// labirinta konfigurācija), apstrāde lietotāja saskarnes sistēmā un izejas kā
-// atjauninātas labirinta konfigurācijas un respawn notikumi.
-
-
 #function-table(
   "Labirinta pārvadības saskarne",
   "IRMF01",
@@ -526,7 +525,7 @@ gala lietotāji nevar piekļūt šīm uzlabotajām konfigurācijas opcijām.
   [
     Ievades dati tiek saņemti no pasaules resursiem un komponentēm:
     + Labirinta spraudņa resurss;
-    + "EguiContext" komponente;#footnote[https://docs.rs/bevy_egui/latest/bevy_egui/]<bevy_egui>
+    + "`EguiContext`" komponente;#footnote[https://docs.rs/bevy_egui/latest/bevy_egui/]<bevy_egui>
     + Labirinta konfigurācija un stāva komponentes saistībā ar pašreizējā stāva
       komponenti;
     + Globālais labirinta konfigurācijas resurss.
@@ -563,7 +562,7 @@ Modulis sastāv no divām galvenajām funkcijām (sk. @fig:dpd-2-floor):
 stāvu kustības (sk. @tbl:floor-F01) un stāvu
 pārejas apstrādes (sk. @tbl:floor-F02).
 Stāvu kustības sistēma nodrošina plūstošu vertikālo pārvietošanos starp
-līmeņiem, savukārt pārejas apstrādes sistema koordinē pārejas starp pašreizējo
+līmeņiem, savukārt pārejas apstrādes sistēma koordinē pārejas starp pašreizējo
 un nākamo stāvu, reaģējot uz "TransitionFloor" notikumu (sk. @tbl:events-floor).
 
 #figure(
@@ -633,7 +632,7 @@ un nākamo stāvu, reaģējot uz "TransitionFloor" notikumu (sk. @tbl:events-flo
 === Labirinta ģenerēšanas modulis
 
 Moduļa funkcionalitāte ir izmantota sešstūraina labirinta ģenerēšanai,
-balstoties uz Amit Patel's "Hexagonal Grids"
+balstoties uz "Hexagonal Grids"
 rakstu @hex-grid, kas jau ir
 kļuvis par _de facto_ standartu sešstūrainu režģu matemātikas un algoritmu
 implementācijai izstrādē.
@@ -686,7 +685,7 @@ programmu.
     + Izveido sākotnējo labirinta struktūru:
       + Inicializē tukšu labirintu ar norādīto rādiusu;
       + Katrai šūnai iestata sākotnējās (visas) sienas.
-    + Validē stākuma prozīciju, ja tāda norādīta.
+    + Validē sākuma pozīciju, ja tāda norādīta.
     + Ģenerē labirintu:
       + Rekursīvi izveido ceļus, noņemot sienas starp šūnām;
       + Izmanto atpakaļizsekošanu, kad sasniegts strupceļš.
@@ -718,7 +717,8 @@ Funkcija ģenerē jaunu labirintu, izmantojot norādīto konfigurāciju, un izvi
 to atbilstošā augstumā spēles pasaulē.
 
 Labirinta atjaunošanas funkcija ļauj pārģenerēt esošā stāva labirintu,
-saglabājot to pašu stāva numuru un pozīciju telpā nemainot entitātes ID.
+saglabājot to pašu stāva numuru un pozīciju telpā nemainot entitātes
+identifikatoru.
 
 #figure(
   caption: [Labirinta pārvaldības moduļa 2. līmeņa DPD],
@@ -808,7 +808,8 @@ Spēlētāja kustība tiek realizēta divās daļās: ievades apstrāde
 Ievades apstrādes funkcija pārbauda tastatūras ievadi
 un, ņemot vērā labirinta sienu izvietojumu, nosaka nākamo kustības mērķi.
 Kustības izpildes funkcija nodrošina plūstošu pārvietošanos uz mērķa pozīciju,
-izmantojot interpolāciju starp pašreizējo un mērķa pozīciju.
+izmantojot interpolāciju#footnote[Matemātiska metode, kas aprēķina starpvērtības
+starp diviem zināmiem punktiem.] starp pašreizējo un mērķa pozīciju.
 
 Stāvu pārejas apstrāde (#link(<player-F04>)[SPMF04]) nepārtraukti uzrauga spēlētāja pozīciju
 attiecībā pret stāva izeju un sākumu. Kad spēlētājs sasniedz kādu no šiem
@@ -989,22 +990,23 @@ punktiem, funkcija izsauc atbilstošu pārejas notikumu.
 ) <player-F04>
 
 === Spēles stāvokļa pārvaldības modulis
+
 Spēles stāvokļa pārvaldības modulis nodrošina spēles dažādu stāvokļu pārvaldību
-un pārejas starp tiem. Modulis sastāv no trim galvenajām funkcijām: spēles
-sākšana (@tbl:screen-F01), atgriešanās uz sākumekrānu
-(@tbl:screen-F02) un sākumekrāna attēlošanas
-(@tbl:screen-F03). Katra no šīm funkcijām apstrādā specifiskus
-lietotāja ievades datus un atbilstoši atjaunina spēles stāvokli operatīvajā
-atmiņā.
+un pārejas starp tiem. Modulis sastāv no trim galvenajām funkcijām:
+spēles sākšana (@tbl:screen-F01),
+atgriešanās uz sākumekrānu (@tbl:screen-F02) un
+sākumekrāna attēlošanas (@tbl:screen-F03).
+Katra no šīm funkcijām apstrādā specifiskus lietotāja ievades datus un
+atbilstoši atjaunina spēles stāvokli.
 
 Moduļa 2. līmeņa DPD diagramma (sk. @fig:dpd-2-screen) parāda, ka lietotājs
 mijiedarbojas ar sistēmu caur diviem galvenajiem ievades veidiem: pogu izvēli
 sākumekrānā un "Escape" taustiņa nospiešanu spēles laikā.
 
 Spēles sākšanas funkcija inicializē nepieciešamos resursus un
-sistēmas, kad lietotājs izvēlas sākt jaunu spēli. Atgriešanās funkcija
-apstrādā lietotāja pieprasījumu pārtraukt aktīvo spēli un atgriežas uz
-sākumekrānu.
+sistēmas, kad lietotājs izvēlas sākt jaunu spēli.
+Atgriešanās funkcija apstrādā lietotāja pieprasījumu pārtraukt aktīvo spēli un
+atgriežas uz sākumekrānu.
 
 #figure(
   caption: [Spēles stāvokļa pārvaldības moduļa 2. līmeņa DPD],
@@ -1218,12 +1220,13 @@ Uz sistēmas veiktspēju ir sekojošas prasības:
 - Jebkura izmēra labirintam jātiek uzģenerētam ātrāk kā 1 sekundē.
 - Spēlei jāstartējas ātrāk par 3 sekundēm.
 - Spēlei jādarbojas ar vismaz 60 kadriem sekundē.
-- Spēlētāja kustībām jātiek apstrādātām bez manāmas aizkaves ($<16$ms).
+- Spēlētāja kustībām jātiek apstrādātā bez manāmas aizkaves ($<16$ms).
+
 === Uzticamība
 Uz sistēmas uzticamību ir sekojošas prasības:
 - Kļūdu apstrāde: spēlei jāapstrādā kļūdas graciozi, bez sistēmas atteicēm.
-- Saglabāšana: spēles progresam jātiek automātiski saglabātam pēc katra līmeņa.
-- Atjaunošanās: spēlei jāspēj atjaunoties pēc negaidītas aizvēršanas.
+// - Saglabāšana: spēles progresam jātiek automātiski saglabātam pēc katra līmeņa.
+// - Atjaunošanās: spēlei jāspēj atjaunoties pēc negaidītas aizvēršanas.
 
 === Atribūti
 ==== Izmantojamība
@@ -1256,7 +1259,7 @@ ir noteiktas, lai nodrošinātu plašu pieejamību, vienlaikus saglabājot veikt
 == Datu struktūru projektējums
 
 Spēle ir veidota, izmantojot Bevy spēles dzinēju, kas īstenu
-entitāšu komponenšu sistēmu (ECS) arhitektūras modeli.
+entitāšu-komponenšu sistēmu (ECS) arhitektūras modeli.
 Šis modelis sadala spēles loģiku trīs galvenajās daļās: entitātes jeb spēles
 objekti, komponentes jeb dati un sistēmas -- loģika, kas darbojas ar entitātēm
 ar konkrētām komponentēm @ecs @bevy-ecs @bevy-cheatbook[nod. ~14.7].
@@ -1666,14 +1669,14 @@ atgriežas un mēģina citu ceļu.
 ) <floor-transition-diagram>
 
 
-=== Plākšņu pārvaldas sistēma
+=== Plākšņu pārvaldības sistēma
 
 Projekta sākotnējā plānošanas posmā tika apsvēra iespēja labirinta elementu
 pārvaldībai izmantot
-"`bevy_ecs_tilemap`" bibliotēku.#footnote[https://crates.io/crates/bevy_ecs_tilemap]<bevy-ecs-tilemap>
+"bevy_ecs_tilemap" bibliotēku.#footnote[https://crates.io/crates/bevy_ecs_tilemap]<bevy-ecs-tilemap>
 Tomēr pēc rūpīgas izvērtēšanas tika secināts, ka tā neatbilst konkrētajam
 projekta lietojuma gadījumam sekojošu iemeslu dēļ:
-+ Uz failiem balstīta plākšņu ielāde: "`bevy_ecs_tilemap`" galvenokārt paļaujas uz
++ Uz failiem balstīta plākšņu ielāde: "bevy_ecs_tilemap" galvenokārt paļaujas uz
   plākšņu ielādi no ārējiem failiem. Šajā projektā ir nepieciešami dinamiski,
   procedurāli ģenerēti labirinti, tāpēc šī pieeja nav īsti piemērota.
 + Elastības ierobežojumi: bibliotēkas plākšņu datu struktūra nav viegli
@@ -1681,14 +1684,14 @@ projekta lietojuma gadījumam sekojošu iemeslu dēļ:
   sarežģītākām telpiskām attiecībām starp šūnām.
 + Prasības attiecībā uz sienu veidošanu: katrai sistēmas labirinta šūnai
   var būt 0-6 sienas, kas tiek ģenerētas nejauši. Šādu dinamisku sienu ģenerēšanas
-  līmeni nav viegli sasniegt izmantojot "`bevy_ecs_tilemap`".
+  līmeni nav viegli sasniegt izmantojot "bevy_ecs_tilemap".
 
 #indent-par[
-  Tā vietā, lai izmantotu "`bevy_ecs_tilemap`", tika izlemts izstrādāt pielāgotu
+  Tā vietā, lai izmantotu "bevy_ecs_tilemap", tika izlemts izstrādāt pielāgotu
   risinājumu, kas tieši integrējas ar labirinta ģenerēšanas algoritmu. Šī
   pieeja ļauj:
 ]
-- vienkāršāku integrācija ar procesuālo labirintu ģenerēšanu;
+- vienkāršāku integrācija ar procedurālo labirintu ģenerēšanu;
 - optimālāku veiktspēja projekta lietošanas gadījumam;
 - lielāku kontroli pār labirinta vizuālo attēlojumu.
 
@@ -1726,7 +1729,7 @@ pogas.
 === Spēles skats
 
 Spēles skats apvieno pašu spēles pasauli ar minimālistisku lietotāja saskarni
-(sk, @fig:game-ui).
+(sk. @fig:game-ui).
 Centrālo daļu aizņem spēles pasaule ar sešstūra labirintu, kas veido spēles
 galveno interaktīvo elementu.
 Ekrāna kreisajā apakšējā stūrī ir izvietoti papildspēju statusa indikatori, kas
@@ -1741,7 +1744,7 @@ atjaunošanās laiku.
 
 === Izstrādes rīki
 Izstrādes rīki, kas redzami @fig:dev-tools-ui[attēlā], ir implementēti
-izmantojot "egui" bibliotēku @bevy_egui.
+izmantojot "bevy_egui" bibliotēku @bevy_egui.
 Pirmais "Bevy Inspector Egui" noklusētais skats @bevy-inspector-egui, kas
 nodrošina detalizētu piekļuvi spēles entitāšu hierarhijai, komponenšu
 inspektoram un resursu pārvaldniekam.
@@ -1763,20 +1766,11 @@ Statiskā testēšana ir svarīga daļa no projekta kvalitātes nodrošināšana
 "Clippy"
 tiek izmantots koda analīzei, meklējot potenciālas problēmas un
 neoptimālus risinājumus. Papildus noklusētajiem noteikumiem, tika aktivizēti
-stingrāki koda kvalitātes pārbaudes līmeņi: "`pedantic`" režīms nodrošina
-padziļinātu koda stila pārbaudi, "`nursery`" aktivizē eksperimentālās pārbaudes,
-un "`unwrap_used`" un "`expect_used`" brīdina par potenciāli nedrošu kļūdu
+stingrāki koda kvalitātes pārbaudes līmeņi: "pedantic" režīms nodrošina
+padziļinātu koda stila pārbaudi, "nursery" aktivizē eksperimentālās pārbaudes,
+un "unwrap_used" un "expect_used" brīdina par potenciāli nedrošu kļūdu
 apstrādi. Šie papildu noteikumi palīdz uzturēt augstāku koda kvalitāti un
 samazināt potenciālo kļūdu skaitu @clippy.
-
-
-/* Programmatūras statiskai testēšanai ir izmantots rīks „clang-tidy“, kas analizē
-programmatūru, meklējot kļūdas un problēmas pirmkodā. [12] Rīks satur vairākas specifiskas
-problēmu kopas, kas var tikt izmantotas analīzē. Tika izmantota „clang-analyzer“ problēmu
-kopa. Vieglākai statisko testu darbināšanai tika izmantots vienkāršs programmēšanas valodas
-„Python“ skripts, kas atlasa visus failus, kuru paplašinājums ir „cpp“ (valodas „C++“ pirmkoda
-fails) vai „h“ (galvenes fails) un darbina statiskās analīzes rīku ar katru failu atsevišķi (sk.
-izpildes rezultātu attēlā 4.3.). */
 
 == Dinamiskā testēšana
 
@@ -1950,8 +1944,8 @@ Automatizēto testu izpildes rezultātu kopsavilkums ir redzams
 pieejams @tests-hexlab-full[pielikumā].
 @fig:tests-hexlab[attēlā], savukārt detalizēts testu izpildes pārskats ir
 
-Izmantojot "cargo-tarpaulin", testu pārklājums ir $81.69%$ (116 no 142
-iekļautajām rindiņām) (sk. @tarpaulin-hexlab[pielikumu]), tomēr šis rādītājs
+Izmantojot "cargo-tarpaulin", testu pārklājums ir $81.69%$ (sk.
+@tarpaulin-hexlab[pielikumu]), tomēr šis rādītājs
 pilnībā neatspoguļo faktisko pārklājumu, jo rīkam ir ierobežojumi attiecībā uz
 "inline"#footnote[https://doc.rust-lang.org/nightly/reference/attributes/codegen.html?highlight=inline]
 funkcijām un citi tehniski ierobežojumi @cargo-tarpaulin.
@@ -1994,9 +1988,8 @@ Viens no galvenajiem rīkiem, kas tiek izmantots ir "Clippy"@clippy, kas analiz�
 iespējamās problēmas un iesaka uzlabojumus (sk. @static-tests nodaļu).
 
 Kopā ar "Clippy" tiek arī izmantots "Rustfmt" @rustfmt, koda formatētājs, lai
-uzturētu vienotu koda formatējumu visā projektā. Šis rīks automātiski formatē
-kodu saskaņā ar Rust stila
-vadlīnijām @rust-style.
+uzturētu vienotu koda formatējumu visā projektā.
+Šis rīks automātiski formatē kodu saskaņā ar Rust stila vadlīnijām @rust-style.
 
 Turklāt visas publiskās funkcijas un datu struktūras "hexlab" bibliotēkā ir
 dokumentētas#footnote[https://docs.rs/hexlab/latest/hexlab/]<hexlab-docs>.
@@ -2035,15 +2028,14 @@ Projekta darbietilpības novērtēšanai tika izmantota QSM (angl. Quantitative
 Software Management, latv. kvantitatīvā programmatūra vadība) metodoloģija, kas
 balstās uz $550$ verificētu programmatūras projektu datubāzi @QSM.
 Izmantojot "tokei" rīku @tokei, tika veikta detalizēta projekta koda analīze,
-kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas, bet
-saistītā "hexlab" bibliotēka -- $979$ rindiņas, kopā veidojot $2906$ loģiskās koda
-rindiņas, neiekļaujot tukšās rindiņas un komentārus (sk. @tokei-maze-ascension[]
-un @tokei-hexlab[pielikumus]).
+kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas (sk. @tokei-maze-ascension), bet
+saistītā "hexlab" bibliotēka -- $979$ rindiņas (sk. @tokei-hexlab), kopā veidojot $2906$ loģiskās koda
+rindiņas, neiekļaujot tukšās rindiņas un komentārus .
 
 Saskaņā ar QSM etalontabulu "Business Systems Implementation Unit (New and
 Modified IU) Benchmarks", pirmās kvartiles projekti ($25%$ mazākie no $550$
 biznesa sistēmu projektiem) vidēji ilgst $3.2$ mēnešus, ar vidēji $1.57$
-izstrādātājiem un mediāno projekta apjomu -- $1889$ koda rindiņas @QSM.
+izstrādātājiem un mediāna projekta apjomu -- $1889$ koda rindiņas @QSM.
 Ņemot vērā, ka projekta autors ir students ar ierobežotu pieredzi, tiek
 izmantota pirmās kvartiles $50%$ diapazona augšējā robeža -- $466$ rindiņas
 personmēnesī.
@@ -2051,11 +2043,11 @@ Tādējādi minimālais nepieciešamais koda apjoms trīs mēnešu darbam būtu 
 = 1398$ rindiņas.
 
 Projekta faktiskais koda apjoms ($2906$ rindiņas) vairāk nekā divkārt pārsniedz šo
-minimālo slieksni, kas nepārprotami apliecina projekta atbilstību trīs mēnešu
-darbietilpības prasībai.
+minimālo slieksni, kas apliecina projekta atbilstību trīs mēnešu darbietilpības
+prasībai.
 Turklāt jāņem vērā projekta papildu sarežģītības faktori:
 - Bevy dzinēja un ECS arhitektūras apgūšana;
-- Procesuālās ģenerēšanas algoritma izstrāde "hexlab" bibliotēkai;
+- Procedurālās ģenerēšanas algoritma izstrāde "hexlab" bibliotēkai;
 - "hexlab" bibliotēkas izstrāde ar plašu dokumentāciju, ieskaitot API
   dokumentāciju, lietošanas piemērus un integrācijas vadlīnijas.
 
@@ -2082,7 +2074,7 @@ pāreju starp dažādiem labirinta līmeņiem.
 Bevy spēļu dzinēja izmantošana ļāva efektīvi implementēt entitāšu-komponenšu
 sistēmu (ECS), kas nodrošina labu veiktspēju un koda organizāciju.
 Tomēr tika konstatēts, ka Bevy ekosistēma joprojām ir aktīvās izstrādes stadijā,
-ko apliecina projekta izstrādes laikā iznākusī jaunā versija (0.15).
+ko apliecina darba izstrādes laikā iznākusī jaunā versija (0.15).
 Ši versija ieviesa vairākas būtiskas izmaiņas, piemēram, "Required Components"
 (latv. nepieciešamo komponentu) konceptu uzlabotu animāciju sistēmu un daudz ko
 citu, kas radīja nepieciešamību pielāgot esošo kodu @bevy-0.15.

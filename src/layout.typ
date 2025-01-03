@@ -256,7 +256,7 @@
       let supplement_map = (
         i-figured-table: "tab.",
         i-figured-image: "att.",
-        attachment: "pielikums",
+        attachment: "pielikumu",
       )
 
 
