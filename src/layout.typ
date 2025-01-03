@@ -19,7 +19,6 @@
   date: "",
   body,
 ) = {
-
   set document(author: authors)
 
   set page(
@@ -39,7 +38,10 @@
     lang: "lv",
     region: "lv",
   )
-  show raw: set text(features: (calt: 0))
+  show raw: set text(
+    font: "JetBrainsMono NF",
+    features: (calt: 0),
+  )
 
   show math.equation: set text(weight: 400)
 
@@ -157,9 +159,7 @@
 
   align(
     center,
-    upper(
-      text(date),
-    ),
+    upper(text(date)),
   )
   /* Title page config end */
 
@@ -192,24 +192,29 @@
     if it.kind == "i-figured-table" {
       return align(
         end,
-        emph(it.counter.display(it.numbering) + " tabula ") + text(
-          weight: "bold",
-          it.body,
-        ),
+        emph(it.counter.display(it.numbering) + " tabula ")
+          + text(
+            weight: "bold",
+            it.body,
+          ),
       )
     }
     if it.kind == "i-figured-image" {
       return align(
         start,
-        emph(it.counter.display(it.numbering) + " att. ") + text(
-          weight: "bold",
-          it.body,
-        ),
+        emph(it.counter.display(it.numbering) + " att. ")
+          + text(
+            weight: "bold",
+            it.body,
+          ),
       )
     }
-    if it.kind in (
-      "i-figured-raw",
-      "i-figured-\"attachment\"",
+    if (
+      it.kind
+        in (
+          "i-figured-raw",
+          "i-figured-\"attachment\"",
+        )
     ) {
       return align(
         end,
@@ -236,7 +241,9 @@
         numbering(
           el.numbering,
           ..counter(heading).at(el.location()),
-        ) + " " + el.body,
+        )
+          + " "
+          + el.body,
       )
     }
 
@@ -263,10 +270,13 @@
       }
 
       let number = if kind == "attachment" {
-        numbering(
-          el.numbering,
-          ..counter(figure.where(kind: kind)).at(el.location()),
-        ) + "." // Only add dot for attachments
+        (
+          numbering(
+            el.numbering,
+            ..counter(figure.where(kind: kind)).at(el.location()),
+          )
+            + "."
+        ) // Only add dot for attachments
       } else {
         numbering(
           el.numbering,
@@ -277,11 +287,12 @@
       // Create counter based on the kind
       return link(
         el.location(),
-        number + if supplement != "" {
-          " " + supplement
-        } else {
-          ""
-        },
+        number
+          + if supplement != "" {
+            " " + supplement
+          } else {
+            ""
+          },
       )
     }
 
@@ -290,13 +301,17 @@
   }
   /* --- Figure/Table config end --- */
 
-  set list(marker: (
-    [•],
-    [--],
-    [\*],
-    [·],
-  ))
-  set enum(numbering: "1aiA)") // TODO: make the same style as LaTeX: 1. | (a) | i. | A.
+  set list(
+    marker: (
+      [•],
+      [--],
+      [\*],
+      [·],
+    ),
+  )
+  set enum(
+    numbering: "1aiA)",
+  ) // TODO: make the same style as LaTeX: 1. | (a) | i. | A.
 
   // Abstract
   include "abstract.typ"
@@ -317,7 +332,6 @@
     ),
   )
   /* ToC config end */
-
 
 
   // show link: set text(fill: blue.darken(20%))

@@ -17,16 +17,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Typst
+      - name: Setup fonts
+        run: |
+          mkdir -p ~/.local/share/fonts
+          cp -r assets/fonts/* ~/.local/share/fonts/
+          fc-cache -f -v
+      - name: Compile main.typ
         uses: lvignoli/typst-action@main
         with:
           source_file: |
             main.typ
+            documentary_page.typ
+      - name: Rename main.pdf
+        run: mv main.pdf kval_darbs_kristians_cagulis_kc22015.pdf
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
           name: PDF
-          path: "*.pdf"
+          path: |
+            *.pdf
       - name: Get current date
         id: date
         run: echo "DATE=$(date +%Y-%m-%d-%H:%M)" >> $GITHUB_ENV
@@ -35,4 +44,4 @@ jobs:
         if: github.ref_type == 'tag'
         with:
           name: "${{ github.ref_name }} — ${{ env.DATE }}"
-          files: main.pdf
+          files: "*.pdf"
