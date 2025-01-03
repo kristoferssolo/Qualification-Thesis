@@ -39,7 +39,7 @@
     region: "lv",
   )
   show raw: set text(
-    font: "JetBrainsMono NF",
+    font: "JetBrainsMono Nerd Font Mono",
     features: (calt: 0),
   )
 

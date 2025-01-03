@@ -17,8 +17,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup fonts
+      - name: Install required fonts
         run: |
+          sudo apt-get updateA
+          # Install Times New Roman
+          sudo apt-get install -y ttf-mscorefonts-installer
+
           mkdir -p ~/.local/share/fonts
           cp -r assets/fonts/* ~/.local/share/fonts/
           fc-cache -f -v
