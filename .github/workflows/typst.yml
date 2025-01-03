@@ -19,8 +19,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Install required fonts
         run: |
-          sudo apt-get updateA
+          sudo apt-get update
           # Install Times New Roman
+          echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
           sudo apt-get install -y ttf-mscorefonts-installer
 
           mkdir -p ~/.local/share/fonts
