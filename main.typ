@@ -2076,7 +2076,7 @@ sistēmu (ECS), kas nodrošina labu veiktspēju un koda organizāciju.
 Tomēr tika konstatēts, ka Bevy ekosistēma joprojām ir aktīvās izstrādes stadijā,
 ko apliecina darba izstrādes laikā iznākusī jaunā versija (0.15).
 Ši versija ieviesa vairākas būtiskas izmaiņas, piemēram, "Required Components"
-(latv. nepieciešamo komponentu) konceptu uzlabotu animāciju sistēmu un daudz ko
+(latv. nepieciešamo komponenšu) konceptu uzlabotu animāciju sistēmu un daudz ko
 citu, kas radīja nepieciešamību pielāgot esošo kodu @bevy-0.15.
 Šāda strauja attīstība, no vienas puses, nodrošina jaunas iespējas un
 uzlabojumus, bet no otras puses, rada izaicinājumus saistībā ar dokumentācijas
