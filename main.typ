@@ -44,8 +44,20 @@
 
 = Ievads
 == Nolūks
-Šī dokumenta mērķis ir raksturot sešstūru labirinta spēles "Maze Ascension"
-programmatūras prasības un izpētīt Bevy spēļu dzinēja iespējas.
+Šī programmatūras prasību specifikācija (PPS) ir izstrādāta, lai definētu un
+dokumentētu procedurāli ģenerētas sešstūru labirinta spēles "Maze Ascension"
+programmatūras prasības, arhitektūru un tehnisko implementāciju. Dokumenta
+galvenais uzdevums ir nodrošināt skaidru un visaptverošu projekta aprakstu, kas
+kalpo gan kā tehniskā specifikācija, gan kā izpētes dokumentācija Bevy spēļu
+dzinēja iespēju demonstrēšanai.
+
+Dokumentācija ir paredzēta vairākām mērķauditorijām. Primāri tā ir orientēta uz
+projekta izstrādātājiem un programmētājiem, kas strādā ar Bevy dzinēju, sniedzot
+detalizētu ieskatu ECS arhitektūras implementācijā un procedurālās ģenerācijas
+risinājumos. Tāpat dokumentācija ir noderīga spēļu izstrādes studentiem un
+tehniskajiem vadītājiem, kas vēlas izprast Bevy dzinēja piemērotību līdzīgiem
+projektiem, kā arī kvalifikācijas darba vērtētājiem, kas izvērtē projekta
+tehnisko realizāciju un atbilstību izvirzītajām prasībām.
 
 == Darbības sfēra
 Darba galvenā uzmanība ir vērsta uz būtisku spēles mehāniku ieviešanu, tostarp
@@ -663,6 +675,8 @@ programmu.
   ),
 ) <dpd-2-hexlab>
 
+
+#pagebreak()
 #function-table(
   "Labirinta būvētājs",
   "LGMF01",
@@ -1378,9 +1392,6 @@ un likvidēšanu.
   `RespawnMaze`,
   "Atjauno esošo labirintu",
   "Atjauno labirintu.",
-  `DespawnMaze`,
-  "Noņem labirintu",
-  "Izdzēš labirinta entitātes norādītajam stāvam.",
 ) <events-maze>
 
 ==== Stāvu notikumi
@@ -1420,9 +1431,6 @@ un likvidēšanu.
   `RespawnPlayer`,
   "Atjauno spēlētāju",
   "Atiestata spēlētāju uz pašreizējā stāva sākuma pozīciju.",
-  `DespawnPlayer`,
-  "Noņem spēlētāju",
-  "Izdzēš spēlētāja entitātes.",
 ) <events-player>
 
 === Resursi
@@ -1438,9 +1446,6 @@ Spēle izmanto vairākus resursus globālās konfigurācijas un stāvokļa pārv
 
 #resources-table(
   caption: "Globālie resursi",
-  `MazePluginLoaded`,
-  "Spraudņa stāvokļa marķieris",
-  "Norāda labirinta spraudņa inicializāciju.",
   `GlobalMazeConfig`,
   "Labirinta vizuālie iestatījumi",
   "Uzglabā globālos labirinta izskata parametrus.",
@@ -2028,9 +2033,9 @@ Projekta darbietilpības novērtēšanai tika izmantota QSM (angl. Quantitative
 Software Management, latv. kvantitatīvā programmatūra vadība) metodoloģija, kas
 balstās uz $550$ verificētu programmatūras projektu datubāzi @QSM.
 Izmantojot "tokei" rīku @tokei, tika veikta detalizēta projekta koda analīze,
-kas parādija, ka "Maze Ascension" projekts satur $1927$ koda rindiņas (sk. @tokei-maze-ascension), bet
-saistītā "hexlab" bibliotēka -- $979$ rindiņas (sk. @tokei-hexlab), kopā veidojot $2906$ loģiskās koda
-rindiņas, neiekļaujot tukšās rindiņas un komentārus .
+kas parādija, ka "Maze Ascension" projekts satur $2686$ koda rindiņas (sk. @tokei-maze-ascension), bet
+saistītā "hexlab" bibliotēka -- $979$ rindiņas (sk. @tokei-hexlab), kopā
+veidojot $3236$ pirmkoda rindiņas, neiekļaujot tukšās rindiņas un komentārus.
 
 Saskaņā ar QSM etalontabulu "Business Systems Implementation Unit (New and
 Modified IU) Benchmarks", pirmās kvartiles projekti ($25%$ mazākie no $550$
@@ -2055,7 +2060,6 @@ Turklāt jāņem vērā projekta papildu sarežģītības faktori:
   Šie faktori būtiski palielina projekta faktisko darbietilpību, jo prasa ne tikai
   koda rakstīšanu, bet arī izpēti, dokumentēšanu un optimizāciju.
 ]
-
 
 = Secinājumi
 
@@ -2100,6 +2104,7 @@ Projekta turpmākās attīstības iespējas ietver:
 
 #include "src/attachments.typ"
 #include "src/code.typ"
+#include "documentary_page.typ"
 
 // #pagebreak()
 // #total-words words

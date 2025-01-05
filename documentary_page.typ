@@ -49,7 +49,7 @@
 #let long-underline = underline(box(width: 1fr, repeat(sym.space)))
 #set page(numbering: none)
 
-= Dokumentārā lapa
+#heading(level: 1, outlined: false, numbering: none, "Dokumentārā lapa")
 
 Kvalifikācijas darbs "*Spēles izstrāde, izmantojot Bevy spēļu dzinēju*" ir
 izstrādāts Latvijas Universitātes Eksakto zinātņu un tehnoloģiju fakultātē,
@@ -68,18 +68,18 @@ izdrukai un/vai recenzentam uzrādītajai darba versijai.
   )
 
   v(vspace / 2)
-  [Autors: *Kristiāns Francis Cagulis, kc22015 ~~\_\_.01.2025.*]
+  [Autors: *Kristiāns Francis Cagulis, kc22015 ~~06.01.2025.*]
 
   v(vspace)
   [Rekomendēju darbu aizstāvēšanai\
-    Darba vadītājs: *prof. Mg. dat. Jānis Iljins ~~\_\_.01.2025.*]
+    Darba vadītājs: *prof. Mg. dat. Jānis Iljins ~~06.01.2025.*]
 
   v(vspace)
   [Recenzents: *Artūrs Driķis*]
 
 
   v(vspace)
-  [Darbs iesniegs *\_\_.01.2025.*\
+  [Darbs iesniegs *06.01.2025.*\
     Kvalifikācijas darbu pārbaudījumu komisijas sekretārs (elektronisks paraksts)
   ]
 

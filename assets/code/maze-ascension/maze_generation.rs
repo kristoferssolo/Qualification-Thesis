@@ -39,7 +39,6 @@ pub(super) fn spawn_maze(
             Visibility::Visible,
         ))
         .insert_if(CurrentFloor, || *floor == 1) // Only floor 1 gets CurrentFloor
-        .insert_if(NextFloor, || *floor != 1) // All other floors get NextFloor
         .id();
 
     let assets = MazeAssets::new(&mut meshes, &mut materials, &global_config);
