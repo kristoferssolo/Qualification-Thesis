@@ -154,10 +154,10 @@ ieteikumi turpmākai projekta attīstībai.
 == Esošā stāvokļa apraksts
 Pašreizējo spēļu izstrādes ainavu raksturo pieaugoša interese pēc neatkarīgajām
 spēlēm un modernu, efektīvu spēļu dzinēju izmantošana. Izstrādātāji arvien
-biežāk meklē rīkus, kas piedāvā elastību, veiktspēju un lietošanas ērtumu. Spēļu
-dzinējs Bevy ar savu moderno arhitektūru un Rust programmēšanas valodas
+biežāk meklē rīkus, kas piedāvā elastību, veiktspēju un lietošanas ērtumu.
+Spēļu dzinējs Bevy ar savu moderno arhitektūru un Rust programmēšanas valodas
 izmantošanu gūst arvien lielāku popularitāti izstrādātāju vidū, pateicoties tā
-drošām un vienlaicīgām (angl. concurrent) funkcijām.
+drošām, paralēlām sistēmām.
 
 == Pasūtītājs
 Sistēma nav izstrādāta pēc konkrēta pasūtītāja pieprasījuma, tā ir raksturota un
@@ -186,6 +186,9 @@ kvalitatīvu lietotāja pieredzi:
 
 - Līmeņu pārvaldība: Sistēma nodrošinās automātisku spēles līmeņu pārvaldību un
   vienmērīgu pāreju starp tiem, veidojot pakāpenisku grūtības pieaugumu.
+- Līmeņu ģenerēšana: Sistēma nodrošinās procedurālu līmeņu ģenerēšanu, radot
+  unikālus sešstūrainus labirintus katram spēles stāvam, garantējot, ka katrs
+  labirints ir pilnībā izejams.
 - Tieša piekļuve: Spēle būs pieejama bez lietotāja konta izveides vai
   autentifikācijas, nodrošinot tūlītēju piekļuvi spēles saturam.
 - Platformu atbalsts: Sistēma tiks izstrādāta ar daudzplatformu atbalstu,
@@ -1749,7 +1752,8 @@ Papildus noklusētajiem noteikumiem, tika aktivizēti stingrāki koda kvalitāte
 pārbaudes līmeņi: "pedantic" režīms nodrošina padziļinātu koda stila pārbaudi,
 "nursery" aktivizē eksperimentālās pārbaudes, un "unwrap_used" un "expect_used"
 brīdina par potenciāli nedrošu kļūdu apstrādi. Šie papildu noteikumi palīdz
-uzturēt augstāku koda kvalitāti un samazināt potenciālo kļūdu skaitu @clippy.
+uzturēt augstāku koda kvalitāti un samazināt potenciālo kļūdu skaitu
+(sk. @clippy-hexlab[] un @clippy-maze-ascension[pielikumus]) @clippy.
 
 == Dinamiskā testēšana
 
