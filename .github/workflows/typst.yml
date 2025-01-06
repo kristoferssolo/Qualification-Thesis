@@ -25,8 +25,8 @@ jobs:
           cache-dependency-path: requirements.typ
       - name: Compile Typst files
         run: |
-          typst compile --font-path=assets/fonts main.typ kval_darbs_kristians_cagulis_kc22015.pdf
-          typst compile --font-path=assets/fonts documentary_page.typ
+          typst compile --font-path=assets/fonts main.typ Cagulis_Kristians.Francis_kc22015.pdf
+          typst compile --font-path=assets/fonts documentary_page.typ reg_lapa_Cagulis_Kristians.Francis_kc22015.pdf
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:

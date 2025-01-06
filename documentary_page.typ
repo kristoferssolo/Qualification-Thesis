@@ -72,7 +72,7 @@ izdrukai un/vai recenzentam uzrādītajai darba versijai.
 
   v(vspace)
   [Rekomendēju darbu aizstāvēšanai\
-    Darba vadītājs: *prof. Mg. dat. Jānis Iljins ~~06.01.2025.*]
+    Darba vadītājs: *Mg. dat. Jānis Iljins ~~06.01.2025.*]
 
   v(vspace)
   [Recenzents: *Artūrs Driķis*]
