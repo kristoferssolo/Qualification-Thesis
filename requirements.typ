@@ -3,4 +3,5 @@
 #import "@preview/headcount:0.1.0"
 #import "@preview/i-figured:0.2.4"
 #import "@preview/tablex:0.0.9"
+#import "@preview/touying:0.5.5"
 #import "@preview/wordometer:0.1.3"
