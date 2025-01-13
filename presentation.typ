@@ -4,7 +4,7 @@
 #import "@preview/fletcher:0.5.3" as fletcher: node, edge
 #import "@preview/ctheorems:1.1.3": *
 #import "@preview/numbly:0.1.0": numbly
-
+#import "src/diagrams.typ": *
 
 #set text(
   font: (
@@ -62,7 +62,6 @@
     author: [Kristiāns Francis Cagulis kc22015],
     date: [2025],
     institution: [Latvijas Universitāte],
-    // logo: emoji.school,
   ),
   config-colors(
     primary: rgb("#575279"),
@@ -75,14 +74,13 @@
 
 #title-slide()
 
-
 #slide[
   = Pārskats
-
   - Entitāšu komponenšu sistēma (ECS)
-  - Spēles pārskats un funkcijas
+  - Maze Ascension
   - Hexlab bibliotēka
-  - Tehniskā demonstrācija
+  - Sešstūru implementācija
+  - Saskarne
   - Rezultāti un secinājumi
 ]
 
@@ -166,41 +164,39 @@
   ```
 }
 
-
 = Maze Ascension
-== Spēles pārskats
-#grid(
-  columns: 2,
-  gutter: 1em,
-  [
-    - Procedurāli ģenerēta spēle ar sešstūrainu labirintu
-    - Procedurāli ģenerēti līmeņi
-    - Izstrādāts ar Bevy spēles dzinēju
-    - Labirintu ģenerēšanas bibliotēka
-  ],
-  image("assets/images/placeholder.jpg"),
+
+== 1. Līmeņa DPD
+
+#figure(
+  image("assets/images/diagrams/dpd1.png"),
 )
 
-== Spēles funkcionalitāte
+== Stāva modulis
 
-#grid(
-  columns: 2,
-  gutter: 1em,
-  [
-    - Izveidots, izmantojot Bevy spēļu dzinēju
-    - Pielāgota labirintu ģenerēšanas bibliotēka
-    - Procedurāla līmeņu ģenerēšana
-    - Dinamiska grūtības pakāpes mainīšana
-  ],
-  image("assets/images/placeholder.jpg"),
+#figure(
+  image("assets/images/diagrams/floor.png", width: 50%),
 )
 
 
 = Hexlab bibliotēka
+
 #pagebreak()
+
 #figure(
   caption: link("https://crates.io/crates/hexlab"),
   image("assets/images/crates/hexlab.png", height: 92%),
+)
+
+== Labirinta ģenerēšanas funkcijas projektējums
+#grid(
+  columns: (1fr, 1fr),
+  figure(
+    image("assets/images/diagrams/maze-gen.png"),
+  ),
+  figure(
+    image("assets/images/diagrams/recursive.png"),
+  ),
 )
 
 == Ģenerēšanas algoritms
@@ -211,16 +207,6 @@
 )
 
 = Sešstūru implementācija
-== Iedvesma
-#figure(
-  caption: link("https://www.redblobgames.com/grids/hexagons/"),
-  grid(
-    columns: 2,
-    figure(image("assets/images/redblogmages/axial-coords.png", height: 92%)),
-    figure(image("assets/videos/coords/coords.gif", height: 92%)),
-  ),
-)
-
 == Attēlošana
 
 #grid(
@@ -238,32 +224,64 @@
 )
 
 = Saskarne
-== foo
-#lorem(10)
+#pagebreak()
+
+#grid(
+  columns: 2,
+  figure(
+    image("assets/images/game/main-menu.png"),
+  ),
+)
+
+#figure(
+  image("assets/videos/game/maze-game.gif"),
+)
+
+#grid(
+  columns: (1fr, 1fr),
+  figure(
+    image("assets/images/game/debug.png"),
+  ),
+  figure(
+    image("assets/images/game/dev-tools.png"),
+  ),
+)
+
+
+#figure(
+  image("assets/videos/game/big-ass-maze.gif"),
+)
 
 = Secinājumi
 == Rezultāti
-- Veiksmīgi īstenota procedurālā ģenerēšana.
-- Efektīvs labirinta ģenerēšanas algoritms.
-- Vienmērīga spēlēšanas pieredze.
-- Modulāra un atkārtoti izmantojama kodu bāze.
+
+- 3D spēle izmantojot Bevy un Rust:
+  - Procedurāla sešstūraina labirints ģenerēšana, izmantojot DFS.
+  - Izveidota atkārtoti lietojama atvērtā pirmkoda bibliotēka "hexlab".
+- Efektīva līmeņa pārvaldība:
+  - Vienmērīga pāreja starp labirinta līmeņiem.
 
 == Turpmākie darbi
 
-= Paldies par uzmanību
+- Īstenot vairāk labirintu ģenerēšanas paņēmienus/algoritmus.
+- Ieviest jaunas mehānikas un papildspējas.
+- Uzlabot vizuālo kvalitāti un spēlētāja izskatu.
+- Izstrādāt daudzspēlētāju režīmu.
+
+= Paldies par uzmanību!
 
 Jautājumi?
 
 #show: appendix
 
-= Pēcvārds
+= Galavārds
 == ECS vs OOP
 #grid(
   columns: (1fr, 1fr),
   gutter: 1em,
   [
     *ECS*
-    - Plakanā hierarhija
+    - Plakana hierarhija
     - Datu orientēta
     - Kešatmiņai piemērots
     - Paralēla apstrāde
@@ -276,3 +294,14 @@ Jautājumi?
     - Secīga apstrāde
   ],
 )
+
+== Iedvesma
+#figure(
+  caption: link("https://www.redblobgames.com/grids/hexagons/"),
+  grid(
+    columns: 2,
+    figure(image("assets/images/redblogmages/axial-coords.png", height: 92%)),
+    figure(image("assets/videos/coords/coords.gif", height: 92%)),
+  ),
+)
+
