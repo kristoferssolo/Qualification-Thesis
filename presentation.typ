@@ -35,6 +35,8 @@
   cover: fletcher.hide,
 )
 
+#set figure(supplement: none)
+
 // Theorems configuration by ctheorems
 #show: thmrules.with(qed-symbol: $square$)
 #let theorem = thmbox("theorem", "Theorem", fill: rgb("#eeffee"))
@@ -55,9 +57,10 @@
 #show: university-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    title: [Kvalifikācijas darbs],
-    subtitle: [Spēles izstrāde, izmantojot Bevy spēļu dzinēju],
+    title: [Spēles izstrāde, izmantojot Bevy spēļu dzinēju],
+    subtitle: [Kvalifikācijas darbs],
     author: [Kristiāns Francis Cagulis kc22015],
+    date: [2025],
     institution: [Latvijas Universitāte],
     // logo: emoji.school,
   ),
@@ -70,186 +73,206 @@
   ),
 )
 
-#set heading(numbering: numbly("{1}.", default: "1.1"))
-
 #title-slide()
 
-= Animation
 
-== Simple Animation
+#slide[
+  = Pārskats
 
-We can use `#pause` to #pause display something later.
-
-#pause
-
-Just like this.
-
-#meanwhile
-
-Meanwhile, #pause we can also use `#meanwhile` to #pause display other content synchronously.
-
-#speaker-note[
-  + This is a speaker note.
-  + You won't see it unless you use `config-common(show-notes-on-second-screen: right)`
+  - Entitāšu komponenšu sistēma (ECS)
+  - Spēles pārskats un funkcijas
+  - Hexlab bibliotēka
+  - Tehniskā demonstrācija
+  - Rezultāti un secinājumi
 ]
 
+= Entitāšu komponenšu sistēma (ECS)
 
-== Complex Animation
+== Kas ir ECS?
 
-At subslide #touying-fn-wrapper((self: none) => str(self.subslide)), we can
+- Koncentrējas uz kompozīciju, nevis mantošanu.
+- Datu orientēta arhitektūra.
+- Nodalīti dati (komponentes) un uzvedība (sistēmas).
 
-use #uncover("2-")[`#uncover` function] for reserving space,
+== Datu izkārtojums
 
-use #only("2-")[`#only` function] for not reserving space,
+// Here is an illustration to help you visualize the logical structure. The
+// checkmarks show what component types are present on each entity. Empty cells
+// mean that the component is not present. In this example, we have a player, a
+// camera, and several enemies.
+#context {
+  show raw: set text(size: 16pt)
+  table(
+    columns: 7,
+    [*Entity (ID)*],
+    [*Transform*],
+    [*Player*],
+    [*Enemy*],
+    [*Camera*],
+    [*Health*],
+    [*...*],
 
-#alternatives[call `#only` multiple times \u{2717}][use `#alternatives` function #sym.checkmark] for choosing one of the alternatives.
+    `...`, "", "", "", "", "", "",
+    "107",
+    [#emoji.checkmark.heavy `<translation>`\ `<rotation>`\ `<scale>`],
+    emoji.checkmark.heavy,
+    "",
+    "",
+    [#emoji.checkmark.heavy `<50.0>`],
+    "",
+
+    "108",
+    [#emoji.checkmark.heavy `<translation>`\ `<rotation>`\ `<scale>`],
+    "",
+    emoji.checkmark.heavy,
+    "",
+    [#emoji.checkmark.heavy `<25.0>`],
+    "",
+
+    "109",
+    [#emoji.checkmark.heavy `<translation>`\ `<rotation>`\ `<scale>`],
+    "",
+    "",
+    [#emoji.checkmark.heavy `<camera data>`],
+    "",
+    "",
+
+    `...`,
+  )
+}
+
+== Piemērs
+#context {
+  show raw: set text(size: 16pt)
+  ```rust
+  #[derive(Component)]
+  struct Player;
+
+  #[derive(Component)]
+  struct Health {
+      current: u32,
+      max: u32
+  }
+
+  fn heal_player(
+      mut query: Query<&mut Health, With<Player>>,
+      time: Res<Time>,
+  ) {
+      for mut health in query.iter_mut() {
+        let new_health = health.current + 2. * time.delta_secs();
+        health.current = new_health.min(health.max);
+      }
+  }
+  ```
+}
 
 
-== Callback Style Animation
-
-#slide(
-  repeat: 3,
-  self => [
-    #let (uncover, only, alternatives) = utils.methods(self)
-
-    At subslide #self.subslide, we can
-
-    use #uncover("2-")[`#uncover` function] for reserving space,
-
-    use #only("2-")[`#only` function] for not reserving space,
-
-    #alternatives[call `#only` multiple times \u{2717}][use `#alternatives` function #sym.checkmark] for choosing one of the alternatives.
+= Maze Ascension
+== Spēles pārskats
+#grid(
+  columns: 2,
+  gutter: 1em,
+  [
+    - Procedurāli ģenerēta spēle ar sešstūrainu labirintu
+    - Procedurāli ģenerēti līmeņi
+    - Izstrādāts ar Bevy spēles dzinēju
+    - Labirintu ģenerēšanas bibliotēka
   ],
+  image("assets/images/placeholder.jpg"),
+)
+
+== Spēles funkcionalitāte
+
+#grid(
+  columns: 2,
+  gutter: 1em,
+  [
+    - Izveidots, izmantojot Bevy spēļu dzinēju
+    - Pielāgota labirintu ģenerēšanas bibliotēka
+    - Procedurāla līmeņu ģenerēšana
+    - Dinamiska grūtības pakāpes mainīšana
+  ],
+  image("assets/images/placeholder.jpg"),
 )
 
 
-== Math Equation Animation
+= Hexlab bibliotēka
+#pagebreak()
+#figure(
+  caption: link("https://crates.io/crates/hexlab"),
+  image("assets/images/crates/hexlab.png", height: 92%),
+)
 
-Equation with `pause`:
+== Ģenerēšanas algoritms
+// recursive backtracking
+#figure(
+  caption: link("https://en.wikipedia.org/wiki/Maze_generation_algorithm"),
+  image("assets/videos/hexmaze/hexmaze.gif", height: 92%),
+)
 
-$
-  f(x) &= pause x^2 + 2x + 1 \
-  &= pause (x + 1)^2 \
-$
-
-#meanwhile
-
-Here, #pause we have the expression of $f(x)$.
-
-#pause
-
-By factorizing, we can obtain this result.
-
-
-== CeTZ Animation
-
-CeTZ Animation in Touying:
-
-#cetz-canvas({
-  import cetz.draw: *
-
-  rect((0, 0), (5, 5))
-
-  (pause,)
-
-  rect((0, 0), (1, 1))
-  rect((1, 1), (2, 2))
-  rect((2, 2), (3, 3))
-
-  (pause,)
-
-  line((0, 0), (2.5, 2.5), name: "line")
-})
-
-
-== Fletcher Animation
-
-Fletcher Animation in Touying:
-
-#fletcher-diagram(
-  node-stroke: .1em,
-  node-fill: gradient.radial(
-    blue.lighten(80%),
-    blue,
-    center: (30%, 20%),
-    radius: 80%,
+= Sešstūru implementācija
+== Iedvesma
+#figure(
+  caption: link("https://www.redblobgames.com/grids/hexagons/"),
+  grid(
+    columns: 2,
+    figure(image("assets/images/redblogmages/axial-coords.png", height: 92%)),
+    figure(image("assets/videos/coords/coords.gif", height: 92%)),
   ),
-  spacing: 4em,
-  edge((-1, 0), "r", "-|>", `open(path)`, label-pos: 0, label-side: center),
-  node((0, 0), `reading`, radius: 2em),
-  edge((0, 0), (0, 0), `read()`, "--|>", bend: 130deg),
-  pause,
-  edge(`read()`, "-|>"),
-  node((1, 0), `eof`, radius: 2em),
-  pause,
-  edge(`close()`, "-|>"),
-  node((2, 0), `closed`, radius: 2em, extrude: (-2.5, 0)),
-  edge((0, 0), (2, 0), `close()`, "-|>", bend: -40deg),
 )
 
+== Attēlošana
 
-= Theorems
+#grid(
+  columns: 2,
+  figure(
+    image("assets/images/game/tile-spreadout.png", height: 100%),
+  ),
+  figure(
+    image("assets/images/game/tile.png", height: 100%),
+  ),
+)
 
-== Prime numbers
+#figure(
+  image("assets/images/game/grid.png", height: 100%),
+)
 
-#definition[
-  A natural number is called a #highlight[_prime number_] if it is greater
-  than 1 and cannot be written as the product of two smaller natural numbers.
-]
-#example[
-  The numbers $2$, $3$, and $17$ are prime.
-  @cor_largest_prime shows that this list is not exhaustive!
-]
+= Saskarne
+== foo
+#lorem(10)
 
-#theorem("Euclid")[
-  There are infinitely many primes.
-]
-#proof[
-  Suppose to the contrary that $p_1, p_2, dots, p_n$ is a finite enumeration
-  of all primes. Set $P = p_1 p_2 dots p_n$. Since $P + 1$ is not in our list,
-  it cannot be prime. Thus, some prime factor $p_j$ divides $P + 1$. Since
-  $p_j$ also divides $P$, it must divide the difference $(P + 1) - P = 1$, a
-  contradiction.
-]
+= Secinājumi
+== Rezultāti
+- Veiksmīgi īstenota procedurālā ģenerēšana.
+- Efektīvs labirinta ģenerēšanas algoritms.
+- Vienmērīga spēlēšanas pieredze.
+- Modulāra un atkārtoti izmantojama kodu bāze.
 
-#corollary[
-  There is no largest prime number.
-] <cor_largest_prime>
-#corollary[
-  There are infinitely many composite numbers.
-]
+== Turpmākie darbi
 
-#theorem[
-  There are arbitrarily long stretches of composite numbers.
-]
+= Paldies par uzmanību
 
-#proof[
-  For any $n > 2$, consider $
-    n! + 2, quad n! + 3, quad ..., quad n! + n #qedhere
-  $
-]
-
-
-= Others
-
-== Side-by-side
-
-#slide(composer: (1fr, 1fr))[
-  First column.
-][
-  Second column.
-]
-
-
-== Multiple Pages
-
-#lorem(200)
-
+Jautājumi?
 
 #show: appendix
 
-= Appendix
-
-== Appendix
-
-Please pay attention to the current slide number.
+= Pēcvārds
+== ECS vs OOP
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  [
+    *ECS*
+    - Plakanā hierarhija
+    - Datu orientēta
+    - Kešatmiņai piemērots
+    - Paralēla apstrāde
+  ],
+  [
+    *OOP*
+    - Dziļa mantojamība (inheritance)
+    - Objektorientēta
+    - Kešatmiņa izkliedēts
+    - Secīga apstrāde
+  ],
+)
