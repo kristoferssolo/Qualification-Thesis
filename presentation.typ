@@ -249,7 +249,7 @@
 
 
 #figure(
-  image("assets/videos/game/big-ass-maze.gif"),
+  image("assets/videos/game/big-maze.gif"),
 )
 
 = Secinājumi
