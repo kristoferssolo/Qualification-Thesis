@@ -168,15 +168,11 @@
 
 == 1. Līmeņa DPD
 
-#figure(
-  image("assets/images/diagrams/dpd1.png"),
-)
+#figure(image("assets/images/diagrams/dpd1.png"))
 
 == Stāva modulis
 
-#figure(
-  image("assets/images/diagrams/floor.png", width: 50%),
-)
+#figure(image("assets/images/diagrams/floor.png", width: 50%))
 
 
 = Hexlab bibliotēka
@@ -191,12 +187,8 @@
 == Labirinta ģenerēšanas funkcijas projektējums
 #grid(
   columns: (1fr, 1fr),
-  figure(
-    image("assets/images/diagrams/maze-gen.png"),
-  ),
-  figure(
-    image("assets/images/diagrams/recursive.png"),
-  ),
+  figure(image("assets/images/diagrams/maze-gen.png")),
+  figure(image("assets/images/diagrams/recursive.png")),
 )
 
 == Ģenerēšanas algoritms
@@ -211,46 +203,30 @@
 
 #grid(
   columns: 2,
-  figure(
-    image("assets/images/game/tile-spreadout.png", height: 100%),
-  ),
-  figure(
-    image("assets/images/game/tile.png", height: 100%),
-  ),
+  figure(image("assets/images/game/tile-spreadout.png", height: 100%)),
+  figure(image("assets/images/game/tile.png", height: 100%)),
 )
 
-#figure(
-  image("assets/images/game/grid.png", height: 100%),
-)
+#figure(image("assets/images/game/grid.png", height: 100%))
 
 = Saskarne
 #pagebreak()
 
 #grid(
   columns: 2,
-  figure(
-    image("assets/images/game/main-menu.png"),
-  ),
+  figure(image("assets/images/game/main-menu.png")),
 )
 
-#figure(
-  image("assets/videos/game/maze-game.gif"),
-)
+#figure(image("assets/videos/game/maze-game.gif"))
 
 #grid(
   columns: (1fr, 1fr),
-  figure(
-    image("assets/images/game/debug.png"),
-  ),
-  figure(
-    image("assets/images/game/dev-tools.png"),
-  ),
+  figure(image("assets/images/game/debug.png")),
+  figure(image("assets/images/game/dev-tools.png")),
 )
 
 
-#figure(
-  image("assets/videos/game/big-maze.gif"),
-)
+#figure(image("assets/videos/game/big-maze.gif"))
 
 = Secinājumi
 == Rezultāti

@@ -41,5 +41,5 @@ jobs:
         with:
           name: "${{ github.ref_name }} — ${{ env.DATE }}"
           files: |
-            kval_darbs_kristians_cagulis_kc22015.pdf
-            documentary_page.pdf
+            Cagulis_Kristians.Francis_kc22015.pdf
+            reg_lapa_Cagulis_Kristians.Francis_kc22015.pdf
